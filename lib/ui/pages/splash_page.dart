@@ -13,30 +13,31 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  DateTime? ex;
+  Timer? timeDel;
+
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 3), () {
+    context.read<AuthCubit>().getProfil();
+
+    Timer(Duration(seconds: 5), () {
       autoLogin();
     });
   }
 
   void autoLogin() async {
-    // print(
-    //     'read refresh tokken = ${await SecureStorages().readStorage('refresh')};');
+    var readToken = await SecureStorages().readStorage('token');
+    // var readNewToken = await SecureStorages().readStorage('newToken');
 
-    var token = await SecureStorages().readStorage('token');
-    // var newToken = await SecureStorages().readStorage('newToken');
+    // var token = readToken ?? readNewToken;
+    var token = readToken;
 
-    // print('token === $token');
-    // print('newToken === $newToken');
-
-    if (token != null) {
-      context.read<AuthCubit>().getProfil();
-      Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
-    } else {
+    print('token == $token');
+    if (token == null) {
       Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
-      // Navigator.pushNamed(context, '/login');
+    } else {
+      Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
     }
   }
 
@@ -44,36 +45,59 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kBackgroundColor,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              width: 120,
-              height: 120,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/logo.png'),
+      body: Stack(
+        children: [
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 120,
+                  height: 120,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/logo.png'),
+                    ),
+                  ),
                 ),
+                SizedBox(height: 20),
+                Text(
+                  'Aplikasi Pendukung Keputusan\nPenerima Beasiswa',
+                  textAlign: TextAlign.center,
+                  style: blackTextStyle.copyWith(
+                    fontSize: 16,
+                    fontWeight: medium,
+                  ),
+                ),
+                const SizedBox(height: 50),
+              ],
+            ),
+          ),
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    'Fakultas Teknik',
+                    style: blackTextStyle.copyWith(
+                      fontSize: 18,
+                      // fontWeight: no,
+                    ),
+                  ),
+                  Text(
+                    'Universitas Islam Makassar',
+                    style: blackTextStyle.copyWith(
+                      fontSize: 18,
+                      fontWeight: medium,
+                    ),
+                  )
+                ],
               ),
             ),
-            SizedBox(height: 30),
-            Text(
-              'Fakultas Teknik',
-              style: blackTextStyle.copyWith(
-                fontSize: 18,
-                fontWeight: medium,
-              ),
-            ),
-            Text(
-              'Universitas Islam Makassar',
-              style: blackTextStyle.copyWith(
-                fontSize: 18,
-                fontWeight: medium,
-              ),
-            )
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

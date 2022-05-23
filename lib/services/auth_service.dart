@@ -1,6 +1,6 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:ft_uim_naive_bayes/storage/storage.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ft_uim_naive_bayes/models/user_model.dart';
 import 'package:ft_uim_naive_bayes/utils/url.dart';
 import 'package:http/http.dart' as http;
@@ -68,18 +68,12 @@ class AuthService {
 
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body)['data'];
-      // prefs.setString('token', data['token']);
-      // prefs.setString('expire', data['expire']);
-      // prefs.setString('nama', data['nama']);
-      // prefs.setString('stambuk', data['stambuk']);
-      // prefs.setString('refresh', data['token']);
-      // prefs.setString('expire', data['expire']);
+
       await SecureStorages().setStorage('token', data['token']);
+
       await SecureStorages().setStorage('refresh', data['refresh']);
 
-      // print('get token = ${prefs.getString('token')}');
       UserModel user = UserModel.fromJson(data);
-
       return user;
     } else {
       var data = jsonDecode(response.body);
@@ -90,30 +84,29 @@ class AuthService {
   Future<void> signOut() async {
     try {
       await SecureStorages().deleteKey('token');
-    } catch (e) {}
+      // await SecureStorages().deleteAll();
+    } catch (e) {
+      throw e;
+    }
   }
 
   Future<UserModel?> getProfil() async {
-    var token = await SecureStorages().readStorage('token');
+    var readToken = await SecureStorages().readStorage('token');
     var url = '$baseUrl/auth/get-one';
+    var readNewToken = await SecureStorages().readStorage('newToken');
 
-    // var newToken = await SecureStorages().readStorage('token');
+    print('token old == $readToken');
+    print('token baru == $readNewToken');
+
+    // var token = readToken ?? readNewToken;
 
     var headers = {
-      'Authorization': 'Bearer $token',
+      'Authorization': 'Bearer $readToken',
     };
 
-    // print('Header === $headers');
-    // var newHeaders = {
-    //   'Authorization': 'Bearer $newToken',
-    // };
-
-    // var newHeader = newHeaders ? newHeaders : headers;
-
-    // print('New Header === $newHeaders');
     var response = await http.get(
       Uri.parse(url),
-      // headers: newHeaders.isNotEmpty ? newHeaders : headers,
+      // headers: headers,
       headers: headers,
     );
 
@@ -122,39 +115,39 @@ class AuthService {
     if (response.statusCode == 200) {
       UserModel user = UserModel.fromJson(jsonDecode(response.body));
       return user;
-    } else if (response.statusCode == 401 && response.statusCode == 404) {
-      // var token = await SecureStorages().readStorage('token');
-      print('expire bos');
-      // await refreshToken();
+    } else if (response.statusCode == 401) {
       await SecureStorages().deleteKey('token');
+      print('expire bos');
+      await SecureStorages().setStorage('msg', 'expire');
+      await refreshToken();
     } else {
       var data = jsonDecode(response.body);
       throw data['error'];
     }
   }
 
-  // Future<void> refreshToken() async {
-  //   var refresh = await SecureStorages().readStorage('refresh');
+  Future<void> refreshToken() async {
+    var refresh = await SecureStorages().readStorage('refresh');
 
-  //   var url = '$baseUrl/auth/token-refresh';
-  //   var headers = {
-  //     'Authorization': 'Bearer $refresh',
-  //   };
-  //   var response = await http.post(
-  //     Uri.parse(url),
-  //     headers: headers,
-  //   );
+    var url = '$baseUrl/auth/token-refresh';
+    var headers = {
+      'Authorization': 'Bearer $refresh',
+    };
+    var response = await http.post(
+      Uri.parse(url),
+      headers: headers,
+    );
 
-  //   if (response.statusCode == 200) {
-  //     var data = jsonDecode(response.body)['token'];
-  //     await SecureStorages().setStorage('token', data);
-  //     print('New Token = $data');
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body)['token'];
+      await SecureStorages().setStorage('newToken', data);
+      print('New Token = $data');
 
-  //     return data;
-  //   } else {
-  //     // await SecureStorages().deleteKey('token');
-  //     print('expire 2');
-  //     throw Exception('error boss');
-  //   }
-  // }
+      return data;
+    } else {
+      // await SecureStorages().deleteKey('token');
+      print('expire 2');
+      throw Exception('error boss');
+    }
+  }
 }

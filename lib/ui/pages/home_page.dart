@@ -48,7 +48,10 @@ class HomePage extends StatelessWidget {
               ),
             );
           }
-          return SizedBox();
+          // return SizedBox();
+          return Center(
+            child: CircularProgressIndicator(),
+          );
         },
       );
     }
@@ -90,7 +93,7 @@ class HomePage extends StatelessWidget {
             // ),
             // const SizedBox(height: 30),
             Text(
-              'Persyaratan Penerima Beasiswa UKT :',
+              'Persyaratan Penerima Beasiswa :',
               style:
                   blackTextStyle.copyWith(fontWeight: semiBold, fontSize: 16),
             ),

@@ -41,6 +41,10 @@ class _UjiPageState extends State<UjiPage> {
     await SecureStorages().setStorage('prodi', selectProdi!.jurusan);
     await SecureStorages().setStorage('semester', selectSemester!.semester);
     await SecureStorages().setStorage('statusMhs', selectStatusMhs);
+    await SecureStorages().setStorage('kip', selectKip);
+    await SecureStorages()
+        .setStorage('penghasilan', selectPenghasilan!.keterangan);
+    await SecureStorages().setStorage('pkh', selectPkh);
   }
 
   @override

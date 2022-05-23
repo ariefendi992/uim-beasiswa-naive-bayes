@@ -11,7 +11,12 @@ class HasilPage extends StatefulWidget {
 }
 
 class _HasilPageState extends State<HasilPage> {
-  String? readProdi, readSemester, readStatusMhs;
+  String? readProdi,
+      readSemester,
+      readStatusMhs,
+      readKip,
+      readPenghasilan,
+      readPkh;
   @override
   void initState() {
     super.initState();
@@ -22,11 +27,17 @@ class _HasilPageState extends State<HasilPage> {
     var prodi = await SecureStorages().readStorage('prodi');
     var semester = await SecureStorages().readStorage('semester');
     var statusMhs = await SecureStorages().readStorage('statusMhs');
+    var kip = await SecureStorages().readStorage('kip');
+    var penghasilan = await SecureStorages().readStorage('penghasilan');
+    var pkh = await SecureStorages().readStorage('pkh');
 
     setState(() {
       readProdi = prodi;
       readSemester = semester;
       readStatusMhs = statusMhs;
+      readKip = kip;
+      readPenghasilan = penghasilan;
+      readPkh = pkh;
     });
   }
 
@@ -102,7 +113,7 @@ class _HasilPageState extends State<HasilPage> {
                   ),
                 ),
                 Text(
-                  '$readProdi',
+                  '${readProdi ?? "-"}',
                   textAlign: TextAlign.center,
                 ),
                 Text(
@@ -125,7 +136,7 @@ class _HasilPageState extends State<HasilPage> {
                   ),
                 ),
                 Text(
-                  '$readSemester',
+                  '${readSemester ?? '-'}',
                   textAlign: TextAlign.center,
                 ),
                 Text(
@@ -148,7 +159,7 @@ class _HasilPageState extends State<HasilPage> {
                   ),
                 ),
                 Text(
-                  readStatusMhs.toString().toCapitalized(),
+                  '${readStatusMhs == null ? '-' : readStatusMhs.toString().toCapitalized()}',
                   textAlign: TextAlign.center,
                 ),
                 Text(
@@ -171,7 +182,7 @@ class _HasilPageState extends State<HasilPage> {
                   ),
                 ),
                 Text(
-                  '$readProdi',
+                  readKip == null ? '-' : readKip.toString().toCapitalized(),
                   textAlign: TextAlign.center,
                 ),
                 Text(
@@ -194,7 +205,7 @@ class _HasilPageState extends State<HasilPage> {
                   ),
                 ),
                 Text(
-                  '$readProdi',
+                  '${readPenghasilan ?? '-'}',
                   textAlign: TextAlign.center,
                 ),
                 Text(
@@ -217,7 +228,7 @@ class _HasilPageState extends State<HasilPage> {
                   ),
                 ),
                 Text(
-                  '$readProdi',
+                  readPkh != null ? readPkh.toString().toCapitalized() : '-',
                   textAlign: TextAlign.center,
                 ),
                 Text(

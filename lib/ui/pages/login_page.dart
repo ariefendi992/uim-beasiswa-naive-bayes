@@ -28,19 +28,20 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  height: 110,
-                  width: 110,
+                  height: 120,
+                  width: 120,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage('assets/images/logo.png'),
+                      image: AssetImage('assets/images/toga.png'),
                     ),
                   ),
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 6),
                 Text(
-                  'Fakultas Teknik',
+                  'Aplikasi Pendukung Keputusan\nPenerima Beasiswa',
+                  textAlign: TextAlign.center,
                   style:
-                      blackTextStyle.copyWith(fontSize: 24, fontWeight: medium),
+                      blackTextStyle.copyWith(fontSize: 18, fontWeight: medium),
                 ),
                 SizedBox(height: 16),
                 Card(
@@ -67,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
                             decoration: InputDecoration(
                               icon: Icon(
                                 Icons.person,
-                                color: kBlackColor,
+                                color: kBlueColor,
                               ),
                               hintText: 'Stambuk Mahasiswa',
                               focusColor: kBlackColor,
@@ -93,7 +94,7 @@ class _LoginPageState extends State<LoginPage> {
                             decoration: InputDecoration(
                               icon: Icon(
                                 Icons.vpn_key_sharp,
-                                color: kBlackColor,
+                                color: kBlueColor,
                               ),
                               hintText: 'Password',
                               focusColor: kBlackColor,
