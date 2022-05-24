@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:ft_uim_naive_bayes/models/uji_ukt_model.dart';
+import 'package:ft_uim_naive_bayes/storage/storage.dart';
 import 'package:ft_uim_naive_bayes/utils/url.dart';
 import 'package:http/http.dart' as http;
 
@@ -40,9 +41,58 @@ class UktService {
 
       if (response.statusCode == 200) {
         var jsonResp = jsonDecode(response.body);
-        // await SecureStorages().setStorage('prodiLayak', jsonResp['data']['atr_prodi']);
-        print('json resp ukt == ${jsonResp["data"]["atr_prodi"]}');
 
+        // prodi layak
+        await SecureStorages().setStorage(
+            'prodiLayak', jsonResp['data']['atr_prodi']['layak'].toString());
+
+        // prodi tidak layak
+        await SecureStorages().setStorage('prodiTidakLayak',
+            jsonResp['data']['atr_prodi']['tidak_layak'].toString());
+
+        // semester layak
+        await SecureStorages().setStorage('semesterLayak',
+            jsonResp['data']['atr_semester']['layak'].toString());
+
+        // semester tidak layak
+        await SecureStorages().setStorage('semesterTidakLayak',
+            jsonResp['data']['atr_semester']['tidak_layak'].toString());
+
+        // statusMahasiswa layak
+        await SecureStorages().setStorage('statusMahasiswaLayak',
+            jsonResp['data']['atr_status_mhs']['layak'].toString());
+
+        // statusMahasiswa tidak layak
+        await SecureStorages().setStorage('statusMahasiswaTidakLayak',
+            jsonResp['data']['atr_status_mhs']['tidak_layak'].toString());
+
+        // kip layak
+        await SecureStorages().setStorage('kipLayak',
+            jsonResp['data']['atr_penerima_kip']['layak'].toString());
+
+        // kip tidak layak
+        await SecureStorages().setStorage('kipTidakLayak',
+            jsonResp['data']['atr_penerima_kip']['tidak_layak'].toString());
+
+        // penghasilan layak
+        await SecureStorages().setStorage('penghasilanLayak',
+            jsonResp['data']['atr_penghasilan_orang_tua']['layak'].toString());
+
+        // penghasilan tidak layak
+        await SecureStorages().setStorage(
+            'penghasilanTidakLayak',
+            jsonResp['data']['atr_penghasilan_orang_tua']['tidak_layak']
+                .toString());
+
+        // pkh layak
+        await SecureStorages().setStorage(
+            'pkhLayak', jsonResp['data']['atr_status_pkh']['layak'].toString());
+
+        // pkh tidak layak
+        await SecureStorages().setStorage('pkhTidakLayak',
+            jsonResp['data']['atr_status_pkh']['tidak_layak'].toString());
+
+        print('json resp ukt == ${jsonResp["data"]["atr_prodi"]['layak']}');
         UjiUktModel ujiUkt = UjiUktModel.fromJson(jsonResp);
         return ujiUkt;
       } else {

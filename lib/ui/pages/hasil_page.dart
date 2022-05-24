@@ -17,6 +17,20 @@ class _HasilPageState extends State<HasilPage> {
       readKip,
       readPenghasilan,
       readPkh;
+
+  String? readProdiLayak,
+      readProdiTidakLayak,
+      readSemesterLayak,
+      readSemesterTidakLayak,
+      readStatusMahasiswaLayak,
+      readStatusMahasiswaTidakLayak,
+      readKipLayak,
+      readKipTidakLayak,
+      readPenghasilanLayak,
+      readPenghasilanTidakLayak,
+      readPkhLayak,
+      readPkhTidakLayak;
+
   @override
   void initState() {
     super.initState();
@@ -31,6 +45,24 @@ class _HasilPageState extends State<HasilPage> {
     var penghasilan = await SecureStorages().readStorage('penghasilan');
     var pkh = await SecureStorages().readStorage('pkh');
 
+    var prodiLayak = await SecureStorages().readStorage('prodiLayak');
+    var prodiTidakLayak = await SecureStorages().readStorage('prodiTidakLayak');
+    var semesterLayak = await SecureStorages().readStorage('semesterLayak');
+    var semesterTidakLayak =
+        await SecureStorages().readStorage('semesterTidakLayak');
+    var statusMahasiswaLayak =
+        await SecureStorages().readStorage('statusMahasiswaLayak');
+    var statusMahasiswaTidakLayak =
+        await SecureStorages().readStorage('statusMahasiswaTidakLayak');
+    var kipLayak = await SecureStorages().readStorage('kipLayak');
+    var kipTidakLayak = await SecureStorages().readStorage('kipTidakLayak');
+    var penghasilanLayak =
+        await SecureStorages().readStorage('penghasilanLayak');
+    var penghasilanTidakLayak =
+        await SecureStorages().readStorage('penghasilanTidakLayak');
+    var pkhLayak = await SecureStorages().readStorage('pkhLayak');
+    var pkhTidakLayak = await SecureStorages().readStorage('pkhTidakLayak');
+
     setState(() {
       readProdi = prodi;
       readSemester = semester;
@@ -38,6 +70,18 @@ class _HasilPageState extends State<HasilPage> {
       readKip = kip;
       readPenghasilan = penghasilan;
       readPkh = pkh;
+      readProdiLayak = prodiLayak;
+      readProdiTidakLayak = prodiTidakLayak;
+      readSemesterLayak = semesterLayak;
+      readSemesterTidakLayak = semesterTidakLayak;
+      readStatusMahasiswaLayak = statusMahasiswaLayak;
+      readStatusMahasiswaTidakLayak = statusMahasiswaTidakLayak;
+      readKipLayak = kipLayak;
+      readKipTidakLayak = kipTidakLayak;
+      readPenghasilanLayak = penghasilanLayak;
+      readPenghasilanTidakLayak = penghasilanTidakLayak;
+      readPkhLayak = pkhLayak;
+      readPkhTidakLayak = pkhTidakLayak;
     });
   }
 
@@ -117,11 +161,11 @@ class _HasilPageState extends State<HasilPage> {
                   textAlign: TextAlign.center,
                 ),
                 Text(
-                  'Layak',
+                  '${readProdiLayak ?? "-"}',
                   textAlign: TextAlign.center,
                 ),
                 Text(
-                  'Tidak Layak',
+                  '${readProdiTidakLayak ?? "-"}',
                   textAlign: TextAlign.center,
                 ),
               ],
@@ -140,11 +184,11 @@ class _HasilPageState extends State<HasilPage> {
                   textAlign: TextAlign.center,
                 ),
                 Text(
-                  'Layak',
+                  '${readSemesterLayak ?? "-"}',
                   textAlign: TextAlign.center,
                 ),
                 Text(
-                  'Tidak Layak',
+                  '${readSemesterTidakLayak ?? "-"}',
                   textAlign: TextAlign.center,
                 ),
               ],
@@ -163,11 +207,11 @@ class _HasilPageState extends State<HasilPage> {
                   textAlign: TextAlign.center,
                 ),
                 Text(
-                  'Layak',
+                  '${readStatusMahasiswaLayak ?? "-"}',
                   textAlign: TextAlign.center,
                 ),
                 Text(
-                  'Tidak Layak',
+                  '${readStatusMahasiswaTidakLayak ?? "-"}',
                   textAlign: TextAlign.center,
                 ),
               ],
@@ -186,11 +230,11 @@ class _HasilPageState extends State<HasilPage> {
                   textAlign: TextAlign.center,
                 ),
                 Text(
-                  'Layak',
+                  '${readKipLayak ?? "-"}',
                   textAlign: TextAlign.center,
                 ),
                 Text(
-                  'Tidak Layak',
+                  '${readKipTidakLayak ?? "-"}',
                   textAlign: TextAlign.center,
                 ),
               ],
@@ -209,11 +253,11 @@ class _HasilPageState extends State<HasilPage> {
                   textAlign: TextAlign.center,
                 ),
                 Text(
-                  'Layak',
+                  '${readPenghasilanLayak ?? "-"}',
                   textAlign: TextAlign.center,
                 ),
                 Text(
-                  'Tidak Layak',
+                  '${readPenghasilanTidakLayak ?? "-"}',
                   textAlign: TextAlign.center,
                 ),
               ],
@@ -232,11 +276,11 @@ class _HasilPageState extends State<HasilPage> {
                   textAlign: TextAlign.center,
                 ),
                 Text(
-                  'Layak',
+                  '${readPkhLayak ?? "-"}',
                   textAlign: TextAlign.center,
                 ),
                 Text(
-                  'Tidak Layak',
+                  '${readPkhTidakLayak ?? "-"}',
                   textAlign: TextAlign.center,
                 ),
               ],
