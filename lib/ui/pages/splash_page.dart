@@ -27,11 +27,10 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void autoLogin() async {
-    var readToken = await SecureStorages().readStorage('token');
+    var token = await SecureStorages().readStorage('token');
     // var readNewToken = await SecureStorages().readStorage('newToken');
 
     // var token = readToken ?? readNewToken;
-    var token = readToken;
 
     print('token == $token');
     if (token == null) {

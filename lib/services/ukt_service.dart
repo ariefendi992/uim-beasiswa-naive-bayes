@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:ft_uim_naive_bayes/models/uji_ukt_model.dart';
 import 'package:ft_uim_naive_bayes/utils/url.dart';
 import 'package:http/http.dart' as http;
@@ -42,7 +41,7 @@ class UktService {
       if (response.statusCode == 200) {
         var jsonResp = jsonDecode(response.body);
         // await SecureStorages().setStorage('prodiLayak', jsonResp['data']['atr_prodi']);
-        print('json resp ukt == ${jsonResp["data"][0]["atr_prodi"]}');
+        print('json resp ukt == ${jsonResp["data"]["atr_prodi"]}');
 
         UjiUktModel ujiUkt = UjiUktModel.fromJson(jsonResp);
         return ujiUkt;
@@ -54,4 +53,8 @@ class UktService {
       throw e;
     }
   }
+
+  // Future<List<UjiUktModel>> fetchUjiUkt() async {
+
+  // }
 }

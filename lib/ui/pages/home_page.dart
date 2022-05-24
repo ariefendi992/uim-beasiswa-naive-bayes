@@ -4,9 +4,14 @@ import 'package:ft_uim_naive_bayes/cubit/auth/auth_cubit.dart';
 import 'package:ft_uim_naive_bayes/utils/theme.dart';
 import 'package:ft_uim_naive_bayes/utils/extensions.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   Future<void> _refresh() {
     return Future.delayed(Duration(seconds: 2));
   }
@@ -29,7 +34,7 @@ class HomePage extends StatelessWidget {
                       Text(
                         'Hi...\n${state.user.nama!.toTitleCase()}',
                         style: blackTextStyle.copyWith(
-                            fontSize: 24, fontWeight: medium),
+                            fontSize: 20, fontWeight: medium),
                       ),
                       CircleAvatar(
                         maxRadius: 25,

@@ -121,8 +121,7 @@ class AuthService {
       await SecureStorages().setStorage('msg', 'expire');
       await refreshToken();
     } else {
-      var data = jsonDecode(response.body);
-      throw data['error'];
+      throw Exception('gagal muat data $url, status : ${response.body}');
     }
   }
 
