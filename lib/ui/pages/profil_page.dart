@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ft_uim_naive_bayes/cubit/auth/auth_cubit.dart';
 import 'package:ft_uim_naive_bayes/cubit/page_cubit.dart';
+import 'package:ft_uim_naive_bayes/storage/storage.dart';
 import 'package:ft_uim_naive_bayes/ui/widgets/custom_button.dart';
 import 'package:ft_uim_naive_bayes/utils/theme.dart';
 
@@ -40,8 +41,9 @@ class ProfilPage extends StatelessWidget {
                 child: CustomButton(
                     width: 200,
                     hintText: 'Log Out',
-                    onPressed: () {
+                    onPressed: () async {
                       context.read<AuthCubit>().signOut();
+                      await SecureStorages().deleteKey('timeExpire');
                     }),
               );
             },

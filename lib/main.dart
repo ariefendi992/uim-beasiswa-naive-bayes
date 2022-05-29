@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ft_uim_naive_bayes/cubit/auth/auth_cubit.dart';
 import 'package:ft_uim_naive_bayes/cubit/page_cubit.dart';
+import 'package:ft_uim_naive_bayes/cubit/ukt/training_ukt_cubit.dart';
 import 'package:ft_uim_naive_bayes/cubit/ukt/ukt_cubit.dart';
 import 'package:ft_uim_naive_bayes/ui/pages/login_page.dart';
 import 'package:ft_uim_naive_bayes/ui/pages/main_page.dart';
@@ -25,6 +26,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => UktCubit(),
+        ),
+        BlocProvider(
+          create: (context) => TrainingUktCubit(),
         ),
       ],
       child: MaterialApp(

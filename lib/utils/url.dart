@@ -1,2 +1,2 @@
-var baseUrl = 'http://10.153.25.248:5000';
-// var baseUrl = 'https://api.beasiswa-tuim.site';
+// var baseUrl = 'http://192.168.43.28:5000';
+var baseUrl = 'https://api.beasiswa-tuim.site';

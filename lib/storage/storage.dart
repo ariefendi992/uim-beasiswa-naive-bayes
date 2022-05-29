@@ -13,6 +13,12 @@ class SecureStorages {
     return read;
   }
 
+  Future<Map<String, String>> readAll() async {
+    Map<String, String> readAll = await FlutterSecureStorage().readAll();
+    print('read all = $readAll');
+    return readAll;
+  }
+
   Future deleteKey(String key) async {
     await storage.delete(key: key);
   }

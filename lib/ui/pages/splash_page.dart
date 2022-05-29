@@ -4,6 +4,7 @@ import 'package:ft_uim_naive_bayes/cubit/auth/auth_cubit.dart';
 import 'package:ft_uim_naive_bayes/storage/storage.dart';
 import 'package:ft_uim_naive_bayes/utils/theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+// import 'package:intl/intl.dart';
 
 class SplashScreen extends StatefulWidget {
   SplashScreen({Key? key}) : super(key: key);
@@ -13,31 +14,66 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  DateTime? ex;
-  Timer? timeDel;
+  String? readTime;
+  DateTime? stringToDateTime;
+  Timer? authTimer;
 
   @override
   void initState() {
     super.initState();
-    context.read<AuthCubit>().getProfil();
-
-    Timer(Duration(seconds: 5), () {
+    autoDeleteToken();
+    // autoLogout();
+    Timer(Duration(seconds: 3), () {
       autoLogin();
     });
   }
 
   void autoLogin() async {
     var token = await SecureStorages().readStorage('token');
-    // var readNewToken = await SecureStorages().readStorage('newToken');
-
-    // var token = readToken ?? readNewToken;
 
     print('token == $token');
     if (token == null) {
       Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
     } else {
+      context.read<AuthCubit>().getProfil();
       Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
     }
+  }
+
+  void autoDeleteToken() async {
+    readTime = await SecureStorages().readStorage('timeExpire');
+    print(readTime.runtimeType);
+
+    stringToDateTime = DateTime.tryParse(readTime!);
+
+    print(stringToDateTime.runtimeType);
+
+    if (DateTime.now().isAfter(stringToDateTime!)) {
+      await SecureStorages().deleteKey('token');
+      // await SecureStorages().deleteKey('timeExpire');
+    }
+    // var stringDateTimeExpire =
+    //     DateFormat("yyy-MM-dd hh:mm:ss").format(stringToDateTime);
+
+    // var formatTime = DateTime.tryParse(stringDateTimeExpire);
+    // print('date time now ${DateTime.now()}');
+    // print('expire time $stringDateTimeExpire');
+    // print('Format Time == $formatTime');
+    // var dateTimeNow = DateTime.now();
+
+    // var subStringTime = dateTimeNow.isAfter(formatDateTimeExpire)
+  }
+
+  void autoLogout() async {
+    var readTime2 = await SecureStorages().readStorage('timeSecond');
+
+    stringToDateTime =
+        DateTime.now().add(Duration(seconds: int.parse(readTime2!)));
+
+    print('time String $stringToDateTime');
+    final timeToExpiry = stringToDateTime!.difference(DateTime.now()).inSeconds;
+
+    print('time to expire === $timeToExpiry');
   }
 
   @override

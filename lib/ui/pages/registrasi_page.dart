@@ -67,6 +67,7 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
               DropdownButtonFormField(
                 focusColor: kGreyColor,
                 decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.all(14),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(defaultRadius),
                   ),

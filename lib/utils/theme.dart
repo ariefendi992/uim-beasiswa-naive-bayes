@@ -7,9 +7,11 @@ Color kBlackColor = Color(0xff1C2833);
 Color kBlueColor = Color(0xff1A6BCE);
 Color kLightBlueColor = Color(0xffE7F8FF);
 Color kWhiteColor = Color(0xffFFFFFF);
-Color kBackgroundColor = Color(0xffeceff1);
+Color kBackgroundColor = Color(0xffF0F0F0);
+// Color kBackgroundColor = Color(0xffeceff1);
 // Color kBackgroundColor = Color(0xffF7F7F9);
 Color kRedColor = Color(0xffDB0E45);
+Color kBarColor = Color(0xff516DB5);
 Color kTransparentColor = Colors.transparent;
 
 // fonts

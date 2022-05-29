@@ -9,6 +9,7 @@ import 'package:ft_uim_naive_bayes/models/prodi_model.dart';
 import 'package:ft_uim_naive_bayes/models/semester_model.dart';
 import 'package:ft_uim_naive_bayes/services/kategori_service.dart';
 import 'package:ft_uim_naive_bayes/storage/storage.dart';
+import 'package:ft_uim_naive_bayes/ui/widgets/custom_app_bar.dart';
 import 'package:ft_uim_naive_bayes/ui/widgets/custom_button.dart';
 import 'package:ft_uim_naive_bayes/utils/theme.dart';
 
@@ -49,15 +50,15 @@ class _UjiPageState extends State<UjiPage> {
 
   @override
   Widget build(BuildContext context) {
-    Widget title() {
-      return Container(
-        margin: const EdgeInsets.only(top: 30),
-        child: Text(
-          'Uji Kelayakan',
-          style: blackTextStyle.copyWith(fontSize: 18, fontWeight: medium),
-        ),
-      );
-    }
+    // Widget title() {
+    //   return Container(
+    //     margin: const EdgeInsets.only(top: 10),
+    //     child: Text(
+    //       'Uji Kelayakan'.toUpperCase(),
+    //       style: blackTextStyle.copyWith(fontSize: 20, fontWeight: medium),
+    //     ),
+    //   );
+    // }
 
     Widget formInput() {
       Widget inputNama() {
@@ -79,6 +80,7 @@ class _UjiPageState extends State<UjiPage> {
                       initialValue: '${state.user.nama}',
                       cursorColor: kBlackColor,
                       decoration: InputDecoration(
+                        contentPadding: EdgeInsets.all(14),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(defaultRadius),
                         ),
@@ -117,6 +119,7 @@ class _UjiPageState extends State<UjiPage> {
                       hint: Text('.:: Pilih ::.'),
                       focusColor: kGreyColor,
                       decoration: InputDecoration(
+                        contentPadding: EdgeInsets.all(14),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(defaultRadius),
                         ),
@@ -172,6 +175,7 @@ class _UjiPageState extends State<UjiPage> {
                       hint: Text('.:: Pilih ::.'),
                       focusColor: kGreyColor,
                       decoration: InputDecoration(
+                        contentPadding: EdgeInsets.all(14),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(defaultRadius),
                         ),
@@ -228,6 +232,7 @@ class _UjiPageState extends State<UjiPage> {
                 hint: Text('.:: Pilih ::.'),
                 value: selectStatusMhs,
                 decoration: InputDecoration(
+                  contentPadding: EdgeInsets.all(14),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(defaultRadius),
                   ),
@@ -275,6 +280,7 @@ class _UjiPageState extends State<UjiPage> {
                 hint: Text('.:: Pilih ::.'),
                 value: selectKip,
                 decoration: InputDecoration(
+                  contentPadding: EdgeInsets.all(14),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(defaultRadius),
                   ),
@@ -322,6 +328,7 @@ class _UjiPageState extends State<UjiPage> {
                     DropdownButtonFormField(
                       hint: const Text('.:: Pilih ::.'),
                       decoration: InputDecoration(
+                        contentPadding: EdgeInsets.all(14),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(defaultRadius),
                         ),
@@ -369,6 +376,7 @@ class _UjiPageState extends State<UjiPage> {
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 decoration: InputDecoration(
+                  contentPadding: EdgeInsets.all(14),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(defaultRadius),
                   ),
@@ -401,6 +409,7 @@ class _UjiPageState extends State<UjiPage> {
                 focusColor: kBlackColor,
                 hint: Text('.:: Pilih ::.'),
                 decoration: InputDecoration(
+                  contentPadding: EdgeInsets.all(14),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(defaultRadius),
                   ),
@@ -430,13 +439,13 @@ class _UjiPageState extends State<UjiPage> {
 
       return Container(
         margin: const EdgeInsets.only(top: 10, bottom: 30),
-        padding: const EdgeInsets.symmetric(
-          vertical: 10,
-          horizontal: 18,
-        ),
+        // padding: const EdgeInsets.symmetric(
+        //   vertical: 10,
+        //   horizontal: 18,
+        // ),
         width: double.infinity,
         decoration: BoxDecoration(
-          color: kWhiteColor,
+          // color: kWhiteColor,
           borderRadius: BorderRadius.circular(defaultRadius),
         ),
         child: Column(
@@ -509,14 +518,31 @@ class _UjiPageState extends State<UjiPage> {
     }
 
     return Scaffold(
-      backgroundColor: kBackgroundColor,
+      backgroundColor: kWhiteColor,
       body: SafeArea(
-        child: ListView(
-          padding: EdgeInsets.symmetric(horizontal: defaultPadding),
+        child: Stack(
           children: [
-            title(),
-            formInput(),
-            submitButton(),
+            SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Container(
+                margin: EdgeInsets.symmetric(horizontal: defaultPadding),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 90),
+                    // title(),
+                    formInput(),
+                    submitButton(),
+                  ],
+                ),
+              ),
+            ),
+            CustomAppBar(
+                title: 'UJI KELAYAKAN',
+                onTap: () {
+                  context.read<PageCubit>().setPage(1);
+                  Navigator.pushNamed(context, '/main');
+                }),
           ],
         ),
       ),

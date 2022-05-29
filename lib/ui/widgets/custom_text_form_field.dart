@@ -35,6 +35,7 @@ class CustomFormInput extends StatelessWidget {
               }
             },
             decoration: InputDecoration(
+                contentPadding: const EdgeInsets.all(14),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(defaultRadius),
                 ),

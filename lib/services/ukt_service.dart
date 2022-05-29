@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:ft_uim_naive_bayes/models/training_ukt.dart';
 import 'package:ft_uim_naive_bayes/models/uji_ukt_model.dart';
 import 'package:ft_uim_naive_bayes/storage/storage.dart';
 import 'package:ft_uim_naive_bayes/utils/url.dart';
@@ -92,6 +93,9 @@ class UktService {
         await SecureStorages().setStorage('pkhTidakLayak',
             jsonResp['data']['atr_status_pkh']['tidak_layak'].toString());
 
+        // kesimpulan
+        await SecureStorages().setStorage('hasil', jsonResp['kesimpulan']);
+
         print('json resp ukt == ${jsonResp["data"]["atr_prodi"]['layak']}');
         UjiUktModel ujiUkt = UjiUktModel.fromJson(jsonResp);
         return ujiUkt;
@@ -104,7 +108,27 @@ class UktService {
     }
   }
 
-  // Future<List<UjiUktModel>> fetchUjiUkt() async {
+  Future<List<TrainingUktModel>> fetchUkt() async {
+    try {
+      final route = baseUrl + '/beasiswa-ukt/data-record2';
+      final response = await http.get(Uri.parse(route));
+      print('respon ukt == $route');
+      if (response.statusCode == 200) {
+        var jsonResp = jsonDecode(response.body);
+        print('data ukt === $jsonResp');
 
-  // }
+        List<TrainingUktModel> uktModel =
+            List<TrainingUktModel>.from(jsonResp['data'].map((e) {
+          return TrainingUktModel.fromJson(e);
+        })).toList();
+
+        return uktModel;
+      } else {
+        throw Exception(
+            'Failed load data $route, staus : ${response.statusCode}');
+      }
+    } catch (e) {
+      throw e;
+    }
+  }
 }

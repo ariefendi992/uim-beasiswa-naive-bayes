@@ -10,6 +10,7 @@ class UserModel extends Equatable {
   final int? id;
   final String? stambuk;
   final String? nama;
+  final String? prodi;
   final String? gender;
   final String? email;
   final String? password;
@@ -18,6 +19,7 @@ class UserModel extends Equatable {
     required this.id,
     required this.stambuk,
     required this.nama,
+    required this.prodi,
     required this.gender,
     required this.email,
     required this.password,
@@ -27,6 +29,7 @@ class UserModel extends Equatable {
     return UserModel(
       id: json['id'],
       stambuk: json['stambuk'],
+      prodi: json['prodi'],
       nama: json['nama'],
       gender: json['gender'],
       email: json['email'],
@@ -37,6 +40,7 @@ class UserModel extends Equatable {
   Map<String, dynamic> toJson() => {
         'stambuk': stambuk,
         'nama': nama,
+        'prodi': prodi,
         'gender': gender,
         'email': email,
         'password': password,
@@ -51,5 +55,6 @@ class UserModel extends Equatable {
   // }
 
   @override
-  List<Object?> get props => [id, stambuk, nama, gender, email, password];
+  List<Object?> get props =>
+      [id, stambuk, prodi, nama, gender, email, password];
 }

@@ -18,9 +18,9 @@ class BeasiswaPage extends StatelessWidget {
             top: 20,
           ),
           child: Text(
-            'Beasiswa',
+            '.:: Menu ::.'.toUpperCase(),
             style: blackTextStyle.copyWith(
-              fontSize: 18,
+              fontSize: 20,
               fontWeight: medium,
             ),
           ),

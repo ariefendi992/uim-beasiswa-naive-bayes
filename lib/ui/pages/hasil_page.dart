@@ -29,12 +29,14 @@ class _HasilPageState extends State<HasilPage> {
       readPenghasilanLayak,
       readPenghasilanTidakLayak,
       readPkhLayak,
-      readPkhTidakLayak;
+      readPkhTidakLayak,
+      readHasil;
 
   @override
   void initState() {
     super.initState();
     getAtribut();
+    SecureStorages().readAll();
   }
 
   void getAtribut() async {
@@ -62,6 +64,7 @@ class _HasilPageState extends State<HasilPage> {
         await SecureStorages().readStorage('penghasilanTidakLayak');
     var pkhLayak = await SecureStorages().readStorage('pkhLayak');
     var pkhTidakLayak = await SecureStorages().readStorage('pkhTidakLayak');
+    var hasil = await SecureStorages().readStorage('hasil');
 
     setState(() {
       readProdi = prodi;
@@ -82,6 +85,7 @@ class _HasilPageState extends State<HasilPage> {
       readPenghasilanTidakLayak = penghasilanTidakLayak;
       readPkhLayak = pkhLayak;
       readPkhTidakLayak = pkhTidakLayak;
+      readHasil = hasil;
     });
   }
 
@@ -94,7 +98,7 @@ class _HasilPageState extends State<HasilPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Hasil Keputusan',
+              '..:: Hasil Keputusan ::..'.toUpperCase(),
               style: blackTextStyle.copyWith(fontSize: 20, fontWeight: medium),
             ),
           ],
@@ -114,177 +118,214 @@ class _HasilPageState extends State<HasilPage> {
           color: kWhiteColor,
           borderRadius: BorderRadius.circular(defaultRadius),
         ),
-        child: Table(
-          border: TableBorder.all(),
-          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-          columnWidths: {
-            0: FlexColumnWidth(),
-            1: FlexColumnWidth(),
-            2: FlexColumnWidth(),
-            3: FlexColumnWidth(),
-          },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TableRow(
-              decoration: BoxDecoration(
-                color: kBlueColor,
+            Table(
+              border: TableBorder.all(),
+              defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+              columnWidths: {
+                0: FlexColumnWidth(),
+                1: FlexColumnWidth(),
+                2: FlexColumnWidth(),
+                3: FlexColumnWidth(),
+              },
+              children: [
+                TableRow(
+                  decoration: BoxDecoration(
+                    color: kBlueColor,
+                  ),
+                  children: [
+                    Text(
+                      'Atribut',
+                      textAlign: TextAlign.center,
+                    ),
+                    Text(
+                      'Value',
+                      textAlign: TextAlign.center,
+                    ),
+                    Text(
+                      'Layak',
+                      textAlign: TextAlign.center,
+                    ),
+                    Text(
+                      'Tidak Layak',
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+                TableRow(
+                  children: [
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: Text(
+                        'Prodi',
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Text(
+                      '${readProdi ?? "-"}',
+                      textAlign: TextAlign.center,
+                    ),
+                    Text(
+                      '${readProdiLayak ?? "-"}',
+                      textAlign: TextAlign.center,
+                    ),
+                    Text(
+                      '${readProdiTidakLayak ?? "-"}',
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+                TableRow(
+                  children: [
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: Text(
+                        'Semester',
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Text(
+                      '${readSemester ?? '-'}',
+                      textAlign: TextAlign.center,
+                    ),
+                    Text(
+                      '${readSemesterLayak ?? "-"}',
+                      textAlign: TextAlign.center,
+                    ),
+                    Text(
+                      '${readSemesterTidakLayak ?? "-"}',
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+                TableRow(
+                  children: [
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: Text(
+                        'Status Mhs',
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Text(
+                      '${readStatusMhs == null ? '-' : readStatusMhs.toString().toCapitalized()}',
+                      textAlign: TextAlign.center,
+                    ),
+                    Text(
+                      '${readStatusMahasiswaLayak ?? "-"}',
+                      textAlign: TextAlign.center,
+                    ),
+                    Text(
+                      '${readStatusMahasiswaTidakLayak ?? "-"}',
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+                TableRow(
+                  children: [
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: Text(
+                        'Terima KIP',
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Text(
+                      readKip == null
+                          ? '-'
+                          : readKip.toString().toCapitalized(),
+                      textAlign: TextAlign.center,
+                    ),
+                    Text(
+                      '${readKipLayak ?? "-"}',
+                      textAlign: TextAlign.center,
+                    ),
+                    Text(
+                      '${readKipTidakLayak ?? "-"}',
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+                TableRow(
+                  children: [
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: Text(
+                        'P. Ortu',
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Text(
+                      '${readPenghasilan ?? '-'}',
+                      textAlign: TextAlign.center,
+                    ),
+                    Text(
+                      '${readPenghasilanLayak ?? "-"}',
+                      textAlign: TextAlign.center,
+                    ),
+                    Text(
+                      '${readPenghasilanTidakLayak ?? "-"}',
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+                TableRow(
+                  children: [
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: Text(
+                        'Terima PKH',
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Text(
+                      readPkh != null
+                          ? readPkh.toString().toCapitalized()
+                          : '-',
+                      textAlign: TextAlign.center,
+                    ),
+                    Text(
+                      '${readPkhLayak ?? "-"}',
+                      textAlign: TextAlign.center,
+                    ),
+                    Text(
+                      '${readPkhTidakLayak ?? "-"}',
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            SizedBox(height: 15),
+            RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text:
+                        'Berdasarkan hasil perhitungan, dapat disimpulkan bahwa data uji tersebut ',
+                  ),
+                  TextSpan(
+                    text: readHasil.toString().toUpperCase(),
+                    style: blackTextStyle.copyWith(
+                        fontWeight: semiBold,
+                        decoration: TextDecoration.underline),
+                  ),
+                  TextSpan(
+                    text: ' untuk menerima beasiswa.',
+                  ),
+                ],
+                style: blackTextStyle.copyWith(fontSize: 16),
               ),
-              children: [
-                Text(
-                  'Atribut',
-                  textAlign: TextAlign.center,
-                ),
-                Text(
-                  'Value',
-                  textAlign: TextAlign.center,
-                ),
-                Text(
-                  'Layak',
-                  textAlign: TextAlign.center,
-                ),
-                Text(
-                  'Tidak Layak',
-                  textAlign: TextAlign.center,
-                ),
-              ],
             ),
-            TableRow(
-              children: [
-                TableCell(
-                  verticalAlignment: TableCellVerticalAlignment.middle,
-                  child: Text(
-                    'Prodi',
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                Text(
-                  '${readProdi ?? "-"}',
-                  textAlign: TextAlign.center,
-                ),
-                Text(
-                  '${readProdiLayak ?? "-"}',
-                  textAlign: TextAlign.center,
-                ),
-                Text(
-                  '${readProdiTidakLayak ?? "-"}',
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-            TableRow(
-              children: [
-                TableCell(
-                  verticalAlignment: TableCellVerticalAlignment.middle,
-                  child: Text(
-                    'Semester',
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                Text(
-                  '${readSemester ?? '-'}',
-                  textAlign: TextAlign.center,
-                ),
-                Text(
-                  '${readSemesterLayak ?? "-"}',
-                  textAlign: TextAlign.center,
-                ),
-                Text(
-                  '${readSemesterTidakLayak ?? "-"}',
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-            TableRow(
-              children: [
-                TableCell(
-                  verticalAlignment: TableCellVerticalAlignment.middle,
-                  child: Text(
-                    'Status Mhs',
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                Text(
-                  '${readStatusMhs == null ? '-' : readStatusMhs.toString().toCapitalized()}',
-                  textAlign: TextAlign.center,
-                ),
-                Text(
-                  '${readStatusMahasiswaLayak ?? "-"}',
-                  textAlign: TextAlign.center,
-                ),
-                Text(
-                  '${readStatusMahasiswaTidakLayak ?? "-"}',
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-            TableRow(
-              children: [
-                TableCell(
-                  verticalAlignment: TableCellVerticalAlignment.middle,
-                  child: Text(
-                    'Terima KIP',
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                Text(
-                  readKip == null ? '-' : readKip.toString().toCapitalized(),
-                  textAlign: TextAlign.center,
-                ),
-                Text(
-                  '${readKipLayak ?? "-"}',
-                  textAlign: TextAlign.center,
-                ),
-                Text(
-                  '${readKipTidakLayak ?? "-"}',
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-            TableRow(
-              children: [
-                TableCell(
-                  verticalAlignment: TableCellVerticalAlignment.middle,
-                  child: Text(
-                    'P. Ortu',
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                Text(
-                  '${readPenghasilan ?? '-'}',
-                  textAlign: TextAlign.center,
-                ),
-                Text(
-                  '${readPenghasilanLayak ?? "-"}',
-                  textAlign: TextAlign.center,
-                ),
-                Text(
-                  '${readPenghasilanTidakLayak ?? "-"}',
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-            TableRow(
-              children: [
-                TableCell(
-                  verticalAlignment: TableCellVerticalAlignment.middle,
-                  child: Text(
-                    'Terima PKH',
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                Text(
-                  readPkh != null ? readPkh.toString().toCapitalized() : '-',
-                  textAlign: TextAlign.center,
-                ),
-                Text(
-                  '${readPkhLayak ?? "-"}',
-                  textAlign: TextAlign.center,
-                ),
-                Text(
-                  '${readPkhTidakLayak ?? "-"}',
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
+            // Text(
+            //     'Berdasarkan hasil perhitungan, dapat disimpulkan bahwa data uji tersebut'),
+            // Text(
+            //   '${readHasil.toString().toUpperCase()}',
+            //   style: blackTextStyle.copyWith(fontWeight: semiBold),
+            // ),
+            // Text('untuk mendapatkan beasiswa'),
           ],
         ),
       );
