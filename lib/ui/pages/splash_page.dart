@@ -21,8 +21,8 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    autoDeleteToken();
-    // autoLogout();
+    // autoDeleteToken();
+    autoLogout();
     Timer(Duration(seconds: 3), () {
       autoLogin();
     });
@@ -40,28 +40,18 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
-  void autoDeleteToken() async {
+  Future<void> autoDeleteToken() async {
     readTime = await SecureStorages().readStorage('timeExpire');
     print(readTime.runtimeType);
 
-    stringToDateTime = DateTime.tryParse(readTime!);
+    stringToDateTime = DateTime.tryParse('$readTime');
 
     print(stringToDateTime.runtimeType);
 
     if (DateTime.now().isAfter(stringToDateTime!)) {
       await SecureStorages().deleteKey('token');
-      // await SecureStorages().deleteKey('timeExpire');
+      await SecureStorages().deleteKey('timeExpire');
     }
-    // var stringDateTimeExpire =
-    //     DateFormat("yyy-MM-dd hh:mm:ss").format(stringToDateTime);
-
-    // var formatTime = DateTime.tryParse(stringDateTimeExpire);
-    // print('date time now ${DateTime.now()}');
-    // print('expire time $stringDateTimeExpire');
-    // print('Format Time == $formatTime');
-    // var dateTimeNow = DateTime.now();
-
-    // var subStringTime = dateTimeNow.isAfter(formatDateTimeExpire)
   }
 
   void autoLogout() async {

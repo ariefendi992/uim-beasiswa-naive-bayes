@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ft_uim_naive_bayes/cubit/auth/auth_cubit.dart';
+import 'package:ft_uim_naive_bayes/cubit/kategori/prodi_cubit.dart';
+import 'package:ft_uim_naive_bayes/models/prodi_model.dart';
 import 'package:ft_uim_naive_bayes/ui/widgets/custom_button.dart';
+import 'package:ft_uim_naive_bayes/ui/widgets/custom_dropdown_form_field.dart';
 import 'package:ft_uim_naive_bayes/ui/widgets/custom_text_form_field.dart';
 import 'package:ft_uim_naive_bayes/utils/theme.dart';
+import 'package:ft_uim_naive_bayes/utils/extensions.dart';
 
 class RegistrasiPage extends StatefulWidget {
   RegistrasiPage({Key? key}) : super(key: key);
@@ -14,6 +18,7 @@ class RegistrasiPage extends StatefulWidget {
 
 class _RegistrasiPageState extends State<RegistrasiPage> {
   final _formKey = GlobalKey<FormState>();
+  ProdiModel? selectProdi;
 
   TextEditingController stambukController = TextEditingController();
   TextEditingController namaController = TextEditingController();
@@ -21,6 +26,12 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   String? selectedGender;
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<ProdiCubit>().fetchProdi();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,57 +60,122 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
         );
       }
 
-      Widget inputGender() {
-        final list = ['laki-laki', 'perempuan'];
-
-        return Container(
-          margin: const EdgeInsets.only(bottom: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Jenis Kelamin',
-                style: blackTextStyle.copyWith(),
-              ),
-              SizedBox(
-                height: 6,
-              ),
-              DropdownButtonFormField(
-                focusColor: kGreyColor,
-                decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.all(14),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(defaultRadius),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(defaultRadius),
-                      borderSide: BorderSide(color: kBlackColor)),
-                  focusColor: kBlackColor,
-                ),
-                hint: Text('.:: Pilih ::.'),
-                value: selectedGender,
-                items: list.map((String value) {
-                  return DropdownMenuItem(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                onChanged: (String? value) {
-                  selectedGender = value;
-                  print(value);
-                },
-              )
-            ],
-          ),
+      Widget inputProdi(List<ProdiModel> prodiModel) {
+        // return Container(
+        //   margin: const EdgeInsets.only(bottom: 20),
+        //   child: Column(
+        //     crossAxisAlignment: CrossAxisAlignment.start,
+        //     children: [
+        //       Text(
+        //         'Prodi',
+        //         style: blackTextStyle.copyWith(),
+        //       ),
+        //       const SizedBox(height: 6),
+        //       DropdownButtonFormField(
+        //         focusColor: kGreyColor,
+        //         decoration: InputDecoration(
+        //           contentPadding: const EdgeInsets.all(14),
+        //           border: OutlineInputBorder(
+        //             borderRadius: BorderRadius.circular(defaultRadius),
+        //           ),
+        //           focusedBorder: OutlineInputBorder(
+        //               borderRadius: BorderRadius.circular(defaultRadius),
+        //               borderSide: BorderSide(color: kBlackColor)),
+        //           focusColor: kBlackColor,
+        //         ),
+        //         hint: Text('.:: Pilih ::.'),
+        //         items: prodiModel.map((ProdiModel itemProdi) {
+        //           return DropdownMenuItem(
+        //             child: Text(itemProdi.jurusan!),
+        //             value: itemProdi,
+        //           );
+        //         }).toList(),
+        //         onChanged: (ProdiModel? value) {
+        //           setState(() {
+        //             selectProdi = value;
+        //           });
+        //         },
+        //       )
+        //     ],
+        //   ),
+        // );
+        return CustomDropdownFormField(
+          title: 'Prodi',
+          items: prodiModel.map((ProdiModel itemProdi) {
+            return DropdownMenuItem(
+              child: Text(itemProdi.jurusan!),
+              value: itemProdi,
+            );
+          }).toList(),
+          onChanged: (value) {
+            setState(() {
+              selectProdi = value;
+              print('prodi select == $selectProdi');
+            });
+          },
         );
       }
 
-      // Widget inputGenders() {
-      //   return CustomFormInput(
-      //     title: 'Gender',
-      //     controller: genderController,
-      //   );
-      // }
+      Widget inputGender() {
+        final list = ['laki-laki', 'perempuan'];
+
+        return CustomDropdownFormField(
+          title: 'Jenis Kelamin',
+          items: list.map((String item) {
+            return DropdownMenuItem(
+              child: Text(item.toCapitalized()),
+              value: item,
+            );
+          }).toList(),
+          onChanged: (items) {
+            setState(() {
+              selectedGender = items;
+              print(items);
+            });
+          },
+        );
+
+        // return Container(
+        //   margin: const EdgeInsets.only(bottom: 20),
+        //   child: Column(
+        //     crossAxisAlignment: CrossAxisAlignment.start,
+        //     children: [
+        //       Text(
+        //         'Jenis Kelamin',
+        //         style: blackTextStyle.copyWith(),
+        //       ),
+        //       SizedBox(
+        //         height: 6,
+        //       ),
+        //       DropdownButtonFormField(
+        //         focusColor: kGreyColor,
+        //         decoration: InputDecoration(
+        //           contentPadding: const EdgeInsets.all(14),
+        //           border: OutlineInputBorder(
+        //             borderRadius: BorderRadius.circular(defaultRadius),
+        //           ),
+        //           focusedBorder: OutlineInputBorder(
+        //               borderRadius: BorderRadius.circular(defaultRadius),
+        //               borderSide: BorderSide(color: kBlackColor)),
+        //           focusColor: kBlackColor,
+        //         ),
+        //         hint: Text('.:: Pilih ::.'),
+        //         value: selectedGender,
+        //         items: list.map((String value) {
+        //           return DropdownMenuItem(
+        //             value: value,
+        //             child: Text(value.toString().toCapitalized()),
+        //           );
+        //         }).toList(),
+        //         onChanged: (String? value) {
+        //           selectedGender = value;
+        //           print(value);
+        //         },
+        //       )
+        //     ],
+        //   ),
+        // );
+      }
 
       Widget inputEmail() {
         return CustomFormInput(
@@ -153,7 +229,7 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
                   context.read<AuthCubit>().register(
                         stambuk: stambukController.text,
                         nama: namaController.text,
-                        // gender: genderController.text,
+                        prodi: selectProdi!.jurusan!,
                         gender: selectedGender!,
                         email: emailController.text,
                         password: passwordController.text,
@@ -174,17 +250,37 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
             color: kWhiteColor,
             borderRadius: BorderRadius.circular(defaultRadius),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              inputNim(),
-              inputNama(),
-              inputGender(),
-              inputEmail(),
-              // inputGenders(),
-              inputPassword(),
-              buttonSubmit(),
-            ],
+          child: BlocConsumer<ProdiCubit, ProdiState>(
+            listener: (context, state) {
+              if (state is ProdiFailed) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    backgroundColor: kRedColor,
+                    content: Text(state.error),
+                  ),
+                );
+              }
+            },
+            builder: (context, state) {
+              if (state is ProdiSucces) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    inputNim(),
+                    inputNama(),
+                    inputProdi(state.prodiModel),
+                    inputGender(),
+                    inputEmail(),
+                    // inputGenders(),
+                    inputPassword(),
+                    buttonSubmit(),
+                  ],
+                );
+              }
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            },
           ),
         ),
       );

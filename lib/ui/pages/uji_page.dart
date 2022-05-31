@@ -131,7 +131,7 @@ class _UjiPageState extends State<UjiPage> {
                       value: selectProdi,
                       items: snapshot.data!.map((ProdiModel item) {
                         return DropdownMenuItem(
-                          child: Text(item.jurusan),
+                          child: Text(item.jurusan!),
                           value: item,
                         );
                       }).toList(),
@@ -502,7 +502,7 @@ class _UjiPageState extends State<UjiPage> {
             hintText: 'Prediksi Data',
             onPressed: () {
               context.read<UktCubit>().ujiUkt(
-                    idProdi: selectProdi!.id,
+                    idProdi: selectProdi!.id!,
                     idSemester: selectSemester!.id,
                     statusMhs: selectStatusMhs!,
                     kip: selectKip!,

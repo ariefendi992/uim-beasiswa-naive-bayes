@@ -11,6 +11,7 @@ class AuthService {
   Future<UserModel> register({
     String? stambuk,
     String? nama,
+    String? prodi,
     String? gender,
     String? email,
     String? password,
@@ -23,6 +24,7 @@ class AuthService {
     var body = jsonEncode({
       'stambuk': stambuk,
       'nama': nama,
+      'prodi': prodi,
       'gender': gender,
       'email': email,
       'password': password,
@@ -86,6 +88,8 @@ class AuthService {
     } else {
       var data = jsonDecode(response.body);
       throw data['error'];
+      // throw Exception(
+      //     'Gagal login url : $url, status : ${response.statusCode}');
     }
   }
 

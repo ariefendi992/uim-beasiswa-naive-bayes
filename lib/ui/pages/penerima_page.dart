@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ft_uim_naive_bayes/cubit/page_cubit.dart';
 import 'package:ft_uim_naive_bayes/cubit/ukt/training_ukt_cubit.dart';
 import 'package:ft_uim_naive_bayes/models/training_ukt.dart';
+import 'package:ft_uim_naive_bayes/ui/widgets/custom_app_bar.dart';
 import 'package:ft_uim_naive_bayes/ui/widgets/srollable_widget.dart';
 import 'package:ft_uim_naive_bayes/utils/theme.dart';
 import 'package:ft_uim_naive_bayes/utils/extensions.dart';
@@ -87,22 +89,36 @@ class _PenerimaPageState extends State<PenerimaPage> {
         },
         builder: (context, state) {
           if (state is TrainingUktSuccess) {
-            return ListView(
-              children: [
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
-                  child: Text(
-                    '.:: Data Training ::.'.toUpperCase(),
-                    style: blackTextStyle.copyWith(
-                      fontSize: 20,
-                      fontWeight: medium,
-                    ),
+            return SafeArea(
+              child: Stack(
+                children: [
+                  // Container(
+                  //   margin: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                  //   child: Text(
+                  //     '.:: Data Training ::.'.toUpperCase(),
+                  //     style: blackTextStyle.copyWith(
+                  //       fontSize: 20,
+                  //       fontWeight: medium,
+                  //     ),
+                  //   ),
+                  // ),
+                  Column(
+                    children: [
+                      SizedBox(height: 100),
+                      ScrollableWidget(
+                        child: buildDataTable(state.trainingUktModel),
+                      ),
+                    ],
                   ),
-                ),
-                ScrollableWidget(
-                  child: buildDataTable(state.trainingUktModel),
-                ),
-              ],
+                  CustomAppBar(
+                    title: 'Data Training',
+                    onTap: () {
+                      context.read<PageCubit>().setPage(1);
+                      Navigator.pushNamed(context, '/main');
+                    },
+                  ),
+                ],
+              ),
             );
           }
           return Center(

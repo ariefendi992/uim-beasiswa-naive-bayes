@@ -23,6 +23,7 @@ class CustomAppBar extends StatelessWidget {
         ),
       ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           GestureDetector(
@@ -30,14 +31,20 @@ class CustomAppBar extends StatelessWidget {
             child: Container(
               width: 40.0,
               height: 40.0,
-              padding:
-                  EdgeInsets.only(top: 13, bottom: 13, right: 17.5, left: 15),
+              // padding: EdgeInsets.only(
+              //   top: 13,
+              //   bottom: 13,
+              //   right: 17.5,
+              //   left: 15,
+              // ),
+              padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: kWhiteColor,
+                color: kTransparentColor,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Image.asset(
                 'assets/icons/arrow_left.png',
+                color: kWhiteColor,
               ),
             ),
           ),

@@ -12,7 +12,7 @@ class ProdiInitial extends ProdiState {}
 class ProdiLoading extends ProdiState {}
 
 class ProdiSucces extends ProdiState {
-  final ProdiModel prodiModel;
+  final List<ProdiModel> prodiModel;
 
   ProdiSucces(this.prodiModel);
 

@@ -11,6 +11,7 @@ class AuthCubit extends Cubit<AuthState> {
   void register({
     required String stambuk,
     required String nama,
+    required String prodi,
     required String gender,
     required String email,
     required String password,
@@ -21,6 +22,7 @@ class AuthCubit extends Cubit<AuthState> {
       UserModel user = await AuthService().register(
         stambuk: stambuk,
         nama: nama,
+        prodi: prodi,
         gender: gender,
         email: email,
         password: password,

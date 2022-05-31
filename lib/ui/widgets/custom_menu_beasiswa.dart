@@ -21,10 +21,11 @@ class CustomMenuBeasiswa extends StatelessWidget {
             size: 40,
             color: kBlueColor,
           ),
-          SizedBox(width: 6),
+          SizedBox(width: 8),
           Text(
             title,
-            style: blackTextStyle.copyWith(fontSize: 16),
+            style: blackTextStyle.copyWith(
+                fontSize: 16, fontWeight: medium, letterSpacing: 0.9),
           )
         ],
       ),

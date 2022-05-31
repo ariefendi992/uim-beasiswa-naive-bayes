@@ -1,12 +1,14 @@
 import 'dart:convert';
 
 import 'package:ft_uim_naive_bayes/models/penghasilan_ortu_model.dart';
+import 'package:ft_uim_naive_bayes/models/prodi_model.dart';
 import 'package:ft_uim_naive_bayes/models/semester_model.dart';
 import 'package:ft_uim_naive_bayes/utils/url.dart';
 import 'package:http/http.dart' as http;
 
 class KategoriService {
-  void getProdi() async {
+  
+  Future<List<ProdiModel>> getProdi() async {
     var url = '$baseUrl/kategori/jurusan';
 
     var response = await http.get(Uri.parse(url));
@@ -14,8 +16,12 @@ class KategoriService {
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body)['data'];
 
-      print('dta prodi $data');
-      return data;
+      List<ProdiModel> prodiModel = List<ProdiModel>.from(data.map((e) {
+        return ProdiModel.fromJson(e);
+      })).toList();
+
+      print('data prodi == $prodiModel');
+      return prodiModel;
     } else {
       var data = jsonDecode(response.body);
       throw data['error'];

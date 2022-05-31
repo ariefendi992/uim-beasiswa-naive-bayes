@@ -1,10 +1,11 @@
 import 'dart:convert';
+import 'package:equatable/equatable.dart';
 import 'package:ft_uim_naive_bayes/utils/url.dart';
 import 'package:http/http.dart' as http;
 
-class ProdiModel {
-  final int id;
-  final String jurusan;
+class ProdiModel extends Equatable {
+  final int? id;
+  final String? jurusan;
 
   ProdiModel({
     required this.id,
@@ -12,8 +13,14 @@ class ProdiModel {
   });
 
   factory ProdiModel.fromJson(Map<String, dynamic> json) {
-    return ProdiModel(id: json['id'], jurusan: json['jurusan']);
+    return ProdiModel(
+      id: json['id'],
+      jurusan: json['jurusan'],
+    );
   }
+
+  @override
+  List<Object?> get props => [id, jurusan];
 }
 
 List<ProdiModel> prodiFromJson(jsonData) {
