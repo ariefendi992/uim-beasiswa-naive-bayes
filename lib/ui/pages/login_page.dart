@@ -135,7 +135,7 @@ class _LoginPageState extends State<LoginPage> {
                   },
                   builder: (context, state) {
                     return CustomButton(
-                      hintText: 'Sign In',
+                      hintText: 'Masuk',
                       onPressed: () {
                         context.read<AuthCubit>().signIn(
                             stambuk: stambukController.text,
@@ -156,9 +156,12 @@ class _LoginPageState extends State<LoginPage> {
                         Navigator.pushNamed(context, '/register');
                       },
                       child: Text(
-                        'Sign Up',
+                        'Daftar'.toUpperCase(),
                         style: blueTextStyle.copyWith(
-                            decoration: TextDecoration.underline),
+                          fontWeight: medium,
+                          decoration: TextDecoration.underline,
+                          letterSpacing: 0.5,
+                        ),
                       ),
                     ),
                   ],

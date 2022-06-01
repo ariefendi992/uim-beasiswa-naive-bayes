@@ -31,4 +31,4 @@ FontWeight bold = FontWeight.w700;
 
 // margin  & padding & borderRadius
 double defaultPadding = 24.0;
-double defaultRadius = 18.0;
+double defaultRadius = 12.0;

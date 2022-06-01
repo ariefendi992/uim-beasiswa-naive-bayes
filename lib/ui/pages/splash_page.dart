@@ -21,8 +21,8 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    // autoDeleteToken();
-    autoLogout();
+    autoDeleteToken();
+    // autoLogout();
     Timer(Duration(seconds: 3), () {
       autoLogin();
     });
