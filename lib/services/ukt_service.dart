@@ -8,11 +8,12 @@ import 'package:http/http.dart' as http;
 class UktService {
   Future<UjiUktModel> ujiData({
     int? idProdi,
+    idUser,
     idSemester,
     idPenghasilan,
+    idTanggungan,
     String? statusMhs,
     kip,
-    tanggungan,
     pkh,
   }) async {
     try {
@@ -23,12 +24,13 @@ class UktService {
       };
 
       var body = jsonEncode({
+        'id_user': idUser,
         'id_prodi': idProdi,
         'id_semester': idSemester,
         'status_mhs': statusMhs,
         'kip_bm': kip,
         'id_penghasilan': idPenghasilan,
-        'tanggungan': tanggungan,
+        'id_tanggungan': idTanggungan,
         'pkh_kks': pkh,
       });
 
@@ -40,63 +42,63 @@ class UktService {
 
       print('response ukt === ${response.body}');
 
+      var prodi = jsonDecode(response.body)['layak']['p_prodi_layak'];
+
+      print('value prodi == $prodi');
+
       if (response.statusCode == 200) {
         var jsonResp = jsonDecode(response.body);
 
         // prodi layak
-        await SecureStorages().setStorage(
-            'prodiLayak', jsonResp['data']['atr_prodi']['layak'].toString());
+        await SecureStorages().setStorage('prodiLayak', prodi.toString());
 
         // prodi tidak layak
-        await SecureStorages().setStorage('prodiTidakLayak',
-            jsonResp['data']['atr_prodi']['tidak_layak'].toString());
+        await SecureStorages().setStorage(
+            'prodiTidakLayak', jsonResp['tidak']['p_prodi_tidak'].toString());
 
         // semester layak
-        await SecureStorages().setStorage('semesterLayak',
-            jsonResp['data']['atr_semester']['layak'].toString());
+        await SecureStorages().setStorage(
+            'semesterLayak', jsonResp['layak']['p_sms_layak'].toString());
 
         // semester tidak layak
-        await SecureStorages().setStorage('semesterTidakLayak',
-            jsonResp['data']['atr_semester']['tidak_layak'].toString());
+        await SecureStorages().setStorage(
+            'semesterTidakLayak', jsonResp['tidak']['p_sms_tidak'].toString());
 
         // statusMahasiswa layak
         await SecureStorages().setStorage('statusMahasiswaLayak',
-            jsonResp['data']['atr_status_mhs']['layak'].toString());
+            jsonResp['layak']['p_status_mhs_layak'].toString());
 
         // statusMahasiswa tidak layak
         await SecureStorages().setStorage('statusMahasiswaTidakLayak',
-            jsonResp['data']['atr_status_mhs']['tidak_layak'].toString());
+            jsonResp['tidak']['p_status_mhs_tidak'].toString());
 
         // kip layak
-        await SecureStorages().setStorage('kipLayak',
-            jsonResp['data']['atr_penerima_kip']['layak'].toString());
+        await SecureStorages().setStorage(
+            'kipLayak', jsonResp['layak']['p_kip_layak'].toString());
 
         // kip tidak layak
-        await SecureStorages().setStorage('kipTidakLayak',
-            jsonResp['data']['atr_penerima_kip']['tidak_layak'].toString());
+        await SecureStorages().setStorage(
+            'kipTidakLayak', jsonResp['tidak']['p_kip_tidak'].toString());
 
         // penghasilan layak
         await SecureStorages().setStorage('penghasilanLayak',
-            jsonResp['data']['atr_penghasilan_orang_tua']['layak'].toString());
+            jsonResp['layak']['p_penghasilan_layak'].toString());
 
         // penghasilan tidak layak
-        await SecureStorages().setStorage(
-            'penghasilanTidakLayak',
-            jsonResp['data']['atr_penghasilan_orang_tua']['tidak_layak']
-                .toString());
+        await SecureStorages().setStorage('penghasilanTidakLayak',
+            jsonResp['tidak']['p_penghasilan_tidak'].toString());
 
         // pkh layak
         await SecureStorages().setStorage(
-            'pkhLayak', jsonResp['data']['atr_status_pkh']['layak'].toString());
+            'pkhLayak', jsonResp['layak']['p_pkh_layak'].toString());
 
         // pkh tidak layak
-        await SecureStorages().setStorage('pkhTidakLayak',
-            jsonResp['data']['atr_status_pkh']['tidak_layak'].toString());
+        await SecureStorages().setStorage(
+            'pkhTidakLayak', jsonResp['tidak']['p_pkh_tidak'].toString());
 
         // kesimpulan
-        await SecureStorages().setStorage('hasil', jsonResp['kesimpulan']);
+        await SecureStorages().setStorage('hasil', jsonResp['keputusan']);
 
-        print('json resp ukt == ${jsonResp["data"]["atr_prodi"]['layak']}');
         UjiUktModel ujiUkt = UjiUktModel.fromJson(jsonResp);
         return ujiUkt;
       } else {

@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ft_uim_naive_bayes/cubit/auth/auth_cubit.dart';
+import 'package:ft_uim_naive_bayes/cubit/kategori/tanggungan_cubit.dart';
 import 'package:ft_uim_naive_bayes/cubit/page_cubit.dart';
 import 'package:ft_uim_naive_bayes/cubit/ukt/ukt_cubit.dart';
 import 'package:ft_uim_naive_bayes/models/penghasilan_ortu_model.dart';
 import 'package:ft_uim_naive_bayes/models/prodi_model.dart';
 import 'package:ft_uim_naive_bayes/models/semester_model.dart';
+import 'package:ft_uim_naive_bayes/models/tanggungan_model.dart';
 import 'package:ft_uim_naive_bayes/services/kategori_service.dart';
 import 'package:ft_uim_naive_bayes/storage/storage.dart';
 import 'package:ft_uim_naive_bayes/ui/widgets/custom_app_bar.dart';
 import 'package:ft_uim_naive_bayes/ui/widgets/custom_button.dart';
+import 'package:ft_uim_naive_bayes/ui/widgets/custom_dropdown_form_field.dart';
 import 'package:ft_uim_naive_bayes/utils/theme.dart';
+import 'package:ft_uim_naive_bayes/utils/extensions.dart';
 
 class UjiPage extends StatefulWidget {
   const UjiPage({Key? key}) : super(key: key);
@@ -21,6 +24,7 @@ class UjiPage extends StatefulWidget {
 }
 
 class _UjiPageState extends State<UjiPage> {
+  TanggunganModel? selectTanggungan;
   ProdiModel? selectProdi;
   SemesterModel? selectSemester;
   PenghasilanOrtuModel? selectPenghasilan;
@@ -28,7 +32,8 @@ class _UjiPageState extends State<UjiPage> {
   Future<List<SemesterModel>>? semester;
   Future<List<PenghasilanOrtuModel>>? penghasilan;
   String? selectStatusMhs, selectKip, selectPkh;
-  TextEditingController tanggunganController = TextEditingController();
+  int? idUser;
+  TextEditingController namaUserController = TextEditingController();
 
   @override
   void initState() {
@@ -36,6 +41,14 @@ class _UjiPageState extends State<UjiPage> {
     prodi = fetchProdi();
     semester = KategoriService().fetchSemester();
     penghasilan = KategoriService().fetchPenghasilanOrtu();
+    getUserId();
+  }
+
+  void getUserId() async {
+    var id = await SecureStorages().readStorage('id_user');
+    setState(() {
+      idUser = int.parse(id!);
+    });
   }
 
   void setAtribut() async {
@@ -45,6 +58,8 @@ class _UjiPageState extends State<UjiPage> {
     await SecureStorages().setStorage('kip', selectKip);
     await SecureStorages()
         .setStorage('penghasilan', selectPenghasilan!.keterangan);
+    await SecureStorages()
+        .setStorage('tanggungan', selectTanggungan!.tanggungan);
     await SecureStorages().setStorage('pkh', selectPkh);
   }
 
@@ -189,7 +204,7 @@ class _UjiPageState extends State<UjiPage> {
                           .map<DropdownMenuItem<SemesterModel>>(
                               (SemesterModel item) {
                         return DropdownMenuItem(
-                          child: Text(item.semester),
+                          child: Text(item.semester.toTitleCase()),
                           value: item,
                         );
                       }).toList(),
@@ -363,31 +378,51 @@ class _UjiPageState extends State<UjiPage> {
         );
       }
 
-      Widget inputTanggungan() {
+      // Widget inputTanggungan() {
+      //   return Container(
+      //     margin: const EdgeInsets.only(top: 10),
+      //     child: Column(
+      //       crossAxisAlignment: CrossAxisAlignment.start,
+      //       children: [
+      //         Text('Jumlanh Tanggungan', style: blackTextStyle),
+      //         const SizedBox(height: 6),
+      //         TextFormField(
+      //           controller: tanggunganController,
+      //           keyboardType: TextInputType.number,
+      //           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+      //           decoration: InputDecoration(
+      //             contentPadding: EdgeInsets.all(14),
+      //             border: OutlineInputBorder(
+      //               borderRadius: BorderRadius.circular(defaultRadius),
+      //             ),
+      //             focusedBorder: OutlineInputBorder(
+      //               borderRadius: BorderRadius.circular(defaultRadius),
+      //             ),
+      //             hintText: 'Jumlah Tanggungan',
+      //             focusColor: kBlackColor,
+      //           ),
+      //         ),
+      //       ],
+      //     ),
+      //   );
+      // }
+
+      Widget inputTanggungan(List<TanggunganModel> tanggunganModel) {
         return Container(
           margin: const EdgeInsets.only(top: 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('Jumlanh Tanggungan', style: blackTextStyle),
-              const SizedBox(height: 6),
-              TextFormField(
-                controller: tanggunganController,
-                keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                decoration: InputDecoration(
-                  contentPadding: EdgeInsets.all(14),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(defaultRadius),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(defaultRadius),
-                  ),
-                  hintText: 'Jumlah Tanggungan',
-                  focusColor: kBlackColor,
-                ),
-              ),
-            ],
+          child: CustomDropdownFormField(
+            title: 'Jumlah Tanggungan',
+            items: tanggunganModel.map((TanggunganModel items) {
+              return DropdownMenuItem(
+                child: Text(items.tanggungan!),
+                value: items,
+              );
+            }).toList(),
+            onChanged: (value) {
+              setState(() {
+                selectTanggungan = value;
+              });
+            },
           ),
         );
       }
@@ -399,7 +434,7 @@ class _UjiPageState extends State<UjiPage> {
         };
 
         return Container(
-          margin: const EdgeInsets.symmetric(vertical: 10),
+          margin: const EdgeInsets.only(bottom: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -437,30 +472,48 @@ class _UjiPageState extends State<UjiPage> {
         );
       }
 
-      return Container(
-        margin: const EdgeInsets.only(top: 10, bottom: 30),
-        // padding: const EdgeInsets.symmetric(
-        //   vertical: 10,
-        //   horizontal: 18,
-        // ),
-        width: double.infinity,
-        decoration: BoxDecoration(
-          // color: kWhiteColor,
-          borderRadius: BorderRadius.circular(defaultRadius),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            inputNama(),
-            inputProdi(),
-            inputSemester(),
-            inputStatusMhs(),
-            inputKip(),
-            inputPenghasilanOrtu(),
-            inputTanggungan(),
-            inputPkh(),
-          ],
-        ),
+      return BlocConsumer<TanggunganCubit, TanggunganState>(
+        listener: (context, state) {
+          if (state is TanggunganFailed) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.error),
+              ),
+            );
+          }
+        },
+        builder: (context, state) {
+          if (state is TanggunganSucces) {
+            return Container(
+              margin: const EdgeInsets.only(top: 10, bottom: 30),
+              // padding: const EdgeInsets.symmetric(
+              //   vertical: 10,
+              //   horizontal: 18,
+              // ),
+              width: double.infinity,
+              decoration: BoxDecoration(
+                // color: kWhiteColor,
+                borderRadius: BorderRadius.circular(defaultRadius),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  inputNama(),
+                  inputProdi(),
+                  inputSemester(),
+                  inputStatusMhs(),
+                  inputKip(),
+                  inputPenghasilanOrtu(),
+                  inputTanggungan(state.tanggungan),
+                  inputPkh(),
+                ],
+              ),
+            );
+          }
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        },
       );
     }
 
@@ -468,15 +521,15 @@ class _UjiPageState extends State<UjiPage> {
       return BlocConsumer<UktCubit, UktState>(
         listener: (context, state) {
           if (state is UktSuccess) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                backgroundColor: kLightBlueColor,
-                content: Text(
-                  'Uji Data Sukses',
-                  style: blackTextStyle,
-                ),
-              ),
-            );
+            // ScaffoldMessenger.of(context).showSnackBar(
+            //   SnackBar(
+            //     backgroundColor: kLightBlueColor,
+            //     content: Text(
+            //       'Uji Data Sukses',
+            //       style: blackTextStyle,
+            //     ),
+            //   ),
+            // );
             context.read<PageCubit>().setPage(2);
             Navigator.pushNamed(context, '/main');
           } else if (state is UktFailed) {
@@ -502,12 +555,13 @@ class _UjiPageState extends State<UjiPage> {
             hintText: 'Prediksi Data',
             onPressed: () {
               context.read<UktCubit>().ujiUkt(
+                    idUser: idUser!,
                     idProdi: selectProdi!.id!,
                     idSemester: selectSemester!.id,
                     statusMhs: selectStatusMhs!,
                     kip: selectKip!,
                     idPenghasilan: selectPenghasilan!.id,
-                    tanggungan: tanggunganController.text,
+                    idTanggungan: selectTanggungan!.id,
                     pkh: selectPkh!,
                   );
               setAtribut();

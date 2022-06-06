@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:ft_uim_naive_bayes/cubit/auth/auth_cubit.dart';
+import 'package:ft_uim_naive_bayes/cubit/kategori/tanggungan_cubit.dart';
 import 'package:ft_uim_naive_bayes/storage/storage.dart';
 import 'package:ft_uim_naive_bayes/utils/theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,8 +16,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   String? readTime;
-  DateTime? stringToDateTime;
-  Timer? authTimer;
+  String? token;
 
   @override
   void initState() {
@@ -29,41 +29,30 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void autoLogin() async {
-    var token = await SecureStorages().readStorage('token');
+    token = await SecureStorages().readStorage('token');
 
+    context.read<TanggunganCubit>().fetchTanggungan();
     print('token == $token');
-    if (token == null) {
-      Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
-    } else {
+    if (token != null) {
       context.read<AuthCubit>().getProfil();
       Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
+    } else {
+      Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
     }
   }
 
   Future<void> autoDeleteToken() async {
     readTime = await SecureStorages().readStorage('timeExpire');
-    print(readTime.runtimeType);
+    final now = DateTime.now();
+    print('tipe readtime == ${readTime.runtimeType}');
 
-    stringToDateTime = DateTime.tryParse('$readTime');
+    final stringToDateTime = DateTime.tryParse('$readTime');
 
-    print(stringToDateTime.runtimeType);
+    print('string todate == $stringToDateTime');
 
-    if (DateTime.now().isAfter(stringToDateTime!)) {
+    if (now.isAfter(stringToDateTime!.toUtc())) {
       await SecureStorages().deleteKey('token');
-      await SecureStorages().deleteKey('timeExpire');
     }
-  }
-
-  void autoLogout() async {
-    var readTime2 = await SecureStorages().readStorage('timeSecond');
-
-    stringToDateTime =
-        DateTime.now().add(Duration(seconds: int.parse(readTime2!)));
-
-    print('time String $stringToDateTime');
-    final timeToExpiry = stringToDateTime!.difference(DateTime.now()).inSeconds;
-
-    print('time to expire === $timeToExpiry');
   }
 
   @override

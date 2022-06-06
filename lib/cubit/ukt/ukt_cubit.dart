@@ -9,24 +9,26 @@ class UktCubit extends Cubit<UktState> {
   UktCubit() : super(UktInitial());
 
   void ujiUkt({
+    required int idUser,
     required int idProdi,
     required int idSemester,
     required String statusMhs,
     required String kip,
     required int idPenghasilan,
-    required String tanggungan,
+    required int idTanggungan,
     required String pkh,
   }) async {
     try {
       emit(UktLaoding());
 
       UjiUktModel ujiUkt = await UktService().ujiData(
+        idUser: idUser,
         idProdi: idProdi,
         idSemester: idSemester,
         statusMhs: statusMhs,
         kip: kip,
         idPenghasilan: idPenghasilan,
-        tanggungan: tanggungan,
+        idTanggungan: idTanggungan,
         pkh: pkh,
       );
 

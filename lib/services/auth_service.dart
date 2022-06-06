@@ -74,6 +74,7 @@ class AuthService {
       var data = jsonDecode(response.body)['data'];
 
       await SecureStorages().setStorage('token', data['token']);
+      await SecureStorages().setStorage('id_user', data['id'].toString());
       await SecureStorages().setStorage('timeSecond', data['expire']);
 
       DateTime setTimeString =
@@ -96,7 +97,7 @@ class AuthService {
   Future<void> signOut() async {
     try {
       await SecureStorages().deleteKey('token');
-      // await SecureStorages().deleteAll();
+      await SecureStorages().deleteAll();
     } catch (e) {
       throw e;
     }

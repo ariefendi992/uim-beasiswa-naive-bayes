@@ -1,10 +1,11 @@
 import 'package:equatable/equatable.dart';
 
 class UjiUktModel extends Equatable {
-  final int? idProdi, idSemester, idPenghasilan;
+  final int? idUser, idProdi, idSemester, idPenghasilan;
   final String? statusMhs, kip, tanggungan, pkh;
 
   UjiUktModel({
+    required this.idUser,
     required this.idProdi,
     required this.idSemester,
     required this.statusMhs,
@@ -16,6 +17,7 @@ class UjiUktModel extends Equatable {
 
   factory UjiUktModel.fromJson(Map<dynamic, dynamic> json) {
     return UjiUktModel(
+      idUser: json['id_user'],
       idProdi: json['id_prodi'],
       idSemester: json['id_semester'],
       statusMhs: json['status_mhs'],

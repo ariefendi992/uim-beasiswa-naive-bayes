@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class TrainingUktModel extends Equatable {
-  final int? id, tanggungan;
+  final int? id;
   final String? nama,
       stambuk,
       prodi,
@@ -10,6 +10,7 @@ class TrainingUktModel extends Equatable {
       statusMhs,
       kip,
       penghasilan,
+      tanggungan,
       pkh;
 
   TrainingUktModel({
@@ -21,7 +22,7 @@ class TrainingUktModel extends Equatable {
     this.statusMhs = '',
     this.kip = '',
     this.penghasilan = '',
-    this.tanggungan = 0,
+    this.tanggungan = '',
     this.pkh = '',
     this.kelaykan = '',
   });

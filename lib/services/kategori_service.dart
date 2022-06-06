@@ -3,11 +3,11 @@ import 'dart:convert';
 import 'package:ft_uim_naive_bayes/models/penghasilan_ortu_model.dart';
 import 'package:ft_uim_naive_bayes/models/prodi_model.dart';
 import 'package:ft_uim_naive_bayes/models/semester_model.dart';
+import 'package:ft_uim_naive_bayes/models/tanggungan_model.dart';
 import 'package:ft_uim_naive_bayes/utils/url.dart';
 import 'package:http/http.dart' as http;
 
 class KategoriService {
-  
   Future<List<ProdiModel>> getProdi() async {
     var url = '$baseUrl/kategori/jurusan';
 
@@ -57,6 +57,30 @@ class KategoriService {
       }
     } catch (e) {
       throw e;
+    }
+  }
+
+  Future<List<TanggunganModel>> fecthTanggungan() async {
+    try {
+      String route = baseUrl + '/kategori/tanggungan';
+
+      final response = await http.get(Uri.parse(route));
+
+      if (response.statusCode == 200) {
+        var jsonResp = jsonDecode(response.body);
+        List<TanggunganModel> result =
+            List<TanggunganModel>.from(jsonResp['data'].map((e) {
+          return TanggunganModel.fromJson(e);
+        })).toList();
+
+        print(result);
+        return result;
+      } else {
+        throw Exception(
+            'Gagal memuat data dari $route, dengan status : ${response.statusCode}');
+      }
+    } catch (e) {
+      throw (e);
     }
   }
 }

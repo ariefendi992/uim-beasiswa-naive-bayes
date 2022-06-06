@@ -156,11 +156,11 @@ class _LoginPageState extends State<LoginPage> {
                         Navigator.pushNamed(context, '/register');
                       },
                       child: Text(
-                        'Daftar'.toUpperCase(),
+                        'Daftar',
                         style: blueTextStyle.copyWith(
                           fontWeight: medium,
                           decoration: TextDecoration.underline,
-                          letterSpacing: 0.5,
+                          // letterSpacing: 0.2,
                         ),
                       ),
                     ),
