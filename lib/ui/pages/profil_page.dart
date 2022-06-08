@@ -49,9 +49,11 @@ class ProfilPage extends StatelessWidget {
               width: double.infinity,
               height: MediaQuery.of(context).size.height,
               decoration: BoxDecoration(
-                  color: kBackgroundColor,
-                  borderRadius:
-                      BorderRadius.vertical(top: Radius.circular(30))),
+                color: kBackgroundColor,
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(20),
+                ),
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

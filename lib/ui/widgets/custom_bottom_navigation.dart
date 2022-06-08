@@ -6,10 +6,12 @@ import 'package:ft_uim_naive_bayes/utils/theme.dart';
 class CustomBottomNavigation extends StatelessWidget {
   final IconData icons;
   final int index;
+  final String titleMenu;
   const CustomBottomNavigation({
     Key? key,
     required this.icons,
     required this.index,
+    required this.titleMenu,
   }) : super(key: key);
 
   @override
@@ -21,26 +23,33 @@ class CustomBottomNavigation extends StatelessWidget {
             context.read<PageCubit>().setPage(index);
           },
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               const SizedBox(),
               Icon(
                 icons,
-                size: 24,
+                size: 30,
                 color: context.read<PageCubit>().state == index
                     ? kBlueColor
                     : kGreyColor,
               ),
-              Container(
-                width: 30,
-                height: 2,
-                decoration: BoxDecoration(
-                  color: context.read<PageCubit>().state == index
-                      ? kBlueColor
-                      : kTransparentColor,
-                  borderRadius: BorderRadius.circular(defaultRadius),
-                ),
-              )
+              Text(
+                titleMenu,
+                style: context.read<PageCubit>().state == index
+                    ? blueTextStyle
+                    : greyTextStyle,
+              ),
+              SizedBox(),
+              // Container(
+              //   width: 40,
+              //   height: 2,
+              //   decoration: BoxDecoration(
+              //     color: context.read<PageCubit>().state == index
+              //         ? kBlueColor
+              //         : kTransparentColor,
+              //     borderRadius: BorderRadius.circular(defaultRadius),
+              //   ),
+              // )
             ],
           ),
         );

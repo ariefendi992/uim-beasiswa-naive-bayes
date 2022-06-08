@@ -15,7 +15,7 @@ class CustomAppBar extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(30),
       width: double.infinity,
-      height: 100,
+      height: 95,
       decoration: BoxDecoration(
         color: kBarColor,
         borderRadius: const BorderRadius.vertical(

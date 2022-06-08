@@ -1,9 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ft_uim_naive_bayes/cubit/page_cubit.dart';
 import 'package:ft_uim_naive_bayes/ui/pages/beasiswa_page.dart';
 import 'package:ft_uim_naive_bayes/ui/pages/hasil_page.dart';
-import 'package:ft_uim_naive_bayes/ui/pages/home_page.dart';
+import 'package:ft_uim_naive_bayes/ui/pages/home_page2.dart';
 import 'package:ft_uim_naive_bayes/ui/pages/profil_page.dart';
 import 'package:ft_uim_naive_bayes/ui/widgets/custom_bottom_navigation.dart';
 import 'package:ft_uim_naive_bayes/utils/theme.dart';
@@ -42,20 +43,39 @@ class _MainPageState extends State<MainPage> {
       return Align(
         alignment: Alignment.bottomCenter,
         child: Container(
-          margin: EdgeInsets.only(left: 24, right: 24, bottom: 20),
+          // margin: EdgeInsets.only(left: 6, right: 6, bottom: 8),
           width: double.infinity,
-          height: 60,
+          height: 70,
           decoration: BoxDecoration(
             color: kWhiteColor,
-            borderRadius: BorderRadius.circular(defaultRadius),
+            // borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(10),
+            ),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              CustomBottomNavigation(icons: Icons.home, index: 0),
-              CustomBottomNavigation(icons: Icons.dashboard, index: 1),
-              CustomBottomNavigation(icons: Icons.check_box, index: 2),
-              CustomBottomNavigation(icons: Icons.manage_accounts, index: 3)
+              CustomBottomNavigation(
+                icons: Icons.home,
+                index: 0,
+                titleMenu: 'Beranda',
+              ),
+              CustomBottomNavigation(
+                icons: CupertinoIcons.square_grid_2x2_fill,
+                index: 1,
+                titleMenu: 'Data',
+              ),
+              CustomBottomNavigation(
+                icons: Icons.check_box,
+                index: 2,
+                titleMenu: 'Hasil',
+              ),
+              CustomBottomNavigation(
+                icons: Icons.manage_accounts,
+                index: 3,
+                titleMenu: 'Akun',
+              )
             ],
           ),
         ),
