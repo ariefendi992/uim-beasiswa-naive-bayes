@@ -1,9 +1,12 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ft_uim_naive_bayes/cubit/auth/auth_cubit.dart';
 import 'package:ft_uim_naive_bayes/ui/widgets/custom_menu_utama.dart';
 import 'package:ft_uim_naive_bayes/utils/theme.dart';
+import 'package:ft_uim_naive_bayes/utils/url.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -28,6 +31,19 @@ class HomePage extends StatelessWidget {
                             style: whiteTextStyle.copyWith(
                                 fontSize: 22, fontWeight: medium),
                           ),
+                          state.user.picture != null
+                              ? CircleAvatar(
+                                  radius: 36,
+                                  backgroundImage: NetworkImage('$baseUrl'
+                                      '/auth/'
+                                      '${state.user.picture}'),
+                                )
+                              : Icon(
+                                  CupertinoIcons
+                                      .person_crop_circle_badge_checkmark,
+                                  size: 36,
+                                  color: kWhiteColor,
+                                ),
                           Text(
                             '${state.user.nama!.toUpperCase()}',
                             style: whiteTextStyle.copyWith(
@@ -56,7 +72,7 @@ class HomePage extends StatelessWidget {
             Container(
               width: double.infinity,
               height: MediaQuery.of(context).size.height,
-              margin: EdgeInsets.only(top: 200),
+              margin: EdgeInsets.only(top: 240),
               padding: EdgeInsets.symmetric(horizontal: 12, vertical: 24),
               decoration: BoxDecoration(
                 color: kBackgroundColor,
@@ -66,7 +82,7 @@ class HomePage extends StatelessWidget {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(top: 170),
+              margin: EdgeInsets.only(top: 215),
               padding: EdgeInsets.symmetric(horizontal: 40),
               child: Column(
                 children: [
@@ -80,7 +96,7 @@ class HomePage extends StatelessWidget {
                       ),
                       SizedBox(width: 18),
                       CustomMenuUtama(
-                        title: 'Uji Data',
+                        title: 'Data Testing',
                         icons: CupertinoIcons.question_square,
                       ),
                     ],
@@ -93,6 +109,22 @@ class HomePage extends StatelessWidget {
                       CustomMenuUtama(
                         title: 'Hasil Uji Data',
                         icons: Icons.checklist_rounded,
+                      ),
+                      SizedBox(width: 18),
+                      CustomMenuUtama(
+                        title: 'Ubah Photo Profil',
+                        icons: CupertinoIcons.profile_circled,
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 12),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      CustomMenuUtama(
+                        title: 'Syarat & Ketentuan',
+                        icons: Icons.not_listed_location_rounded,
                       ),
                       SizedBox(width: 18),
                       CustomMenuUtama(

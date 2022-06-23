@@ -98,7 +98,7 @@ class _HasilPageState extends State<HasilPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              '..:: Hasil Keputusan ::..'.toUpperCase(),
+              '..:: Hasil Uji Data ::..'.toUpperCase(),
               style: blackTextStyle.copyWith(fontSize: 20, fontWeight: medium),
             ),
           ],

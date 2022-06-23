@@ -71,6 +71,10 @@ class ProfilPage extends StatelessWidget {
                         text: 'Ubah Password',
                         onPressed: () {},
                       ),
+                      CustomButtonAkun(
+                        text: 'Ubah Photo Profil',
+                        onPressed: () {},
+                      ),
                     ],
                   ),
                   Container(

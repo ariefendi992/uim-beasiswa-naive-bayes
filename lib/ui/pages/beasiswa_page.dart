@@ -19,7 +19,7 @@ class BeasiswaPage extends StatelessWidget {
             top: 20,
           ),
           child: Text(
-            '.:: Menu ::.'.toUpperCase(),
+            ''.toUpperCase(),
             style: blackTextStyle.copyWith(
               fontSize: 20,
               fontWeight: medium,
@@ -68,7 +68,7 @@ class BeasiswaPage extends StatelessWidget {
                 },
                 child: CustomMenuBeasiswa(
                   icon: Icons.app_registration_sharp,
-                  title: 'Uji Data'.toUpperCase(),
+                  title: 'Data Testing'.toUpperCase(),
                 ),
               ),
             ],

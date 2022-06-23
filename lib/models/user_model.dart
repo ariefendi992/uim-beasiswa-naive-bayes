@@ -12,6 +12,7 @@ class UserModel extends Equatable {
   final String? nama;
   final String? prodi;
   final String? gender;
+  final String? picture;
   final String? email;
   final String? password;
 
@@ -21,6 +22,7 @@ class UserModel extends Equatable {
     required this.nama,
     required this.prodi,
     required this.gender,
+    required this.picture,
     required this.email,
     required this.password,
   });
@@ -32,6 +34,7 @@ class UserModel extends Equatable {
       prodi: json['prodi'],
       nama: json['nama'],
       gender: json['gender'],
+      picture: json['picture'],
       email: json['email'],
       password: json['password'],
     );

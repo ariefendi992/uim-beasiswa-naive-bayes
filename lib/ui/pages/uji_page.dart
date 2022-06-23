@@ -552,7 +552,7 @@ class _UjiPageState extends State<UjiPage> {
           }
           return CustomButton(
             margin: const EdgeInsets.only(bottom: 40),
-            hintText: 'Prediksi Data',
+            hintText: 'UJI DATA',
             onPressed: () {
               context.read<UktCubit>().ujiUkt(
                     idUser: idUser!,
@@ -592,7 +592,7 @@ class _UjiPageState extends State<UjiPage> {
               ),
             ),
             CustomAppBar(
-                title: 'UJI KELAYAKAN',
+                title: 'Form Data Testing',
                 onTap: () {
                   context.read<PageCubit>().setPage(1);
                   Navigator.pushNamed(context, '/main');

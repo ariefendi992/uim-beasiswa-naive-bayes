@@ -102,7 +102,7 @@ class _PenerimaPageState extends State<PenerimaPage> {
                   //     ),
                   //   ),
                   // ),
-                  Column(
+                  ListView(
                     children: [
                       SizedBox(height: 100),
                       ScrollableWidget(

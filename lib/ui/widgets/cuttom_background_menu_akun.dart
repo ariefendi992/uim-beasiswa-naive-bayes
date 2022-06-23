@@ -12,7 +12,7 @@ class CustomBackgroundMenuAkun extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: defaultPadding),
+      padding: EdgeInsets.only(left: defaultPadding),
       margin: const EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
         color: kWhiteColor,
