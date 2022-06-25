@@ -4,12 +4,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ft_uim_naive_bayes/cubit/auth/auth_cubit.dart';
+import 'package:ft_uim_naive_bayes/ui/pages/auth/up_photo_profil.dart';
 import 'package:ft_uim_naive_bayes/ui/widgets/custom_menu_utama.dart';
 import 'package:ft_uim_naive_bayes/utils/theme.dart';
 import 'package:ft_uim_naive_bayes/utils/url.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,12 +42,12 @@ class HomePage extends StatelessWidget {
                             style: whiteTextStyle.copyWith(
                                 fontSize: 22, fontWeight: medium),
                           ),
+                          SizedBox(height: 8),
                           state.user.picture != null
                               ? CircleAvatar(
-                                  radius: 36,
-                                  backgroundImage: NetworkImage('$baseUrl'
-                                      '/auth/'
-                                      '${state.user.picture}'),
+                                  radius: 32,
+                                  backgroundImage: NetworkImage(
+                                      '$imageUrl' '${state.user.picture}'),
                                 )
                               : Icon(
                                   CupertinoIcons
@@ -44,6 +55,7 @@ class HomePage extends StatelessWidget {
                                   size: 36,
                                   color: kWhiteColor,
                                 ),
+                          SizedBox(height: 8),
                           Text(
                             '${state.user.nama!.toUpperCase()}',
                             style: whiteTextStyle.copyWith(
@@ -111,9 +123,19 @@ class HomePage extends StatelessWidget {
                         icons: Icons.checklist_rounded,
                       ),
                       SizedBox(width: 18),
-                      CustomMenuUtama(
-                        title: 'Ubah Photo Profil',
-                        icons: CupertinoIcons.profile_circled,
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => UploadPoho(),
+                              ),
+                              (route) => false);
+                        },
+                        child: CustomMenuUtama(
+                          title: 'Ubah Photo Profil',
+                          icons: CupertinoIcons.profile_circled,
+                        ),
                       ),
                     ],
                   ),

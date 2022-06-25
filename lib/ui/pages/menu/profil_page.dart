@@ -3,7 +3,8 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ft_uim_naive_bayes/cubit/auth/auth_cubit.dart';
 import 'package:ft_uim_naive_bayes/cubit/page_cubit.dart';
-import 'package:ft_uim_naive_bayes/ui/pages/syarat_ketentuan_page.dart';
+import 'package:ft_uim_naive_bayes/ui/pages/auth/up_photo_profil.dart';
+import 'package:ft_uim_naive_bayes/ui/pages/beasiswa/syarat_ketentuan_page.dart';
 // import 'package:ft_uim_naive_bayes/storage/storage.dart';
 import 'package:ft_uim_naive_bayes/ui/widgets/custom_button.dart';
 import 'package:ft_uim_naive_bayes/ui/widgets/cuttom_background_menu_akun.dart';
@@ -23,7 +24,7 @@ class ProfilPage extends StatelessWidget {
             Center(
               child: Column(
                 children: [
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 20),
                   Container(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -32,7 +33,7 @@ class ProfilPage extends StatelessWidget {
                         Text(
                           'AKUN',
                           style: whiteTextStyle.copyWith(
-                            fontSize: 20,
+                            fontSize: 18,
                             fontWeight: medium,
                           ),
                         ),
@@ -44,7 +45,7 @@ class ProfilPage extends StatelessWidget {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(top: 100),
+              margin: EdgeInsets.only(top: 70),
               padding: EdgeInsets.symmetric(vertical: 30),
               width: double.infinity,
               height: MediaQuery.of(context).size.height,
@@ -72,8 +73,15 @@ class ProfilPage extends StatelessWidget {
                         onPressed: () {},
                       ),
                       CustomButtonAkun(
-                        text: 'Ubah Photo Profil',
-                        onPressed: () {},
+                        text: 'Ubah Foto Profil',
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => UploadPoho(),
+                            ),
+                          );
+                        },
                       ),
                     ],
                   ),

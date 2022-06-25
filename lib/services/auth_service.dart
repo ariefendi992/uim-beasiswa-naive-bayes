@@ -178,4 +178,13 @@ class AuthService {
       throw Exception('error boss');
     }
   }
+
+  // void uploadImage(String id, ) async {
+  //   final url = '$baseUrl/update-picture?=$id';
+  //   // final headers = {""}
+  //   final request = await http.MultipartRequest('PUT', Uri.parse(url));
+  //   request.files.add(await http.MultipartFile.fromPath('file', ))
+    
+    
+  // }
 }

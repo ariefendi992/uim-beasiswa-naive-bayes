@@ -12,6 +12,7 @@ Color kBackgroundColor = Color(0xffF0F0F0);
 // Color kBackgroundColor = Color(0xffF7F7F9);
 Color kRedColor = Color(0xffDB0E45);
 Color kBarColor = Color(0xff516DB5);
+Color kGreenClor = Color(0xff43A047);
 Color kTransparentColor = Colors.transparent;
 
 // fonts

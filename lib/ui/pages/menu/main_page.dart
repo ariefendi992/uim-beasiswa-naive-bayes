@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ft_uim_naive_bayes/cubit/page_cubit.dart';
-import 'package:ft_uim_naive_bayes/ui/pages/beasiswa_page.dart';
-import 'package:ft_uim_naive_bayes/ui/pages/hasil_page.dart';
-import 'package:ft_uim_naive_bayes/ui/pages/home_page2.dart';
-import 'package:ft_uim_naive_bayes/ui/pages/profil_page.dart';
+import 'package:ft_uim_naive_bayes/ui/pages/menu/beasiswa_page.dart';
+import 'package:ft_uim_naive_bayes/ui/pages/menu/hasil_page.dart';
+import 'package:ft_uim_naive_bayes/ui/pages/menu/home_page2.dart';
+import 'package:ft_uim_naive_bayes/ui/pages/menu/profil_page.dart';
 import 'package:ft_uim_naive_bayes/ui/widgets/custom_bottom_navigation.dart';
 import 'package:ft_uim_naive_bayes/utils/theme.dart';
 
