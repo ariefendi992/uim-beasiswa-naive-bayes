@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:ft_uim_naive_bayes/cubit/auth/auth_cubit.dart';
-import 'package:ft_uim_naive_bayes/cubit/kategori/tanggungan_cubit.dart';
 import 'package:ft_uim_naive_bayes/storage/storage.dart';
 import 'package:ft_uim_naive_bayes/utils/theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,8 +30,6 @@ class _SplashScreenState extends State<SplashScreen> {
   void autoLogin() async {
     token = await SecureStorages().readStorage('token');
 
-    context.read<TanggunganCubit>().fetchTanggungan();
-    print('token == $token');
     if (token != null) {
       context.read<AuthCubit>().getProfil();
       Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
@@ -48,7 +45,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     final stringToDateTime = DateTime.tryParse('$readTime');
 
-    print('string todate == $stringToDateTime');
+    // print('string todate == $stringToDateTime');
 
     if (now.isAfter(stringToDateTime!.toUtc())) {
       await SecureStorages().deleteKey('token');

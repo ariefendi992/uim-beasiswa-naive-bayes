@@ -1,9 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ft_uim_naive_bayes/cubit/auth/auth_cubit.dart';
 import 'package:ft_uim_naive_bayes/cubit/page_cubit.dart';
-import 'package:ft_uim_naive_bayes/ui/pages/auth/up_photo_profil.dart';
+import 'package:ft_uim_naive_bayes/ui/pages/auth/up_photo_profil_page.dart';
 import 'package:ft_uim_naive_bayes/ui/pages/beasiswa/syarat_ketentuan_page.dart';
 // import 'package:ft_uim_naive_bayes/storage/storage.dart';
 import 'package:ft_uim_naive_bayes/ui/widgets/custom_button.dart';
@@ -11,8 +13,22 @@ import 'package:ft_uim_naive_bayes/ui/widgets/cuttom_background_menu_akun.dart';
 import 'package:ft_uim_naive_bayes/ui/widgets/cuttom_button_akun.dart';
 import 'package:ft_uim_naive_bayes/utils/theme.dart';
 
-class ProfilPage extends StatelessWidget {
+class ProfilPage extends StatefulWidget {
   const ProfilPage({Key? key}) : super(key: key);
+
+  @override
+  _ProfilPageState createState() => _ProfilPageState();
+}
+
+class _ProfilPageState extends State<ProfilPage> {
+  FutureOr onGoBack(dynamic value) {
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,12 +91,19 @@ class ProfilPage extends StatelessWidget {
                       CustomButtonAkun(
                         text: 'Ubah Foto Profil',
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => UploadPoho(),
-                            ),
-                          );
+                          Route route = MaterialPageRoute(
+                              builder: (context) => UploadPoho());
+                          setState(() {
+                            Navigator.pushAndRemoveUntil(
+                                context, route, (route) => false);
+                          });
+
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (context) => UploadPoho(),
+                          //   ),
+                          // );
                         },
                       ),
                     ],

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ft_uim_naive_bayes/cubit/auth/auth_cubit.dart';
 import 'package:ft_uim_naive_bayes/cubit/page_cubit.dart';
 import 'package:ft_uim_naive_bayes/ui/pages/menu/beasiswa_page.dart';
 import 'package:ft_uim_naive_bayes/ui/pages/menu/hasil_page.dart';
@@ -20,6 +21,7 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
+    context.read<AuthCubit>().getProfil();
   }
 
   @override

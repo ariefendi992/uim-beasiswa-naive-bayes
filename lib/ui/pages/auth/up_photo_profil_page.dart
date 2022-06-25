@@ -1,7 +1,8 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ft_uim_naive_bayes/cubit/page_cubit.dart';
+import 'package:ft_uim_naive_bayes/cubit/auth/auth_cubit.dart';
+import 'package:ft_uim_naive_bayes/cubit/upload/upload_cubit.dart';
 import 'package:ft_uim_naive_bayes/storage/storage.dart';
 import 'package:ft_uim_naive_bayes/utils/theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -61,6 +62,8 @@ class _UploadPohoState extends State<UploadPoho> {
     super.initState();
     this.imageFile = imageFile;
     getIdUser();
+    
+    context.read<AuthCubit>().getProfil();
   }
 
   @override
@@ -129,7 +132,12 @@ class _UploadPohoState extends State<UploadPoho> {
             TextButton(
               onPressed: () {
                 setState(() {
-                  uploadImage();
+                  // uploadImage();
+                  context.read<AuthCubit>().getProfil();
+                  context.read<UploadCubit>().uploadImage(
+                      idUser: idUser,
+                      fieldName: 'image',
+                      imageFile: imageFile!);
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       backgroundColor: kGreenClor,
@@ -170,9 +178,10 @@ class _UploadPohoState extends State<UploadPoho> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            context.read<PageCubit>().setPage(3);
                             Navigator.pushNamedAndRemoveUntil(
                                 context, '/main', (route) => false);
+                            // Navigator.pushNamedAndRemoveUntil(
+                            //     context, '/main', (route) => false);
                           },
                           child: Icon(
                             CupertinoIcons.arrow_left,

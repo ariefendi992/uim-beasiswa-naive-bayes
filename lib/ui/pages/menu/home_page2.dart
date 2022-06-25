@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ft_uim_naive_bayes/cubit/auth/auth_cubit.dart';
-import 'package:ft_uim_naive_bayes/ui/pages/auth/up_photo_profil.dart';
+import 'package:ft_uim_naive_bayes/ui/pages/auth/up_photo_profil_page.dart';
 import 'package:ft_uim_naive_bayes/ui/widgets/custom_menu_utama.dart';
 import 'package:ft_uim_naive_bayes/utils/theme.dart';
 import 'package:ft_uim_naive_bayes/utils/url.dart';
@@ -20,6 +20,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    setState(() {});
   }
 
   @override
