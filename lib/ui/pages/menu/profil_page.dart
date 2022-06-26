@@ -5,6 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ft_uim_naive_bayes/cubit/auth/auth_cubit.dart';
 import 'package:ft_uim_naive_bayes/cubit/page_cubit.dart';
+import 'package:ft_uim_naive_bayes/ui/pages/auth/check_password_page.dart';
 import 'package:ft_uim_naive_bayes/ui/pages/auth/up_photo_profil_page.dart';
 import 'package:ft_uim_naive_bayes/ui/pages/beasiswa/syarat_ketentuan_page.dart';
 // import 'package:ft_uim_naive_bayes/storage/storage.dart';
@@ -86,7 +87,14 @@ class _ProfilPageState extends State<ProfilPage> {
                     children: [
                       CustomButtonAkun(
                         text: 'Ubah Password',
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CheckPasswordPage(),
+                            ),
+                          );
+                        },
                       ),
                       CustomButtonAkun(
                         text: 'Ubah Foto Profil',

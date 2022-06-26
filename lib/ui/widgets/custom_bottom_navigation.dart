@@ -28,7 +28,7 @@ class CustomBottomNavigation extends StatelessWidget {
               const SizedBox(),
               Icon(
                 icons,
-                size: 30,
+                size: 26,
                 color: context.read<PageCubit>().state == index
                     ? kBlueColor
                     : kGreyColor,

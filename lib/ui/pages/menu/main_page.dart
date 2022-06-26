@@ -47,7 +47,7 @@ class _MainPageState extends State<MainPage> {
         child: Container(
           // margin: EdgeInsets.only(left: 6, right: 6, bottom: 8),
           width: double.infinity,
-          height: 70,
+          height: 55,
           decoration: BoxDecoration(
             color: kWhiteColor,
             // borderRadius: BorderRadius.circular(10),

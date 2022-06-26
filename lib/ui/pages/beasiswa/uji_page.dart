@@ -42,6 +42,7 @@ class _UjiPageState extends State<UjiPage> {
     semester = KategoriService().fetchSemester();
     penghasilan = KategoriService().fetchPenghasilanOrtu();
     getUserId();
+    context.read<TanggunganCubit>().fetchTanggungan();
   }
 
   void getUserId() async {

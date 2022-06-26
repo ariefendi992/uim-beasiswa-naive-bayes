@@ -4,7 +4,6 @@ import 'package:ft_uim_naive_bayes/cubit/auth/auth_cubit.dart';
 import 'package:ft_uim_naive_bayes/storage/storage.dart';
 import 'package:ft_uim_naive_bayes/utils/theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:intl/intl.dart';
 
 class SplashScreen extends StatefulWidget {
   SplashScreen({Key? key}) : super(key: key);
@@ -16,11 +15,13 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   String? readTime;
   String? token;
+  DateTime? stringToDateTime;
 
   @override
   void initState() {
     super.initState();
     autoDeleteToken();
+    this.stringToDateTime = stringToDateTime;
     // autoLogout();
     Timer(Duration(seconds: 3), () {
       autoLogin();
@@ -41,14 +42,16 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> autoDeleteToken() async {
     readTime = await SecureStorages().readStorage('timeExpire');
     final now = DateTime.now();
-    print('tipe readtime == ${readTime.runtimeType}');
+    // print('tipe readtime == ${readTime.runtimeType}');
 
-    final stringToDateTime = DateTime.tryParse('$readTime');
+    stringToDateTime = DateTime.tryParse('$readTime');
 
-    // print('string todate == $stringToDateTime');
+    print('string todate == $stringToDateTime');
 
     if (now.isAfter(stringToDateTime!.toUtc())) {
-      await SecureStorages().deleteKey('token');
+      setState(() {
+        SecureStorages().deleteKey('token');
+      });
     }
   }
 

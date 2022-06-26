@@ -1,10 +1,14 @@
 import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ft_uim_naive_bayes/cubit/auth/auth_cubit.dart';
+import 'package:ft_uim_naive_bayes/cubit/page_cubit.dart';
+import 'package:ft_uim_naive_bayes/ui/pages/auth/check_password_page.dart';
 import 'package:ft_uim_naive_bayes/ui/pages/auth/up_photo_profil_page.dart';
+import 'package:ft_uim_naive_bayes/ui/pages/beasiswa/penerima_page.dart';
+import 'package:ft_uim_naive_bayes/ui/pages/beasiswa/syarat_ketentuan_page.dart';
+import 'package:ft_uim_naive_bayes/ui/pages/beasiswa/uji_page.dart';
 import 'package:ft_uim_naive_bayes/ui/widgets/custom_menu_utama.dart';
 import 'package:ft_uim_naive_bayes/utils/theme.dart';
 import 'package:ft_uim_naive_bayes/utils/url.dart';
@@ -96,65 +100,107 @@ class _HomePageState extends State<HomePage> {
             ),
             Container(
               margin: EdgeInsets.only(top: 215),
-              padding: EdgeInsets.symmetric(horizontal: 40),
+              padding: EdgeInsets.symmetric(horizontal: 30),
               child: Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      CustomMenuUtama(
-                        title: 'Data Training',
-                        icons: CupertinoIcons.square_list,
-                      ),
-                      SizedBox(width: 18),
-                      CustomMenuUtama(
-                        title: 'Data Testing',
-                        icons: CupertinoIcons.question_square,
-                      ),
-                    ],
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Route route = MaterialPageRoute(
+                                builder: (context) => PenerimaPage());
+                            Navigator.pushAndRemoveUntil(
+                                context, route, (route) => false);
+                          },
+                          child: CustomMenuUtama(
+                            title: 'Data Training',
+                            icons: CupertinoIcons.square_list,
+                          ),
+                        ),
+                        SizedBox(width: 18),
+                        GestureDetector(
+                          onTap: () {
+                            Route route = MaterialPageRoute(
+                                builder: (context) => UjiPage());
+                            Navigator.pushAndRemoveUntil(
+                                context, route, (route) => false);
+                          },
+                          child: CustomMenuUtama(
+                            title: 'Data Testing',
+                            icons: CupertinoIcons.question_square,
+                          ),
+                        ),
+                        SizedBox(width: 18),
+                        GestureDetector(
+                          onTap: () {
+                            context.read<PageCubit>().setPage(2);
+                            Navigator.pushNamed(context, '/main');
+                          },
+                          child: CustomMenuUtama(
+                            title: 'Hasil Uji Data',
+                            icons: Icons.checklist_rounded,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   SizedBox(height: 12),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      CustomMenuUtama(
-                        title: 'Hasil Uji Data',
-                        icons: Icons.checklist_rounded,
-                      ),
-                      SizedBox(width: 18),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pushAndRemoveUntil(
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => UploadPoho(),
+                                ),
+                                (route) => false);
+                          },
+                          child: CustomMenuUtama(
+                            title: 'Ubah Photo Profil',
+                            icons: CupertinoIcons.profile_circled,
+                          ),
+                        ),
+                        SizedBox(width: 18),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => UploadPoho(),
+                                builder: (context) => SyaratPage(),
                               ),
-                              (route) => false);
-                        },
-                        child: CustomMenuUtama(
-                          title: 'Ubah Photo Profil',
-                          icons: CupertinoIcons.profile_circled,
+                            );
+                          },
+                          child: CustomMenuUtama(
+                            title: 'Syarat & Ketentuan',
+                            icons: Icons.not_listed_location_rounded,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 12),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      CustomMenuUtama(
-                        title: 'Syarat & Ketentuan',
-                        icons: Icons.not_listed_location_rounded,
-                      ),
-                      SizedBox(width: 18),
-                      CustomMenuUtama(
-                        title: 'Ubah Password',
-                        icons: CupertinoIcons.lock_rotation,
-                      ),
-                    ],
+                        SizedBox(width: 18),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => CheckPasswordPage(),
+                                ),
+                                (route) => false);
+                          },
+                          child: CustomMenuUtama(
+                            title: 'Ubah Password',
+                            icons: CupertinoIcons.lock_rotation,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

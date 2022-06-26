@@ -179,12 +179,29 @@ class AuthService {
     }
   }
 
-  // void uploadImage(String id, ) async {
-  //   final url = '$baseUrl/update-picture?=$id';
-  //   // final headers = {""}
-  //   final request = await http.MultipartRequest('PUT', Uri.parse(url));
-  //   request.files.add(await http.MultipartFile.fromPath('file', ))
-    
-    
-  // }
+  Future<UserModel> checkPassword({
+    String? password,
+    String? idUser,
+  }) async {
+    var url = ('$baseUrl/auth/check-password?id=$idUser');
+    print('url == $url');
+    var headers = {'Content-Type': 'application/json'};
+
+    var body = jsonEncode({'password': password});
+
+    var response = await http.post(
+      Uri.parse(url),
+      headers: headers,
+      body: body,
+    );
+
+    if (response.statusCode == 200) {
+      var jsonResp = jsonDecode(response.body);
+      UserModel user = UserModel.fromJson(jsonResp);
+      return user;
+    } else {
+      var jsonResp = jsonDecode(response.body);
+      throw jsonResp['msg'];
+    }
+  }
 }
