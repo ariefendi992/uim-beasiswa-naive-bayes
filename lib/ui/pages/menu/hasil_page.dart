@@ -113,7 +113,7 @@ class _HasilPageState extends State<HasilPage> {
         //   vertical: 10,
         // ),
         margin: EdgeInsets.only(top: 70),
-        padding: EdgeInsets.symmetric(horizontal: defaultPadding, vertical: 20),
+        padding: EdgeInsets.symmetric(horizontal: 18, vertical: 20),
         width: double.infinity,
         decoration: BoxDecoration(
           color: kBackgroundColor,
@@ -308,7 +308,9 @@ class _HasilPageState extends State<HasilPage> {
                         'Berdasarkan hasil perhitungan, dapat disimpulkan bahwa data uji tersebut ',
                   ),
                   TextSpan(
-                    text: readHasil.toString().toUpperCase(),
+                    text: readHasil != null
+                        ? readHasil.toString().toUpperCase()
+                        : 'Belum Diketahui',
                     style: blackTextStyle.copyWith(
                         fontWeight: semiBold,
                         decoration: TextDecoration.underline),
