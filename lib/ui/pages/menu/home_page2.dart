@@ -130,7 +130,7 @@ class _HomePageState extends State<HomePage> {
                                 context, route, (route) => false);
                           },
                           child: CustomMenuUtama(
-                            title: 'Data Testing',
+                            title: 'Form Registrasi',
                             icons: CupertinoIcons.question_square,
                           ),
                         ),
@@ -141,7 +141,7 @@ class _HomePageState extends State<HomePage> {
                             Navigator.pushNamed(context, '/main');
                           },
                           child: CustomMenuUtama(
-                            title: 'Hasil Uji Data',
+                            title: 'Hasil Keputusan',
                             icons: Icons.checklist_rounded,
                           ),
                         ),

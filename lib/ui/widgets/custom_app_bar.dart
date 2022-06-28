@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ft_uim_naive_bayes/utils/theme.dart';
 
@@ -12,47 +13,57 @@ class CustomAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(30),
-      width: double.infinity,
-      height: 95,
-      decoration: BoxDecoration(
-        color: kBarColor,
-        borderRadius: const BorderRadius.vertical(
-          bottom: Radius.circular(30),
-        ),
-      ),
+    return
+        // Container(
+        //         margin: EdgeInsets.only(top: 40),
+        //         padding: EdgeInsets.symmetric(horizontal: defaultPadding),
+        //         child: Row(
+        //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //           children: [
+        //             GestureDetector(
+        //               onTap: () {
+        //                 context.read<PageCubit>().setPage(3);
+        //                 Navigator.pushNamedAndRemoveUntil(
+        //                     context, '/main', (route) => false);
+        //               },
+        //               child: Icon(
+        //                 CupertinoIcons.arrow_left,
+        //                 color: kWhiteColor,
+        //               ),
+        //             ),
+        //             Text(
+        //               'Keamanan',
+        //               style: whiteTextStyle.copyWith(
+        //                 fontSize: 16,
+        //                 fontWeight: medium,
+        //               ),
+        //             ),
+        //             SizedBox()
+        //           ],
+        //         ),
+        //       ),
+
+        Container(
+      margin: EdgeInsets.only(top: 40),
+      padding: EdgeInsets.symmetric(horizontal: defaultPadding),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           GestureDetector(
             onTap: onTap,
-            child: Container(
-              width: 40.0,
-              height: 40.0,
-              // padding: EdgeInsets.only(
-              //   top: 13,
-              //   bottom: 13,
-              //   right: 17.5,
-              //   left: 15,
-              // ),
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: kTransparentColor,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Image.asset(
-                'assets/icons/arrow_left.png',
-                color: kWhiteColor,
-              ),
+            child: Icon(
+              CupertinoIcons.arrow_left,
+              color: kWhiteColor,
             ),
           ),
           Text(
             title,
-            style: whiteTextStyle.copyWith(fontSize: 20, fontWeight: medium),
+            style: whiteTextStyle.copyWith(
+              fontSize: 16,
+              fontWeight: medium,
+            ),
           ),
-          SizedBox(),
+          SizedBox()
         ],
       ),
     );

@@ -118,7 +118,7 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
                             )
                           : Icon(
                               CupertinoIcons.eye_slash,
-                              size: 28,
+                              size: 26,
                             ),
                     ),
                   ],
@@ -167,7 +167,7 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
                             )
                           : Icon(
                               CupertinoIcons.eye_slash,
-                              size: 28,
+                              size: 26,
                             ),
                     ),
                   ],

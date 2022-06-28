@@ -21,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     autoDeleteToken();
-    this.stringToDateTime = stringToDateTime;
+    // this.stringToDateTime = stringToDateTime;
     // autoLogout();
     Timer(Duration(seconds: 3), () {
       autoLogin();
@@ -43,8 +43,10 @@ class _SplashScreenState extends State<SplashScreen> {
     readTime = await SecureStorages().readStorage('timeExpire');
     final now = DateTime.now();
     // print('tipe readtime == ${readTime.runtimeType}');
-
-    stringToDateTime = DateTime.tryParse('$readTime');
+    var parseTimes = readTime == null
+        ? (now.add(Duration(minutes: 30))).toString()
+        : readTime!;
+    stringToDateTime = DateTime.tryParse(parseTimes);
 
     print('string todate == $stringToDateTime');
 

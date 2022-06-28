@@ -76,7 +76,7 @@ class _PenerimaPageState extends State<PenerimaPage> {
     }
 
     return Scaffold(
-      backgroundColor: kBackgroundColor,
+      backgroundColor: kBarColor,
       body: BlocConsumer<TrainingUktCubit, TrainingUktState>(
         listener: (context, state) {
           if (state is TrainingUktFailed) {
@@ -89,36 +89,37 @@ class _PenerimaPageState extends State<PenerimaPage> {
         },
         builder: (context, state) {
           if (state is TrainingUktSuccess) {
-            return SafeArea(
-              child: Stack(
-                children: [
-                  // Container(
-                  //   margin: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
-                  //   child: Text(
-                  //     '.:: Data Training ::.'.toUpperCase(),
-                  //     style: blackTextStyle.copyWith(
-                  //       fontSize: 20,
-                  //       fontWeight: medium,
-                  //     ),
-                  //   ),
-                  // ),
-                  ListView(
+            return Stack(
+              children: [
+                // Container(
+                //   margin: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                //   child: Text(
+                //     '.:: Data Training ::.'.toUpperCase(),
+                //     style: blackTextStyle.copyWith(
+                //       fontSize: 20,
+                //       fontWeight: medium,
+                //     ),
+                //   ),
+                // ),
+                Container(
+                  margin: EdgeInsets.only(top: 80),
+                  decoration: BoxDecoration(color: kBackgroundColor),
+                  child: ListView(
                     children: [
-                      SizedBox(height: 100),
                       ScrollableWidget(
                         child: buildDataTable(state.trainingUktModel),
                       ),
                     ],
                   ),
-                  CustomAppBar(
-                    title: 'Data Training',
-                    onTap: () {
-                      context.read<PageCubit>().setPage(1);
-                      Navigator.pushNamed(context, '/main');
-                    },
-                  ),
-                ],
-              ),
+                ),
+                CustomAppBar(
+                  title: 'Data Training',
+                  onTap: () {
+                    context.read<PageCubit>().setPage(1);
+                    Navigator.pushNamed(context, '/main');
+                  },
+                ),
+              ],
             );
           }
           return Center(

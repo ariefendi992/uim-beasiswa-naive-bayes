@@ -573,18 +573,27 @@ class _UjiPageState extends State<UjiPage> {
     }
 
     return Scaffold(
-      backgroundColor: kWhiteColor,
-      body: SafeArea(
-        child: Stack(
-          children: [
-            SingleChildScrollView(
+      backgroundColor: kBarColor,
+      body: Stack(
+        children: [
+          CustomAppBar(
+            title: 'Form Registrasi Beasiswa',
+            onTap: () {
+              context.read<PageCubit>().setPage(1);
+              Navigator.pushNamed(context, '/main');
+            },
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 80),
+            // padding: EdgeInsets.symmetric(horizontal: defaultPadding),
+            decoration: BoxDecoration(color: kBackgroundColor),
+            child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: Container(
-                margin: EdgeInsets.symmetric(horizontal: defaultPadding),
+                padding: EdgeInsets.symmetric(horizontal: defaultPadding),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 90),
                     // title(),
                     formInput(),
                     submitButton(),
@@ -592,14 +601,8 @@ class _UjiPageState extends State<UjiPage> {
                 ),
               ),
             ),
-            CustomAppBar(
-                title: 'Form Data Testing',
-                onTap: () {
-                  context.read<PageCubit>().setPage(1);
-                  Navigator.pushNamed(context, '/main');
-                }),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

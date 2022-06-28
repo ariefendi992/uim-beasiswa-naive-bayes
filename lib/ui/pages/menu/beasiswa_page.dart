@@ -1,80 +1,122 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:ft_uim_naive_bayes/ui/pages/beasiswa/penerima_page.dart';
 import 'package:ft_uim_naive_bayes/ui/pages/beasiswa/uji_page.dart';
-import 'package:ft_uim_naive_bayes/ui/widgets/custom_menu_beasiswa.dart';
+import 'package:ft_uim_naive_bayes/ui/widgets/cuttom_background_menu_akun.dart';
+import 'package:ft_uim_naive_bayes/ui/widgets/cuttom_button_akun.dart';
 import 'package:ft_uim_naive_bayes/utils/theme.dart';
-// import 'package:ft_uim_naive_bayes/utils/extensions.dart';
 
-class BeasiswaPage extends StatelessWidget {
+class BeasiswaPage extends StatefulWidget {
   const BeasiswaPage({Key? key}) : super(key: key);
 
   @override
+  _BeasiswaPageState createState() => _BeasiswaPageState();
+}
+
+class _BeasiswaPageState extends State<BeasiswaPage> {
+  FutureOr onGoBack(dynamic value) {
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        Container(
-          padding: EdgeInsets.only(
-            left: defaultPadding,
-            right: defaultPadding,
-            top: 20,
-          ),
-          child: Text(
-            ''.toUpperCase(),
-            style: blackTextStyle.copyWith(
-              fontSize: 20,
-              fontWeight: medium,
+    return Scaffold(
+      backgroundColor: kBarColor,
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Center(
+              child: Column(
+                children: [
+                  const SizedBox(height: 20),
+                  Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(),
+                        Text(
+                          'BEASISWA',
+                          style: whiteTextStyle.copyWith(
+                            fontSize: 18,
+                            fontWeight: medium,
+                          ),
+                        ),
+                        SizedBox(),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(
-            left: defaultPadding,
-            right: defaultPadding,
-            top: 10,
-          ),
-          padding: EdgeInsets.symmetric(
-            horizontal: defaultPadding,
-            vertical: 10,
-          ),
-          decoration: BoxDecoration(
-            color: kWhiteColor,
-            borderRadius: BorderRadius.circular(defaultRadius),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => PenerimaPage(),
-                    ),
-                  );
-                },
-                child: CustomMenuBeasiswa(
-                  icon: Icons.list_alt,
-                  title: 'Data Training'.toUpperCase(),
+            Container(
+              margin: EdgeInsets.only(top: 70),
+              padding: EdgeInsets.symmetric(vertical: 30),
+              width: double.infinity,
+              height: MediaQuery.of(context).size.height,
+              decoration: BoxDecoration(
+                color: kBackgroundColor,
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(20),
                 ),
               ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => UjiPage(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(left: 12, bottom: 10),
+                    child: Text(
+                      'Data Beasiswa',
+                      style: blueTextStyle.copyWith(
+                          fontSize: 16, fontWeight: semiBold),
                     ),
-                  );
-                },
-                child: CustomMenuBeasiswa(
-                  icon: Icons.app_registration_sharp,
-                  title: 'Data Testing'.toUpperCase(),
-                ),
+                  ),
+                  CustomBackgroundMenuAkun(
+                    children: [
+                      CustomButtonAkun(
+                        text: 'Data Training Beasiswa',
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PenerimaPage(),
+                            ),
+                          );
+                        },
+                      ),
+                      CustomButtonAkun(
+                        text: 'Form Registrasi Beasiswa',
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => UjiPage(),
+                            ),
+                          );
+
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (context) => UploadPoho(),
+                          //   ),
+                          // );
+                        },
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

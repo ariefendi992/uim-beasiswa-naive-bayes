@@ -91,32 +91,33 @@ class _HasilPageState extends State<HasilPage> {
 
   @override
   Widget build(BuildContext context) {
-    Widget titlePage() {
-      return Container(
-        margin: EdgeInsets.symmetric(horizontal: defaultPadding),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              '..:: Hasil Uji Data ::..'.toUpperCase(),
-              style: blackTextStyle.copyWith(fontSize: 20, fontWeight: medium),
-            ),
-          ],
-        ),
-      );
-    }
+    // Widget titlePage() {
+    //   return Container(
+    //     margin: EdgeInsets.symmetric(horizontal: defaultPadding),
+    //     child: Column(
+    //       crossAxisAlignment: CrossAxisAlignment.start,
+    //       children: [
+    //         Text(
+    //           '..:: Hasil Uji Data ::..'.toUpperCase(),
+    //           style: blackTextStyle.copyWith(fontSize: 20, fontWeight: medium),
+    //         ),
+    //       ],
+    //     ),
+    //   );
+    // }
 
     Widget body() {
       return Container(
-        margin: EdgeInsets.symmetric(
-          horizontal: 10,
-          vertical: 10,
-        ),
-        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+        // margin: EdgeInsets.symmetric(
+        //   horizontal: 10,
+        //   vertical: 10,
+        // ),
+        margin: EdgeInsets.only(top: 70),
+        padding: EdgeInsets.symmetric(horizontal: defaultPadding, vertical: 20),
         width: double.infinity,
         decoration: BoxDecoration(
-          color: kWhiteColor,
-          borderRadius: BorderRadius.circular(defaultRadius),
+          color: kBackgroundColor,
+          borderRadius: BorderRadius.circular(20),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -332,12 +333,37 @@ class _HasilPageState extends State<HasilPage> {
     }
 
     return Scaffold(
-      backgroundColor: kBackgroundColor,
-      body: ListView(
-        children: [
-          titlePage(),
-          body(),
-        ],
+      backgroundColor: kBarColor,
+      body: SafeArea(
+        child: Stack(
+          children: [
+            // titlePage(),
+            Center(
+              child: Column(
+                children: [
+                  const SizedBox(height: 20),
+                  Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(),
+                        Text(
+                          'HASIL KEPUTUSAN',
+                          style: whiteTextStyle.copyWith(
+                            fontSize: 18,
+                            fontWeight: medium,
+                          ),
+                        ),
+                        SizedBox(),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            body(),
+          ],
+        ),
       ),
     );
   }
