@@ -23,6 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
     autoDeleteToken();
     // this.stringToDateTime = stringToDateTime;
     // autoLogout();
+    // context.read<HasilUktCubit>().fetchOneUkt(idUser: '2');
     Timer(Duration(seconds: 3), () {
       autoLogin();
     });

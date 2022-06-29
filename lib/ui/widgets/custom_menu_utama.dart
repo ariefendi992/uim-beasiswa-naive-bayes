@@ -18,7 +18,7 @@ class CustomMenuUtama extends StatelessWidget {
       child: Container(
         width: 97,
         height: 95,
-        // padding: EdgeInsets.symmetric(horizontal: 2),
+        padding: EdgeInsets.symmetric(horizontal: 2),
         // margin: EdgeInsets.only(right: 12, left: 12),
         decoration: BoxDecoration(
           color: kWhiteColor,

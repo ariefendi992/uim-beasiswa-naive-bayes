@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:ft_uim_naive_bayes/models/hasil_ukt_model.dart';
 import 'package:ft_uim_naive_bayes/models/training_ukt.dart';
 import 'package:ft_uim_naive_bayes/models/uji_ukt_model.dart';
 import 'package:ft_uim_naive_bayes/storage/storage.dart';
@@ -124,10 +125,35 @@ class UktService {
           return TrainingUktModel.fromJson(e);
         })).toList();
 
+        print('training data length == ${uktModel.length}');
+
         return uktModel;
       } else {
         throw Exception(
             'Failed load data $route, staus : ${response.statusCode}');
+      }
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  Future<List<HasilUktModel>> fetchOne({String? idUser}) async {
+    try {
+      final url = baseUrl + '/beasiswa-ukt/hasil-ukt-byid?id=$idUser';
+      print('url == $url');
+      final request = await http.get(Uri.parse(url));
+      if (request.statusCode == 200) {
+        var response = jsonDecode(request.body);
+        print('response hasil ukt $response');
+        List<HasilUktModel> ukt =
+            List<HasilUktModel>.from(response['data'].map((e) {
+          return HasilUktModel.fromJson(e);
+        })).toList();
+        print('ukte lenght == ${ukt.length}');
+        return ukt;
+      } else {
+        throw Exception(
+            'Gagal memuat data Hasil Ukt $url, status ${request.statusCode}');
       }
     } catch (e) {
       throw e;

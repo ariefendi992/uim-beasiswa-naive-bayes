@@ -1,6 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ft_uim_naive_bayes/cubit/ukt/hasil_ukt_cubit.dart';
 import 'package:ft_uim_naive_bayes/storage/storage.dart';
 import 'package:ft_uim_naive_bayes/utils/theme.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ft_uim_naive_bayes/utils/extensions.dart';
 
 class HasilPage extends StatefulWidget {
@@ -11,362 +14,570 @@ class HasilPage extends StatefulWidget {
 }
 
 class _HasilPageState extends State<HasilPage> {
-  String? readProdi,
-      readSemester,
-      readStatusMhs,
-      readKip,
-      readPenghasilan,
-      readPkh;
-
-  String? readProdiLayak,
-      readProdiTidakLayak,
-      readSemesterLayak,
-      readSemesterTidakLayak,
-      readStatusMahasiswaLayak,
-      readStatusMahasiswaTidakLayak,
-      readKipLayak,
-      readKipTidakLayak,
-      readPenghasilanLayak,
-      readPenghasilanTidakLayak,
-      readPkhLayak,
-      readPkhTidakLayak,
-      readHasil;
+  String? idUser;
 
   @override
   void initState() {
     super.initState();
-    getAtribut();
-    SecureStorages().readAll();
+    getIdUser();
+    // this.id = id;
+    // context.read<HasilUktCubit>().fetchOneUkt(idUser: '$id');
   }
 
-  void getAtribut() async {
-    var prodi = await SecureStorages().readStorage('prodi');
-    var semester = await SecureStorages().readStorage('semester');
-    var statusMhs = await SecureStorages().readStorage('statusMhs');
-    var kip = await SecureStorages().readStorage('kip');
-    var penghasilan = await SecureStorages().readStorage('penghasilan');
-    var pkh = await SecureStorages().readStorage('pkh');
-
-    var prodiLayak = await SecureStorages().readStorage('prodiLayak');
-    var prodiTidakLayak = await SecureStorages().readStorage('prodiTidakLayak');
-    var semesterLayak = await SecureStorages().readStorage('semesterLayak');
-    var semesterTidakLayak =
-        await SecureStorages().readStorage('semesterTidakLayak');
-    var statusMahasiswaLayak =
-        await SecureStorages().readStorage('statusMahasiswaLayak');
-    var statusMahasiswaTidakLayak =
-        await SecureStorages().readStorage('statusMahasiswaTidakLayak');
-    var kipLayak = await SecureStorages().readStorage('kipLayak');
-    var kipTidakLayak = await SecureStorages().readStorage('kipTidakLayak');
-    var penghasilanLayak =
-        await SecureStorages().readStorage('penghasilanLayak');
-    var penghasilanTidakLayak =
-        await SecureStorages().readStorage('penghasilanTidakLayak');
-    var pkhLayak = await SecureStorages().readStorage('pkhLayak');
-    var pkhTidakLayak = await SecureStorages().readStorage('pkhTidakLayak');
-    var hasil = await SecureStorages().readStorage('hasil');
-
+  void getIdUser() async {
+    var id = await SecureStorages().readStorage('id_user');
     setState(() {
-      readProdi = prodi;
-      readSemester = semester;
-      readStatusMhs = statusMhs;
-      readKip = kip;
-      readPenghasilan = penghasilan;
-      readPkh = pkh;
-      readProdiLayak = prodiLayak;
-      readProdiTidakLayak = prodiTidakLayak;
-      readSemesterLayak = semesterLayak;
-      readSemesterTidakLayak = semesterTidakLayak;
-      readStatusMahasiswaLayak = statusMahasiswaLayak;
-      readStatusMahasiswaTidakLayak = statusMahasiswaTidakLayak;
-      readKipLayak = kipLayak;
-      readKipTidakLayak = kipTidakLayak;
-      readPenghasilanLayak = penghasilanLayak;
-      readPenghasilanTidakLayak = penghasilanTidakLayak;
-      readPkhLayak = pkhLayak;
-      readPkhTidakLayak = pkhTidakLayak;
-      readHasil = hasil;
+      idUser = id;
+      print('id user == $idUser');
+      context.read<HasilUktCubit>().fetchOneUkt(idUser: idUser!);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    // Widget titlePage() {
-    //   return Container(
-    //     margin: EdgeInsets.symmetric(horizontal: defaultPadding),
-    //     child: Column(
-    //       crossAxisAlignment: CrossAxisAlignment.start,
-    //       children: [
-    //         Text(
-    //           '..:: Hasil Uji Data ::..'.toUpperCase(),
-    //           style: blackTextStyle.copyWith(fontSize: 20, fontWeight: medium),
-    //         ),
-    //       ],
-    //     ),
-    //   );
-    // }
-
-    Widget body() {
-      return Container(
-        // margin: EdgeInsets.symmetric(
-        //   horizontal: 10,
-        //   vertical: 10,
-        // ),
-        margin: EdgeInsets.only(top: 70),
-        padding: EdgeInsets.symmetric(horizontal: 18, vertical: 20),
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: kBackgroundColor,
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Table(
-              border: TableBorder.all(),
-              defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-              columnWidths: {
-                0: FlexColumnWidth(),
-                1: FlexColumnWidth(),
-                2: FlexColumnWidth(),
-                3: FlexColumnWidth(),
-              },
-              children: [
-                TableRow(
-                  decoration: BoxDecoration(
-                    color: kBlueColor,
-                  ),
-                  children: [
-                    Text(
-                      'Atribut',
-                      textAlign: TextAlign.center,
-                    ),
-                    Text(
-                      'Value',
-                      textAlign: TextAlign.center,
-                    ),
-                    Text(
-                      'Layak',
-                      textAlign: TextAlign.center,
-                    ),
-                    Text(
-                      'Tidak Layak',
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    TableCell(
-                      verticalAlignment: TableCellVerticalAlignment.middle,
-                      child: Text(
-                        'Prodi',
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    Text(
-                      '${readProdi ?? "-"}',
-                      textAlign: TextAlign.center,
-                    ),
-                    Text(
-                      '${readProdiLayak ?? "-"}',
-                      textAlign: TextAlign.center,
-                    ),
-                    Text(
-                      '${readProdiTidakLayak ?? "-"}',
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    TableCell(
-                      verticalAlignment: TableCellVerticalAlignment.middle,
-                      child: Text(
-                        'Semester',
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    Text(
-                      '${readSemester ?? '-'}',
-                      textAlign: TextAlign.center,
-                    ),
-                    Text(
-                      '${readSemesterLayak ?? "-"}',
-                      textAlign: TextAlign.center,
-                    ),
-                    Text(
-                      '${readSemesterTidakLayak ?? "-"}',
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    TableCell(
-                      verticalAlignment: TableCellVerticalAlignment.middle,
-                      child: Text(
-                        'Status Mhs',
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    Text(
-                      '${readStatusMhs == null ? '-' : readStatusMhs.toString().toCapitalized()}',
-                      textAlign: TextAlign.center,
-                    ),
-                    Text(
-                      '${readStatusMahasiswaLayak ?? "-"}',
-                      textAlign: TextAlign.center,
-                    ),
-                    Text(
-                      '${readStatusMahasiswaTidakLayak ?? "-"}',
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    TableCell(
-                      verticalAlignment: TableCellVerticalAlignment.middle,
-                      child: Text(
-                        'Terima KIP',
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    Text(
-                      readKip == null
-                          ? '-'
-                          : readKip.toString().toCapitalized(),
-                      textAlign: TextAlign.center,
-                    ),
-                    Text(
-                      '${readKipLayak ?? "-"}',
-                      textAlign: TextAlign.center,
-                    ),
-                    Text(
-                      '${readKipTidakLayak ?? "-"}',
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    TableCell(
-                      verticalAlignment: TableCellVerticalAlignment.middle,
-                      child: Text(
-                        'P. Ortu',
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    Text(
-                      '${readPenghasilan ?? '-'}',
-                      textAlign: TextAlign.center,
-                    ),
-                    Text(
-                      '${readPenghasilanLayak ?? "-"}',
-                      textAlign: TextAlign.center,
-                    ),
-                    Text(
-                      '${readPenghasilanTidakLayak ?? "-"}',
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    TableCell(
-                      verticalAlignment: TableCellVerticalAlignment.middle,
-                      child: Text(
-                        'Terima PKH',
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    Text(
-                      readPkh != null
-                          ? readPkh.toString().toCapitalized()
-                          : '-',
-                      textAlign: TextAlign.center,
-                    ),
-                    Text(
-                      '${readPkhLayak ?? "-"}',
-                      textAlign: TextAlign.center,
-                    ),
-                    Text(
-                      '${readPkhTidakLayak ?? "-"}',
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            SizedBox(height: 15),
-            RichText(
-              text: TextSpan(
+    return BlocBuilder<HasilUktCubit, HasilUktState>(
+      builder: (context, state) {
+        if (state is HasilUktLoading) {
+          return Scaffold(
+            backgroundColor: kBarColor,
+            body: SafeArea(
+              child: Stack(
                 children: [
-                  TextSpan(
-                    text:
-                        'Berdasarkan hasil perhitungan, dapat disimpulkan bahwa data uji tersebut ',
-                  ),
-                  TextSpan(
-                    text: readHasil != null
-                        ? readHasil.toString().toUpperCase()
-                        : 'Belum Diketahui',
-                    style: blackTextStyle.copyWith(
-                        fontWeight: semiBold,
-                        decoration: TextDecoration.underline),
-                  ),
-                  TextSpan(
-                    text: ' untuk menerima beasiswa.',
-                  ),
-                ],
-                style: blackTextStyle.copyWith(fontSize: 16),
-              ),
-            ),
-            // Text(
-            //     'Berdasarkan hasil perhitungan, dapat disimpulkan bahwa data uji tersebut'),
-            // Text(
-            //   '${readHasil.toString().toUpperCase()}',
-            //   style: blackTextStyle.copyWith(fontWeight: semiBold),
-            // ),
-            // Text('untuk mendapatkan beasiswa'),
-          ],
-        ),
-      );
-    }
-
-    return Scaffold(
-      backgroundColor: kBarColor,
-      body: SafeArea(
-        child: Stack(
-          children: [
-            // titlePage(),
-            Center(
-              child: Column(
-                children: [
-                  const SizedBox(height: 20),
-                  Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  Center(
+                    child: Column(
                       children: [
-                        SizedBox(),
-                        Text(
-                          'HASIL KEPUTUSAN',
-                          style: whiteTextStyle.copyWith(
-                            fontSize: 18,
-                            fontWeight: medium,
+                        const SizedBox(height: 20),
+                        Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(),
+                              Text(
+                                'HASIL KEPUTUSAN',
+                                style: whiteTextStyle.copyWith(
+                                  fontSize: 18,
+                                  fontWeight: medium,
+                                ),
+                              ),
+                              SizedBox(),
+                            ],
                           ),
                         ),
-                        SizedBox(),
                       ],
                     ),
                   ),
+                  Container(
+                    margin: EdgeInsets.only(top: 70),
+                    padding: EdgeInsets.symmetric(horizontal: 18, vertical: 20),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: kBackgroundColor,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),
                 ],
               ),
             ),
-            body(),
-          ],
-        ),
-      ),
+          );
+        } else if (state is HasilUktSuccess) {
+          if (state.hasilUkt.length == 0) {
+            print('length ${state.hasilUkt.length}');
+            return Scaffold(
+              backgroundColor: kBarColor,
+              body: SafeArea(
+                child: Stack(
+                  children: [
+                    Center(
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 20),
+                          Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SizedBox(),
+                                Text(
+                                  'HASIL KEPUTUSAN',
+                                  style: whiteTextStyle.copyWith(
+                                    fontSize: 18,
+                                    fontWeight: medium,
+                                  ),
+                                ),
+                                SizedBox(),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 70),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 18, vertical: 20),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: kBackgroundColor,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Anda belum melakukan Registrasi lanjutan',
+                          style: blackTextStyle.copyWith(
+                              fontSize: 18, fontWeight: medium),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          } else {
+            return Scaffold(
+              backgroundColor: kBarColor,
+              body: SafeArea(
+                child: Stack(
+                  children: [
+                    Center(
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 20),
+                          Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SizedBox(),
+                                Text(
+                                  'HASIL KEPUTUSAN',
+                                  style: whiteTextStyle.copyWith(
+                                    fontSize: 18,
+                                    fontWeight: medium,
+                                  ),
+                                ),
+                                SizedBox(),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 70),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 18, vertical: 24),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: kBackgroundColor,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Hasil Keputusan',
+                            style: blueTextStyle.copyWith(
+                              fontSize: 16,
+                              fontWeight: semiBold,
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          Flexible(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                AnimatedContainer(
+                                  duration: Duration(milliseconds: 500),
+                                  width: 16,
+                                  height: 16,
+                                  decoration: BoxDecoration(
+                                      color: state.hasilUkt.single.prodi != null
+                                          ? kGreenClor
+                                          : kTransparentColor,
+                                      border: state.hasilUkt.single.prodi !=
+                                              null
+                                          ? Border.all(color: kTransparentColor)
+                                          : Border.all(
+                                              color: Colors.grey.shade400),
+                                      borderRadius: BorderRadius.circular(50)),
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.check,
+                                      color: kWhiteColor,
+                                      size: 15,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 6),
+                                Text(
+                                  'Program Studi',
+                                  style: blackTextStyle.copyWith(fontSize: 16),
+                                ),
+                                Spacer(),
+                                Text('${state.hasilUkt.single.prodi}',
+                                    style:
+                                        blackTextStyle.copyWith(fontSize: 16)),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 11),
+                          Flexible(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                AnimatedContainer(
+                                  duration: Duration(milliseconds: 500),
+                                  width: 16,
+                                  height: 16,
+                                  decoration: BoxDecoration(
+                                      color: state.hasilUkt.single.prodi != null
+                                          ? kGreenClor
+                                          : kTransparentColor,
+                                      border: state.hasilUkt.single.prodi !=
+                                              null
+                                          ? Border.all(color: kTransparentColor)
+                                          : Border.all(
+                                              color: Colors.grey.shade400),
+                                      borderRadius: BorderRadius.circular(50)),
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.check,
+                                      color: kWhiteColor,
+                                      size: 15,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 6),
+                                Text(
+                                  'Semester',
+                                  style: blackTextStyle.copyWith(fontSize: 16),
+                                ),
+                                Spacer(),
+                                Text('${state.hasilUkt.single.semester}',
+                                    style:
+                                        blackTextStyle.copyWith(fontSize: 16)),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 11),
+                          Flexible(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                AnimatedContainer(
+                                  duration: Duration(milliseconds: 500),
+                                  width: 16,
+                                  height: 16,
+                                  decoration: BoxDecoration(
+                                      color: state.hasilUkt.single.prodi != null
+                                          ? kGreenClor
+                                          : kTransparentColor,
+                                      border: state.hasilUkt.single.prodi !=
+                                              null
+                                          ? Border.all(color: kTransparentColor)
+                                          : Border.all(
+                                              color: Colors.grey.shade400),
+                                      borderRadius: BorderRadius.circular(50)),
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.check,
+                                      color: kWhiteColor,
+                                      size: 15,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 6),
+                                Text(
+                                  'Status Mahasiswa',
+                                  style: blackTextStyle.copyWith(fontSize: 16),
+                                ),
+                                Spacer(),
+                                Text(
+                                    '${state.hasilUkt.single.statusMhs}'
+                                        .toTitleCase(),
+                                    style:
+                                        blackTextStyle.copyWith(fontSize: 16)),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 11),
+                          Flexible(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                AnimatedContainer(
+                                  duration: Duration(milliseconds: 500),
+                                  width: 16,
+                                  height: 16,
+                                  decoration: BoxDecoration(
+                                      color: state.hasilUkt.single.prodi != null
+                                          ? kGreenClor
+                                          : kTransparentColor,
+                                      border: state.hasilUkt.single.prodi !=
+                                              null
+                                          ? Border.all(color: kTransparentColor)
+                                          : Border.all(
+                                              color: Colors.grey.shade400),
+                                      borderRadius: BorderRadius.circular(50)),
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.check,
+                                      color: kWhiteColor,
+                                      size: 15,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 6),
+                                Text(
+                                  'Penerima KIP',
+                                  style: blackTextStyle.copyWith(fontSize: 16),
+                                ),
+                                Spacer(),
+                                Text(
+                                    '${state.hasilUkt.single.kip}'
+                                        .toTitleCase(),
+                                    style:
+                                        blackTextStyle.copyWith(fontSize: 16)),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 11),
+                          Flexible(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                AnimatedContainer(
+                                  duration: Duration(milliseconds: 500),
+                                  width: 16,
+                                  height: 16,
+                                  decoration: BoxDecoration(
+                                      color: state.hasilUkt.single.prodi != null
+                                          ? kGreenClor
+                                          : kTransparentColor,
+                                      border: state.hasilUkt.single.prodi !=
+                                              null
+                                          ? Border.all(color: kTransparentColor)
+                                          : Border.all(
+                                              color: Colors.grey.shade400),
+                                      borderRadius: BorderRadius.circular(50)),
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.check,
+                                      color: kWhiteColor,
+                                      size: 15,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 6),
+                                Text(
+                                  'Penghasilan Ortu',
+                                  style: blackTextStyle.copyWith(fontSize: 16),
+                                ),
+                                Spacer(),
+                                Text(
+                                    '${state.hasilUkt.single.penghasilan}'
+                                        .toTitleCase(),
+                                    style:
+                                        blackTextStyle.copyWith(fontSize: 16)),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 11),
+                          Flexible(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                AnimatedContainer(
+                                  duration: Duration(milliseconds: 500),
+                                  width: 16,
+                                  height: 16,
+                                  decoration: BoxDecoration(
+                                      color: state.hasilUkt.single.prodi != null
+                                          ? kGreenClor
+                                          : kTransparentColor,
+                                      border: state.hasilUkt.single.prodi !=
+                                              null
+                                          ? Border.all(color: kTransparentColor)
+                                          : Border.all(
+                                              color: Colors.grey.shade400),
+                                      borderRadius: BorderRadius.circular(50)),
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.check,
+                                      color: kWhiteColor,
+                                      size: 15,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 6),
+                                Text(
+                                  'Jumlah Tanggungan',
+                                  style: blackTextStyle.copyWith(fontSize: 16),
+                                ),
+                                Spacer(),
+                                Text(
+                                    '${state.hasilUkt.single.tanggungan} Orang'
+                                        .toTitleCase(),
+                                    style:
+                                        blackTextStyle.copyWith(fontSize: 16)),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 11),
+                          Flexible(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                AnimatedContainer(
+                                  duration: Duration(milliseconds: 500),
+                                  width: 16,
+                                  height: 16,
+                                  decoration: BoxDecoration(
+                                      color: state.hasilUkt.single.prodi != null
+                                          ? kGreenClor
+                                          : kTransparentColor,
+                                      border: state.hasilUkt.single.prodi !=
+                                              null
+                                          ? Border.all(color: kTransparentColor)
+                                          : Border.all(
+                                              color: Colors.grey.shade400),
+                                      borderRadius: BorderRadius.circular(50)),
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.check,
+                                      color: kWhiteColor,
+                                      size: 15,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 6),
+                                Text(
+                                  'Penerima PKH',
+                                  style: blackTextStyle.copyWith(fontSize: 16),
+                                ),
+                                Spacer(),
+                                Text(
+                                    '${state.hasilUkt.single.pkh}'
+                                        .toTitleCase(),
+                                    style:
+                                        blackTextStyle.copyWith(fontSize: 16)),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 14),
+                          Flexible(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                AnimatedContainer(
+                                  duration: Duration(milliseconds: 500),
+                                  width: 18,
+                                  height: 18,
+                                  decoration: BoxDecoration(
+                                      color: state.hasilUkt.single.kelaykan !=
+                                              'layak'
+                                          ? kRedColor
+                                          : kGreenClor,
+                                      border: state.hasilUkt.single.prodi !=
+                                              null
+                                          ? Border.all(color: kTransparentColor)
+                                          : Border.all(
+                                              color: Colors.grey.shade400),
+                                      borderRadius: BorderRadius.circular(50)),
+                                  child: Center(
+                                    child: state.hasilUkt.single.kelaykan !=
+                                            'layak'
+                                        ? Icon(
+                                            CupertinoIcons.exclamationmark,
+                                            color: kWhiteColor,
+                                            size: 15,
+                                          )
+                                        : Icon(
+                                            Icons.check,
+                                            color: kWhiteColor,
+                                            size: 15,
+                                          ),
+                                  ),
+                                ),
+                                SizedBox(width: 6),
+                                Text(
+                                  'KEPUTUSAN',
+                                  style: blackTextStyle.copyWith(fontSize: 16),
+                                ),
+                                Spacer(),
+                                Text(
+                                    '${state.hasilUkt.single.kelaykan}'
+                                        .toUpperCase(),
+                                    style: state.hasilUkt.single.kelaykan !=
+                                            'layak'
+                                        ? redTextStyle.copyWith(fontSize: 16)
+                                        : blueTextStyle.copyWith(fontSize: 16)),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }
+        }
+        return Scaffold(
+          backgroundColor: kBarColor,
+          body: SafeArea(
+            child: Stack(
+              children: [
+                Center(
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 20),
+                      Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(),
+                            Text(
+                              'HASIL KEPUTUSAN',
+                              style: whiteTextStyle.copyWith(
+                                fontSize: 18,
+                                fontWeight: medium,
+                              ),
+                            ),
+                            SizedBox(),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 70),
+                  padding: EdgeInsets.symmetric(horizontal: 18, vertical: 20),
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: kBackgroundColor,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Text('Nuull'),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
+
+    // );
   }
 }

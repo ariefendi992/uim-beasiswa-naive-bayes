@@ -4,6 +4,7 @@ import 'package:ft_uim_naive_bayes/cubit/auth/auth_cubit.dart';
 import 'package:ft_uim_naive_bayes/cubit/kategori/prodi_cubit.dart';
 import 'package:ft_uim_naive_bayes/cubit/kategori/tanggungan_cubit.dart';
 import 'package:ft_uim_naive_bayes/cubit/page_cubit.dart';
+import 'package:ft_uim_naive_bayes/cubit/ukt/hasil_ukt_cubit.dart';
 import 'package:ft_uim_naive_bayes/cubit/ukt/training_ukt_cubit.dart';
 import 'package:ft_uim_naive_bayes/cubit/ukt/ukt_cubit.dart';
 import 'package:ft_uim_naive_bayes/cubit/upload/upload_cubit.dart';
@@ -41,6 +42,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => UploadCubit(),
+        ),
+        BlocProvider(
+          create: (context) => HasilUktCubit(),
         ),
       ],
       child: MaterialApp(
