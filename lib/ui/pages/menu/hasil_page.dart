@@ -178,11 +178,10 @@ class _HasilPageState extends State<HasilPage> {
                           Text(
                             'Hasil Keputusan',
                             style: blueTextStyle.copyWith(
-                              fontSize: 16,
                               fontWeight: semiBold,
                             ),
                           ),
-                          SizedBox(height: 8),
+                          SizedBox(height: 10),
                           Flexible(
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -213,16 +212,17 @@ class _HasilPageState extends State<HasilPage> {
                                 SizedBox(width: 6),
                                 Text(
                                   'Program Studi',
-                                  style: blackTextStyle.copyWith(fontSize: 16),
+                                  style: blackTextStyle.copyWith(
+                                      fontWeight: medium),
                                 ),
                                 Spacer(),
                                 Text('${state.hasilUkt.single.prodi}',
-                                    style:
-                                        blackTextStyle.copyWith(fontSize: 16)),
+                                    style: blackTextStyle.copyWith(
+                                        fontWeight: medium)),
                               ],
                             ),
                           ),
-                          SizedBox(height: 11),
+                          SizedBox(height: 16),
                           Flexible(
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -253,16 +253,17 @@ class _HasilPageState extends State<HasilPage> {
                                 SizedBox(width: 6),
                                 Text(
                                   'Semester',
-                                  style: blackTextStyle.copyWith(fontSize: 16),
+                                  style: blackTextStyle.copyWith(
+                                      fontWeight: medium),
                                 ),
                                 Spacer(),
                                 Text('${state.hasilUkt.single.semester}',
-                                    style:
-                                        blackTextStyle.copyWith(fontSize: 16)),
+                                    style: blackTextStyle.copyWith(
+                                        fontWeight: medium)),
                               ],
                             ),
                           ),
-                          SizedBox(height: 11),
+                          SizedBox(height: 16),
                           Flexible(
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -293,18 +294,19 @@ class _HasilPageState extends State<HasilPage> {
                                 SizedBox(width: 6),
                                 Text(
                                   'Status Mahasiswa',
-                                  style: blackTextStyle.copyWith(fontSize: 16),
+                                  style: blackTextStyle.copyWith(
+                                      fontWeight: medium),
                                 ),
                                 Spacer(),
                                 Text(
                                     '${state.hasilUkt.single.statusMhs}'
                                         .toTitleCase(),
-                                    style:
-                                        blackTextStyle.copyWith(fontSize: 16)),
+                                    style: blackTextStyle.copyWith(
+                                        fontWeight: medium)),
                               ],
                             ),
                           ),
-                          SizedBox(height: 11),
+                          SizedBox(height: 16),
                           Flexible(
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -335,18 +337,19 @@ class _HasilPageState extends State<HasilPage> {
                                 SizedBox(width: 6),
                                 Text(
                                   'Penerima KIP',
-                                  style: blackTextStyle.copyWith(fontSize: 16),
+                                  style: blackTextStyle.copyWith(
+                                      fontWeight: medium),
                                 ),
                                 Spacer(),
                                 Text(
                                     '${state.hasilUkt.single.kip}'
                                         .toTitleCase(),
-                                    style:
-                                        blackTextStyle.copyWith(fontSize: 16)),
+                                    style: blackTextStyle.copyWith(
+                                        fontWeight: medium)),
                               ],
                             ),
                           ),
-                          SizedBox(height: 11),
+                          SizedBox(height: 16),
                           Flexible(
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -377,18 +380,19 @@ class _HasilPageState extends State<HasilPage> {
                                 SizedBox(width: 6),
                                 Text(
                                   'Penghasilan Ortu',
-                                  style: blackTextStyle.copyWith(fontSize: 16),
+                                  style: blackTextStyle.copyWith(
+                                      fontWeight: medium),
                                 ),
                                 Spacer(),
                                 Text(
                                     '${state.hasilUkt.single.penghasilan}'
                                         .toTitleCase(),
-                                    style:
-                                        blackTextStyle.copyWith(fontSize: 16)),
+                                    style: blackTextStyle.copyWith(
+                                        fontWeight: medium)),
                               ],
                             ),
                           ),
-                          SizedBox(height: 11),
+                          SizedBox(height: 16),
                           Flexible(
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -419,18 +423,19 @@ class _HasilPageState extends State<HasilPage> {
                                 SizedBox(width: 6),
                                 Text(
                                   'Jumlah Tanggungan',
-                                  style: blackTextStyle.copyWith(fontSize: 16),
+                                  style: blackTextStyle.copyWith(
+                                      fontWeight: medium),
                                 ),
                                 Spacer(),
                                 Text(
                                     '${state.hasilUkt.single.tanggungan} Orang'
                                         .toTitleCase(),
-                                    style:
-                                        blackTextStyle.copyWith(fontSize: 16)),
+                                    style: blackTextStyle.copyWith(
+                                        fontWeight: medium)),
                               ],
                             ),
                           ),
-                          SizedBox(height: 11),
+                          SizedBox(height: 16),
                           Flexible(
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -460,19 +465,20 @@ class _HasilPageState extends State<HasilPage> {
                                 ),
                                 SizedBox(width: 6),
                                 Text(
-                                  'Penerima PKH',
-                                  style: blackTextStyle.copyWith(fontSize: 16),
+                                  'Penerma PKH',
+                                  style: blackTextStyle.copyWith(
+                                      fontWeight: medium),
                                 ),
                                 Spacer(),
                                 Text(
                                     '${state.hasilUkt.single.pkh}'
                                         .toTitleCase(),
-                                    style:
-                                        blackTextStyle.copyWith(fontSize: 16)),
+                                    style: blackTextStyle.copyWith(
+                                        fontWeight: medium)),
                               ],
                             ),
                           ),
-                          SizedBox(height: 14),
+                          SizedBox(height: 18),
                           Flexible(
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -511,7 +517,8 @@ class _HasilPageState extends State<HasilPage> {
                                 SizedBox(width: 6),
                                 Text(
                                   'KEPUTUSAN',
-                                  style: blackTextStyle.copyWith(fontSize: 16),
+                                  style: blackTextStyle.copyWith(
+                                      fontWeight: medium),
                                 ),
                                 Spacer(),
                                 Text(
@@ -519,8 +526,10 @@ class _HasilPageState extends State<HasilPage> {
                                         .toUpperCase(),
                                     style: state.hasilUkt.single.kelaykan !=
                                             'layak'
-                                        ? redTextStyle.copyWith(fontSize: 16)
-                                        : blueTextStyle.copyWith(fontSize: 16)),
+                                        ? redTextStyle.copyWith(
+                                            fontWeight: medium)
+                                        : blueTextStyle.copyWith(
+                                            fontWeight: medium)),
                               ],
                             ),
                           ),

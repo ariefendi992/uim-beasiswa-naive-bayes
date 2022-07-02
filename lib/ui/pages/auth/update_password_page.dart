@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ft_uim_naive_bayes/cubit/auth/auth_cubit.dart';
 import 'package:ft_uim_naive_bayes/cubit/page_cubit.dart';
+import 'package:ft_uim_naive_bayes/storage/storage.dart';
+import 'package:ft_uim_naive_bayes/ui/widgets/custom_button.dart';
 import 'package:ft_uim_naive_bayes/utils/theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -12,10 +15,11 @@ class UpdatePasswordPage extends StatefulWidget {
 }
 
 class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
-  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmasiPasswordController = TextEditingController();
   var focusNode = FocusNode();
   bool obscureText = true;
   bool isPasswordSixCharacters = false;
+  String? idUser;
 
   onPasswordChange(String password) {
     // final numericRegex = RegExp(r'[0-9]');
@@ -37,6 +41,15 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
   @override
   void initState() {
     super.initState();
+    getIdUser();
+  }
+
+  void getIdUser() async {
+    var id = await SecureStorages().readStorage('id_user');
+    setState(() {
+      idUser = id;
+      print('id user == $idUser');
+    });
   }
 
   @override
@@ -81,79 +94,31 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
             height: MediaQuery.of(context).size.height,
             child: Column(
               children: [
-                Row(
-                  children: [
-                    Icon(
-                      CupertinoIcons.padlock,
-                      size: 26,
-                      color: kBlueColor,
-                    ),
-                    SizedBox(width: 6),
-                    Flexible(
-                      child: TextFormField(
-                        focusNode: focusNode,
-                        cursorColor: kBlackColor,
-                        showCursor: false,
-                        obscureText: obscureText,
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all(10),
-                          labelText: 'Password Baru',
-                          labelStyle:
-                              TextStyle(color: kBlackColor, fontSize: 18),
-                          focusColor: kBlackColor,
-                          hoverColor: kGreyColor,
-                          border: InputBorder.none,
-                        ),
-                        controller: passwordController,
-                        onChanged: (password) => onPasswordChange(password),
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: showHide,
-                      icon: obscureText == false
-                          ? Icon(
-                              CupertinoIcons.eye,
-                              color: kBlueColor,
-                              size: 26,
-                            )
-                          : Icon(
-                              CupertinoIcons.eye_slash,
-                              size: 26,
-                            ),
-                    ),
-                  ],
-                ),
-                Divider(
-                  color: Colors.grey.shade400,
-                  height: 0,
-                ),
-
                 // ---------------- Konfirmasi password baru
-                const SizedBox(height: 18),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     Icon(
                       CupertinoIcons.padlock,
-                      size: 26,
+                      size: 24,
                       color: kBlueColor,
                     ),
                     SizedBox(width: 6),
                     Flexible(
                       child: TextFormField(
                         focusNode: focusNode,
-                        cursorColor: kBlackColor,
-                        showCursor: false,
+                        cursorColor: kGreyColor,
+                        showCursor: true,
                         obscureText: obscureText,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.all(10),
                           labelText: 'Password Baru',
-                          labelStyle:
-                              TextStyle(color: kBlackColor, fontSize: 18),
+                          labelStyle: TextStyle(color: kBlackColor),
                           focusColor: kBlackColor,
                           hoverColor: kGreyColor,
                           border: InputBorder.none,
                         ),
-                        controller: passwordController,
+                        controller: confirmasiPasswordController,
                         onChanged: (password) => onPasswordChange(password),
                       ),
                     ),
@@ -163,11 +128,11 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
                           ? Icon(
                               CupertinoIcons.eye,
                               color: kBlueColor,
-                              size: 26,
+                              size: 24,
                             )
                           : Icon(
                               CupertinoIcons.eye_slash,
-                              size: 26,
+                              size: 24,
                             ),
                     ),
                   ],
@@ -176,6 +141,66 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
                   color: Colors.grey.shade400,
                   height: 0,
                 ),
+                SizedBox(height: 10),
+                Row(
+                  children: [
+                    AnimatedContainer(
+                      duration: Duration(milliseconds: 550),
+                      child: Center(
+                        child: Icon(
+                          Icons.check,
+                          color: kWhiteColor,
+                          size: 15,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text("Panjang karakter minimsl 6")
+                  ],
+                ),
+                SizedBox(height: 80),
+                Container(
+                    height: 45,
+                    child: BlocConsumer<AuthCubit, AuthState>(
+                      listener: (context, state) {
+                        if (state is AuthSuccess) {
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (context) => UpdatePasswordPage(),
+                          //   ),
+                          // );
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              backgroundColor: kGreenClor,
+                              content: Text('Password telah diganti!.')));
+                          setState(() {
+                            context.read<AuthCubit>().getProfil();
+                          });
+                        }
+
+                        if (state is AuthFailed) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              backgroundColor: kRedColor,
+                              content: Text('${state.error}'),
+                            ),
+                          );
+                          print('${state.error}');
+                        }
+                      },
+                      builder: (context, state) {
+                        return CustomButton(
+                            width: double.infinity,
+                            hintText: 'Update Password',
+                            onPressed: () {
+                              context.read<AuthCubit>().updatePassword(
+                                  idUser: idUser!,
+                                  password: confirmasiPasswordController.text);
+                            });
+                      },
+                    )),
               ],
             ),
           ),

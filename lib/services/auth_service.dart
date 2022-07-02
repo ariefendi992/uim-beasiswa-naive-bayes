@@ -204,4 +204,28 @@ class AuthService {
       throw jsonResp['msg'];
     }
   }
+
+  Future<UserModel> updatePassword({
+    String? idUser,
+    String? password,
+  }) async {
+    var url = baseUrl + '/auth/update-password?id=$idUser';
+    var headers = {'Content-Type': 'application/json'};
+    var body = jsonEncode({'password': password});
+
+    var response = await http.put(
+      Uri.parse(url),
+      headers: headers,
+      body: body,
+    );
+
+    if (response.statusCode == 201) {
+      var jsonResp = jsonDecode(response.body);
+      UserModel users = UserModel.fromJson(jsonResp);
+      return users;
+    } else {
+      throw Exception(
+          'Gagal update password $url, status ${response.statusCode}');
+    }
+  }
 }

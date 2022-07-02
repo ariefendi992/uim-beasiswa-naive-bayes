@@ -120,15 +120,12 @@ class _CheckPasswordPageState extends State<CheckPasswordPage> {
                         focusNode: focusNode,
                         cursorColor: kBlackColor,
                         showCursor: false,
-                        // validator: (val) => val!.length < 6
-                        //     ? 'Password minimal 6 karakter'
-                        //     : '',
+
                         obscureText: obscureText,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.all(10),
                           labelText: 'Password Lama',
-                          labelStyle:
-                              TextStyle(color: kBlackColor, fontSize: 18),
+                          labelStyle: TextStyle(color: kBlackColor),
                           focusColor: kBlackColor,
                           hoverColor: kGreyColor,
                           border: InputBorder.none,
@@ -184,7 +181,7 @@ class _CheckPasswordPageState extends State<CheckPasswordPage> {
                     SizedBox(
                       width: 10,
                     ),
-                    Text("Panjang karakter minimsl 6")
+                    Text("Panjang karakter minimal 6")
                   ],
                 ),
                 Container(

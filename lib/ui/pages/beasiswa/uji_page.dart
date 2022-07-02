@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ft_uim_naive_bayes/cubit/auth/auth_cubit.dart';
 import 'package:ft_uim_naive_bayes/cubit/kategori/tanggungan_cubit.dart';
 import 'package:ft_uim_naive_bayes/cubit/page_cubit.dart';
+import 'package:ft_uim_naive_bayes/cubit/ukt/hasil_ukt_cubit.dart';
 import 'package:ft_uim_naive_bayes/cubit/ukt/ukt_cubit.dart';
 import 'package:ft_uim_naive_bayes/models/penghasilan_ortu_model.dart';
 import 'package:ft_uim_naive_bayes/models/prodi_model.dart';
@@ -66,16 +67,6 @@ class _UjiPageState extends State<UjiPage> {
 
   @override
   Widget build(BuildContext context) {
-    // Widget title() {
-    //   return Container(
-    //     margin: const EdgeInsets.only(top: 10),
-    //     child: Text(
-    //       'Uji Kelayakan'.toUpperCase(),
-    //       style: blackTextStyle.copyWith(fontSize: 20, fontWeight: medium),
-    //     ),
-    //   );
-    // }
-
     Widget formInput() {
       Widget inputNama() {
         return BlocBuilder<AuthCubit, AuthState>(
@@ -591,13 +582,50 @@ class _UjiPageState extends State<UjiPage> {
               scrollDirection: Axis.vertical,
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: defaultPadding),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // title(),
-                    formInput(),
-                    submitButton(),
-                  ],
+                child: BlocBuilder<HasilUktCubit, HasilUktState>(
+                  builder: (context, state) {
+                    if (state is HasilUktSuccess) {
+                      if (state.hasilUkt.length == 0) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // title(),
+                            formInput(),
+                            submitButton(),
+                          ],
+                        );
+                      } else {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            // title(),
+                            Container(
+                              width: double.infinity,
+                              height: MediaQuery.of(context).size.height,
+                              decoration:
+                                  BoxDecoration(color: kBackgroundColor),
+                              child: Center(
+                                child: Text(
+                                  "Ma'af.! Anda tidak dapat\nmelakukan uji data kembali.",
+                                  style: blueTextStyle.copyWith(
+                                      fontWeight: medium, fontSize: 16),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            )
+                          ],
+                        );
+                      }
+                    }
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // title(),
+                        formInput(),
+                        submitButton(),
+                      ],
+                    );
+                  },
                 ),
               ),
             ),

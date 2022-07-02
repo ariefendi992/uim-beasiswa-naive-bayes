@@ -16,7 +16,7 @@ class CustomMenuUtama extends StatelessWidget {
       elevation: 7,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
       child: Container(
-        width: 97,
+        width: 95,
         height: 95,
         padding: EdgeInsets.symmetric(horizontal: 2),
         // margin: EdgeInsets.only(right: 12, left: 12),
@@ -37,7 +37,7 @@ class CustomMenuUtama extends StatelessWidget {
               SizedBox(height: 6),
               Text(
                 title.toUpperCase(),
-                style: greyTextStyle.copyWith(fontWeight: medium, fontSize: 12),
+                style: greyTextStyle.copyWith(fontWeight: medium, fontSize: 10),
                 textAlign: TextAlign.center,
               )
             ],

@@ -48,17 +48,17 @@ class _HomePageState extends State<HomePage> {
                                 fontSize: 22, fontWeight: medium),
                           ),
                           SizedBox(height: 8),
-                          state.user.picture != null
-                              ? CircleAvatar(
-                                  radius: 32,
-                                  backgroundImage: NetworkImage(
-                                      '$imageUrl' '${state.user.picture}'),
-                                )
-                              : Icon(
+                          state.user.picture == null
+                              ? Icon(
                                   CupertinoIcons
                                       .person_crop_circle_badge_checkmark,
                                   size: 36,
                                   color: kWhiteColor,
+                                )
+                              : CircleAvatar(
+                                  radius: 32,
+                                  backgroundImage: NetworkImage(
+                                      '$imageUrl' '${state.user.picture}'),
                                 ),
                           SizedBox(height: 8),
                           Text(
