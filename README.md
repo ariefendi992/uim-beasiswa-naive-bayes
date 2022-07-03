@@ -2,7 +2,7 @@
 
 ## Penggunaan
 #### Menggunakan built-in yang sudah jadi
-Untuk versi rilisan terakhir dari [Halaman Rilis](https://github.com/ariefendi992/uim-beasiswa-naive-bayes/releases)
+Unduh versi rilisan terakhir dari [Halaman Rilis](https://github.com/ariefendi992/uim-beasiswa-naive-bayes/releases)
 
 #### Mengembangkan Project ini 
 - Clone the repository 'https://github.com/ariefendi992/uim-beasiswa-naive-bayes.git'
