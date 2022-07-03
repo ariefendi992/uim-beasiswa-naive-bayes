@@ -19,6 +19,3 @@ Untuk versi rilisan terakhir dari [Halaman Rilis](https://github.com/ariefendi99
 - Menggunakan Python Flask Framework
 - Halaman [Project API](https://github.com/ariefendi992/api-naive-bayes)
 
-
-#### SOSMED
-- [facebook](fb.com/arichilles)
