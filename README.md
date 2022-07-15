@@ -1,17 +1,20 @@
-# ft_uim_naive_bayes
+<h1 align="center">Naive Bayes Classifer Dengan Flutter & Flask</h1>
 
-A new Flutter project.
+## Penggunaan
+#### Menggunakan built-in yang sudah jadi
+Untuk versi rilisan terakhir dari [Halaman Rilis](https://github.com/ariefendi992/uim-beasiswa-naive-bayes/releases)
 
-## Getting Started
+#### Mengembangkan Project ini 
+- Clone the repository 'https://github.com/ariefendi992/uim-beasiswa-naive-bayes.git'
+- Install Package:
+    - http: ^0.13.3
+    - flutter_bloc: ^8.0.1
+    - equatable: ^2.0.3
+    - flutter_secure_storage: ^5.0.2
+    - change_app_package_name: ^1.0.0
+    - intl: ^0.17.0
+    - image_picker: ^0.8.3+2
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-"# uim-beasiswa-naive-bayes" 
+#### Project API 
+- Menggunakan Python Flask Framework
+- Halaman [Project API](https://github.com/ariefendi992/api-naive-bayes)

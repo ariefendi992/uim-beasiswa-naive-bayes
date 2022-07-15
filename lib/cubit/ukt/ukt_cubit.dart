@@ -12,7 +12,7 @@ class UktCubit extends Cubit<UktState> {
     required int idUser,
     required int idProdi,
     required int idSemester,
-    required String statusMhs,
+    // required String statusMhs,
     required String kip,
     required int idPenghasilan,
     required int idTanggungan,
@@ -25,7 +25,7 @@ class UktCubit extends Cubit<UktState> {
         idUser: idUser,
         idProdi: idProdi,
         idSemester: idSemester,
-        statusMhs: statusMhs,
+        // statusMhs: statusMhs,
         kip: kip,
         idPenghasilan: idPenghasilan,
         idTanggungan: idTanggungan,
@@ -37,6 +37,4 @@ class UktCubit extends Cubit<UktState> {
       emit(UktFailed(e.toString()));
     }
   }
-
-
 }

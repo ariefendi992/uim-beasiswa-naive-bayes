@@ -35,38 +35,38 @@ class _HasilPageState extends State<HasilPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: kBarColor,
-      body: SafeArea(
-        child: Stack(
-          children: [
-            Center(
-              child: Column(
+    return BlocBuilder<HasilUktCubit, HasilUktState>(
+      builder: (context, state) {
+        if (state is HasilUktLoading) {
+          return Scaffold(
+            backgroundColor: kBarColor,
+            body: SafeArea(
+              child: Stack(
                 children: [
-                  const SizedBox(height: 20),
-                  Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  Center(
+                    child: Column(
                       children: [
-                        SizedBox(),
-                        Text(
-                          'HASIL KEPUTUSAN',
-                          style: whiteTextStyle.copyWith(
-                            fontSize: 18,
-                            fontWeight: medium,
+                        const SizedBox(height: 20),
+                        Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(),
+                              Text(
+                                'HASIL KEPUTUSAN',
+                                style: whiteTextStyle.copyWith(
+                                  fontSize: 18,
+                                  fontWeight: medium,
+                                ),
+                              ),
+                              SizedBox(),
+                            ],
                           ),
                         ),
-                        SizedBox(),
                       ],
                     ),
                   ),
-                ],
-              ),
-            ),
-            BlocBuilder<HasilUktCubit, HasilUktState>(
-              builder: (context, state) {
-                if (state is HasilUktLoading) {
-                  return Container(
+                  Container(
                     margin: EdgeInsets.only(top: 70),
                     padding: EdgeInsets.symmetric(horizontal: 18, vertical: 20),
                     width: double.infinity,
@@ -77,10 +77,43 @@ class _HasilPageState extends State<HasilPage> {
                     child: Center(
                       child: CircularProgressIndicator(),
                     ),
-                  );
-                } else if (state is HasilUktSuccess) {
-                  if (state.hasilUkt.length == 0) {
-                    return Container(
+                  ),
+                ],
+              ),
+            ),
+          );
+        } else if (state is HasilUktSuccess) {
+          if (state.hasilUkt.length == 0) {
+            print('length ${state.hasilUkt.length}');
+            return Scaffold(
+              backgroundColor: kBarColor,
+              body: SafeArea(
+                child: Stack(
+                  children: [
+                    Center(
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 20),
+                          Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SizedBox(),
+                                Text(
+                                  'HASIL KEPUTUSAN',
+                                  style: whiteTextStyle.copyWith(
+                                    fontSize: 18,
+                                    fontWeight: medium,
+                                  ),
+                                ),
+                                SizedBox(),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
                       margin: EdgeInsets.only(top: 70),
                       padding:
                           EdgeInsets.symmetric(horizontal: 18, vertical: 20),
@@ -91,17 +124,46 @@ class _HasilPageState extends State<HasilPage> {
                       ),
                       child: Center(
                         child: Text(
-                          'Anda belum melakukan\nRegistrasi lanjutan',
+                          'Anda belum melakukan Registrasi lanjutan',
                           style: blackTextStyle.copyWith(
-                            fontSize: 18,
-                            fontWeight: medium,
-                          ),
-                          textAlign: TextAlign.center,
+                              fontSize: 18, fontWeight: medium),
                         ),
                       ),
-                    );
-                  } else {
-                    return Container(
+                    ),
+                  ],
+                ),
+              ),
+            );
+          } else {
+            return Scaffold(
+              backgroundColor: kBarColor,
+              body: SafeArea(
+                child: Stack(
+                  children: [
+                    Center(
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 20),
+                          Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SizedBox(),
+                                Text(
+                                  'HASIL KEPUTUSAN',
+                                  style: whiteTextStyle.copyWith(
+                                    fontSize: 18,
+                                    fontWeight: medium,
+                                  ),
+                                ),
+                                SizedBox(),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
                       margin: EdgeInsets.only(top: 70),
                       padding:
                           EdgeInsets.symmetric(horizontal: 18, vertical: 24),
@@ -196,6 +258,49 @@ class _HasilPageState extends State<HasilPage> {
                                 ),
                                 Spacer(),
                                 Text('${state.hasilUkt.single.semester}',
+                                    style: blackTextStyle.copyWith(
+                                        fontWeight: medium)),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 16),
+                          Flexible(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                AnimatedContainer(
+                                  duration: Duration(milliseconds: 500),
+                                  width: 16,
+                                  height: 16,
+                                  decoration: BoxDecoration(
+                                      color: state.hasilUkt.single.prodi != null
+                                          ? kGreenClor
+                                          : kTransparentColor,
+                                      border: state.hasilUkt.single.prodi !=
+                                              null
+                                          ? Border.all(color: kTransparentColor)
+                                          : Border.all(
+                                              color: Colors.grey.shade400),
+                                      borderRadius: BorderRadius.circular(50)),
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.check,
+                                      color: kWhiteColor,
+                                      size: 15,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 6),
+                                Text(
+                                  'Status Mahasiswa',
+                                  style: blackTextStyle.copyWith(
+                                      fontWeight: medium),
+                                ),
+                                Spacer(),
+                                Text(
+                                    '${state.hasilUkt.single.statusMhs}'
+                                        .toTitleCase(),
                                     style: blackTextStyle.copyWith(
                                         fontWeight: medium)),
                               ],
@@ -417,24 +522,55 @@ class _HasilPageState extends State<HasilPage> {
                                 ),
                                 Spacer(),
                                 Text(
-                                  '${state.hasilUkt.single.kelaykan}'
-                                      .toUpperCase(),
-                                  style:
-                                      state.hasilUkt.single.kelaykan != 'layak'
-                                          ? redTextStyle.copyWith(
-                                              fontWeight: medium)
-                                          : blueTextStyle.copyWith(
-                                              fontWeight: medium),
-                                ),
+                                    '${state.hasilUkt.single.kelaykan}'
+                                        .toUpperCase(),
+                                    style: state.hasilUkt.single.kelaykan !=
+                                            'layak'
+                                        ? redTextStyle.copyWith(
+                                            fontWeight: medium)
+                                        : blueTextStyle.copyWith(
+                                            fontWeight: medium)),
                               ],
                             ),
                           ),
                         ],
                       ),
-                    );
-                  }
-                }
-                return Container(
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }
+        }
+        return Scaffold(
+          backgroundColor: kBarColor,
+          body: SafeArea(
+            child: Stack(
+              children: [
+                Center(
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 20),
+                      Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(),
+                            Text(
+                              'HASIL KEPUTUSAN',
+                              style: whiteTextStyle.copyWith(
+                                fontSize: 18,
+                                fontWeight: medium,
+                              ),
+                            ),
+                            SizedBox(),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
                   margin: EdgeInsets.only(top: 70),
                   padding: EdgeInsets.symmetric(horizontal: 18, vertical: 20),
                   width: double.infinity,
@@ -442,22 +578,15 @@ class _HasilPageState extends State<HasilPage> {
                     color: kBackgroundColor,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: Center(
-                    child: Text(
-                      'Bad request',
-                      style: blackTextStyle.copyWith(
-                        fontSize: 18,
-                        fontWeight: medium,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                );
-              },
+                  child: Text('Nuull'),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
+
+    // );
   }
 }

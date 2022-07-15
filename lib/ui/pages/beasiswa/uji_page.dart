@@ -32,7 +32,7 @@ class _UjiPageState extends State<UjiPage> {
   Future<List<ProdiModel>>? prodi;
   Future<List<SemesterModel>>? semester;
   Future<List<PenghasilanOrtuModel>>? penghasilan;
-  String? selectStatusMhs, selectKip, selectPkh;
+  String? selectKip, selectPkh;
   int? idUser;
   TextEditingController namaUserController = TextEditingController();
 
@@ -56,7 +56,7 @@ class _UjiPageState extends State<UjiPage> {
   void setAtribut() async {
     await SecureStorages().setStorage('prodi', selectProdi!.jurusan);
     await SecureStorages().setStorage('semester', selectSemester!.semester);
-    await SecureStorages().setStorage('statusMhs', selectStatusMhs);
+    // await SecureStorages().setStorage('statusMhs', selectStatusMhs);
     await SecureStorages().setStorage('kip', selectKip);
     await SecureStorages()
         .setStorage('penghasilan', selectPenghasilan!.keterangan);
@@ -219,53 +219,53 @@ class _UjiPageState extends State<UjiPage> {
         );
       }
 
-      Widget inputStatusMhs() {
-        Map<String, dynamic> statusMhs = {
-          'aktif': 'Aktif',
-          'cuti': 'Cuti',
-        };
+      // Widget inputStatusMhs() {
+      //   Map<String, dynamic> statusMhs = {
+      //     'aktif': 'Aktif',
+      //     'cuti': 'Cuti',
+      //   };
 
-        return Container(
-          margin: const EdgeInsets.only(top: 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Status Mahasiswa',
-                style: blackTextStyle,
-              ),
-              SizedBox(height: 6),
-              DropdownButtonFormField(
-                hint: Text('.:: Pilih ::.'),
-                value: selectStatusMhs,
-                decoration: InputDecoration(
-                  contentPadding: EdgeInsets.all(14),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(defaultRadius),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(defaultRadius),
-                  ),
-                  focusColor: kBlackColor,
-                ),
-                items: statusMhs.entries.map((value) {
-                  return DropdownMenuItem(
-                    child: Text(value.value),
-                    value: value.key,
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    selectStatusMhs = value.toString();
+      //   return Container(
+      //     margin: const EdgeInsets.only(top: 10),
+      //     child: Column(
+      //       crossAxisAlignment: CrossAxisAlignment.start,
+      //       children: [
+      //         Text(
+      //           'Status Mahasiswa',
+      //           style: blackTextStyle,
+      //         ),
+      //         SizedBox(height: 6),
+      //         DropdownButtonFormField(
+      //           hint: Text('.:: Pilih ::.'),
+      //           value: selectStatusMhs,
+      //           decoration: InputDecoration(
+      //             contentPadding: EdgeInsets.all(14),
+      //             border: OutlineInputBorder(
+      //               borderRadius: BorderRadius.circular(defaultRadius),
+      //             ),
+      //             focusedBorder: OutlineInputBorder(
+      //               borderRadius: BorderRadius.circular(defaultRadius),
+      //             ),
+      //             focusColor: kBlackColor,
+      //           ),
+      //           items: statusMhs.entries.map((value) {
+      //             return DropdownMenuItem(
+      //               child: Text(value.value),
+      //               value: value.key,
+      //             );
+      //           }).toList(),
+      //           onChanged: (value) {
+      //             setState(() {
+      //               selectStatusMhs = value.toString();
 
-                    print(value);
-                  });
-                },
-              ),
-            ],
-          ),
-        );
-      }
+      //               print(value);
+      //             });
+      //           },
+      //         ),
+      //       ],
+      //     ),
+      //   );
+      // }
 
       Widget inputKip() {
         Map<String, dynamic> statusKip = {
@@ -493,7 +493,7 @@ class _UjiPageState extends State<UjiPage> {
                   inputNama(),
                   inputProdi(),
                   inputSemester(),
-                  inputStatusMhs(),
+                  // inputStatusMhs(),
                   inputKip(),
                   inputPenghasilanOrtu(),
                   inputTanggungan(state.tanggungan),
@@ -550,7 +550,7 @@ class _UjiPageState extends State<UjiPage> {
                     idUser: idUser!,
                     idProdi: selectProdi!.id!,
                     idSemester: selectSemester!.id,
-                    statusMhs: selectStatusMhs!,
+                    // statusMhs: selectStatusMhs!,
                     kip: selectKip!,
                     idPenghasilan: selectPenghasilan!.id,
                     idTanggungan: selectTanggungan!.id,
