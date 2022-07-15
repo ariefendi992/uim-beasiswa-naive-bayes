@@ -2,7 +2,11 @@
 
 ## Penggunaan
 #### Menggunakan built-in yang sudah jadi
+<<<<<<< HEAD
 Untuk versi rilisan terakhir dari [Halaman Rilis](https://github.com/ariefendi992/uim-beasiswa-naive-bayes/releases)
+=======
+Unduh versi rilisan terakhir dari [Halaman Rilis](https://github.com/ariefendi992/uim-beasiswa-naive-bayes/releases)
+>>>>>>> 90b2975d9324047ef307e9bf5d9de319bae526bf
 
 #### Mengembangkan Project ini 
 - Clone the repository 'https://github.com/ariefendi992/uim-beasiswa-naive-bayes.git'
@@ -18,3 +22,7 @@ Untuk versi rilisan terakhir dari [Halaman Rilis](https://github.com/ariefendi99
 #### Project API 
 - Menggunakan Python Flask Framework
 - Halaman [Project API](https://github.com/ariefendi992/api-naive-bayes)
+<<<<<<< HEAD
+=======
+
+>>>>>>> 90b2975d9324047ef307e9bf5d9de319bae526bf
