@@ -118,6 +118,7 @@ class _LoginPageState extends State<LoginPage> {
                 BlocConsumer<AuthCubit, AuthState>(
                   listener: (context, state) {
                     if (state is AuthSuccess) {
+                      context.read<AuthCubit>().getProfil();
                       Navigator.pushNamedAndRemoveUntil(
                           context, '/main', (route) => false);
                       print('state = ${state.props}');

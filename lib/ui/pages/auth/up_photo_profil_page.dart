@@ -3,7 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ft_uim_naive_bayes/cubit/auth/auth_cubit.dart';
 import 'package:ft_uim_naive_bayes/cubit/upload/upload_cubit.dart';
+import 'package:ft_uim_naive_bayes/models/user_model.dart';
 import 'package:ft_uim_naive_bayes/storage/storage.dart';
+import 'package:ft_uim_naive_bayes/ui/pages/menu/ubah_profil_page.dart';
 import 'package:ft_uim_naive_bayes/utils/theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ft_uim_naive_bayes/utils/url.dart';
@@ -18,6 +20,7 @@ class UploadPoho extends StatefulWidget {
 }
 
 class _UploadPohoState extends State<UploadPoho> {
+  late final UserModel users;
   File? imageFile;
   String? idUser;
 
@@ -62,7 +65,7 @@ class _UploadPohoState extends State<UploadPoho> {
     super.initState();
     this.imageFile = imageFile;
     getIdUser();
-    
+
     context.read<AuthCubit>().getProfil();
   }
 
@@ -178,10 +181,10 @@ class _UploadPohoState extends State<UploadPoho> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            Navigator.pushNamedAndRemoveUntil(
-                                context, '/main', (route) => false);
-                            // Navigator.pushNamedAndRemoveUntil(
-                            //     context, '/main', (route) => false);
+                            Navigator.pushReplacement(context,
+                                MaterialPageRoute(builder: (context) {
+                              return UbahProfilPage(users);
+                            }));
                           },
                           child: Icon(
                             CupertinoIcons.arrow_left,

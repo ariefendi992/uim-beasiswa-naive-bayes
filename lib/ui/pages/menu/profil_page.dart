@@ -1,14 +1,12 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ft_uim_naive_bayes/cubit/auth/auth_cubit.dart';
 import 'package:ft_uim_naive_bayes/cubit/page_cubit.dart';
+import 'package:ft_uim_naive_bayes/models/user_model.dart';
 import 'package:ft_uim_naive_bayes/ui/pages/auth/check_password_page.dart';
-import 'package:ft_uim_naive_bayes/ui/pages/auth/up_photo_profil_page.dart';
 import 'package:ft_uim_naive_bayes/ui/pages/beasiswa/syarat_ketentuan_page.dart';
-// import 'package:ft_uim_naive_bayes/storage/storage.dart';
+import 'package:ft_uim_naive_bayes/ui/pages/menu/ubah_profil_page.dart';
 import 'package:ft_uim_naive_bayes/ui/widgets/custom_button.dart';
 import 'package:ft_uim_naive_bayes/ui/widgets/cuttom_background_menu_akun.dart';
 import 'package:ft_uim_naive_bayes/ui/widgets/cuttom_button_akun.dart';
@@ -22,14 +20,19 @@ class ProfilPage extends StatefulWidget {
 }
 
 class _ProfilPageState extends State<ProfilPage> {
-  FutureOr onGoBack(dynamic value) {
-    setState(() {});
-  }
-
+  UserModel? user;
   @override
   void initState() {
     super.initState();
   }
+
+  // Future navigateEditUserForm(BuildContext context, UserModel users) async {
+  //   var result = Navigator.push(context, MaterialPageRoute(builder: (context) {
+  //     return UbahProfilForm(users);
+  //   }));
+
+  //   return result;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -96,22 +99,33 @@ class _ProfilPageState extends State<ProfilPage> {
                           );
                         },
                       ),
-                      CustomButtonAkun(
-                        text: 'Ubah Foto Profil',
-                        onPressed: () {
-                          Route route = MaterialPageRoute(
-                              builder: (context) => UploadPoho());
-                          setState(() {
-                            Navigator.pushAndRemoveUntil(
-                                context, route, (route) => false);
-                          });
-
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => UploadPoho(),
-                          //   ),
-                          // );
+                      BlocConsumer<AuthCubit, AuthState>(
+                        listener: (context, state) {
+                          if (state is AuthInitial) {}
+                        },
+                        builder: (context, state) {
+                          if (state is AuthSuccess) {
+                            return CustomButtonAkun(
+                              text: 'Ubah Profil',
+                              onPressed: () {
+                                setState(() {
+                                  print('${state.user}');
+                                });
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            UbahProfilPage(state.user)));
+                                // Navigator.push(context,
+                                //     MaterialPageRoute(builder: (context) {
+                                //   return UbahProfilForm(users!);
+                                // }));
+                                // await navigateEditUserForm(context, user);
+                              },
+                            );
+                          }
+                          return CustomButton(
+                              hintText: 'Ubah Profil', onPressed: () {});
                         },
                       ),
                     ],

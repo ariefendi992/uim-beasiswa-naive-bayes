@@ -39,6 +39,7 @@ class _HomePageState extends State<HomePage> {
               child: Center(
                 child: BlocBuilder<AuthCubit, AuthState>(
                   builder: (context, state) {
+                    print('state home user $state');
                     if (state is AuthSuccess) {
                       return Column(
                         children: [
@@ -56,9 +57,13 @@ class _HomePageState extends State<HomePage> {
                                   color: kWhiteColor,
                                 )
                               : CircleAvatar(
-                                  radius: 32,
-                                  backgroundImage: NetworkImage(
-                                      '$imageUrl' '${state.user.picture}'),
+                                  radius: 45,
+                                  backgroundColor: kWhiteColor,
+                                  child: CircleAvatar(
+                                    radius: 40,
+                                    backgroundImage: NetworkImage(
+                                        '$imageUrl' '${state.user.picture}'),
+                                  ),
                                 ),
                           SizedBox(height: 8),
                           Text(
@@ -89,7 +94,7 @@ class _HomePageState extends State<HomePage> {
             Container(
               width: double.infinity,
               height: MediaQuery.of(context).size.height,
-              margin: EdgeInsets.only(top: 240),
+              margin: EdgeInsets.only(top: 245),
               padding: EdgeInsets.symmetric(horizontal: 12, vertical: 24),
               decoration: BoxDecoration(
                 color: kBackgroundColor,
@@ -99,7 +104,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(top: 215),
+              margin: EdgeInsets.only(top: 230),
               padding: EdgeInsets.symmetric(horizontal: 12),
               child: Center(
                 child: Column(
