@@ -6,21 +6,23 @@ class CustomButton extends StatelessWidget {
   final double width;
   final Function() onPressed;
   final EdgeInsets margin;
+  final double height;
 
-  const CustomButton({
-    Key? key,
-    required this.hintText,
-    required this.onPressed,
-    this.width = double.infinity,
-    this.margin = EdgeInsets.zero,
-  }) : super(key: key);
+  const CustomButton(
+      {Key? key,
+      required this.hintText,
+      required this.onPressed,
+      this.width = double.infinity,
+      this.margin = EdgeInsets.zero,
+      this.height = 55})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: margin,
       width: width,
-      height: 55,
+      height: height,
       child: TextButton(
         onPressed: onPressed,
         child: Text(

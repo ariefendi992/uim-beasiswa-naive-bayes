@@ -7,6 +7,7 @@ import 'package:ft_uim_naive_bayes/models/user_model.dart';
 import 'package:ft_uim_naive_bayes/ui/pages/auth/check_password_page.dart';
 import 'package:ft_uim_naive_bayes/ui/pages/beasiswa/syarat_ketentuan_page.dart';
 import 'package:ft_uim_naive_bayes/ui/pages/menu/ubah_profil_page.dart';
+import 'package:ft_uim_naive_bayes/ui/pages/menu/upload_berkas_page.dart';
 import 'package:ft_uim_naive_bayes/ui/widgets/custom_button.dart';
 import 'package:ft_uim_naive_bayes/ui/widgets/cuttom_background_menu_akun.dart';
 import 'package:ft_uim_naive_bayes/ui/widgets/cuttom_button_akun.dart';
@@ -124,12 +125,24 @@ class _ProfilPageState extends State<ProfilPage> {
                               },
                             );
                           }
-                          return CustomButton(
-                              hintText: 'Ubah Profil', onPressed: () {});
+                          return CustomButtonAkun(
+                              text: 'Ubah Profil', onPressed: () {});
+                        },
+                      ),
+                      CustomButtonAkun(
+                        text: 'Upload Berkas',
+                        onPressed: () {
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => UploadBerkasPage(),
+                              ),
+                              (route) => false);
                         },
                       ),
                     ],
                   ),
+
                   Container(
                     margin: EdgeInsets.only(left: 12, bottom: 10),
                     child: Text(

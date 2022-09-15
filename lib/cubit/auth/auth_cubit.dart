@@ -108,4 +108,29 @@ class AuthCubit extends Cubit<AuthState> {
       emit(AuthFailed(e.toString()));
     }
   }
+
+  void editUser({
+    required String idUser,
+    required String nama,
+    required String stambuk,
+    required String prodi,
+    required String gender,
+    required String email,
+  }) async {
+    try {
+      emit(AuthLoading());
+      UserModel users = await AuthService().editUser(
+        idUser: idUser,
+        nama: nama,
+        stambuk: stambuk,
+        prodi: prodi,
+        gender: gender,
+        email: email,
+      );
+
+      emit(AuthSuccess(users));
+    } catch (e) {
+      emit(AuthFailed(e.toString()));
+    }
+  }
 }

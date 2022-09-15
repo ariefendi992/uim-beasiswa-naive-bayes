@@ -3,14 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ft_uim_naive_bayes/cubit/auth/auth_cubit.dart';
 import 'package:ft_uim_naive_bayes/cubit/upload/upload_cubit.dart';
-import 'package:ft_uim_naive_bayes/models/user_model.dart';
 import 'package:ft_uim_naive_bayes/storage/storage.dart';
-import 'package:ft_uim_naive_bayes/ui/pages/menu/ubah_profil_page.dart';
 import 'package:ft_uim_naive_bayes/utils/theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ft_uim_naive_bayes/utils/url.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:http/http.dart' as http;
 
 class UploadPoho extends StatefulWidget {
   const UploadPoho({Key? key}) : super(key: key);
@@ -20,7 +16,6 @@ class UploadPoho extends StatefulWidget {
 }
 
 class _UploadPohoState extends State<UploadPoho> {
-  late final UserModel users;
   File? imageFile;
   String? idUser;
 
@@ -29,28 +24,29 @@ class _UploadPohoState extends State<UploadPoho> {
     final XFile? imagePicked =
         await picker.pickImage(source: ImageSource.gallery);
     imageFile = File(imagePicked!.path);
+    print('get images === $imageFile');
     setState(() {});
   }
 
-  void uploadImage() async {
-    final url = '$baseUrl/auth/update-picture?id=$idUser';
-    final request = http.MultipartRequest('PUT', Uri.parse(url));
-    request.files.add(http.MultipartFile(
-        'file', imageFile!.readAsBytes().asStream(), imageFile!.lengthSync(),
-        filename: imageFile!.path.split('/').last));
+  // void uploadImage() async {
+  //   final url = '$baseUrl/auth/update-picture?id=$idUser';
+  //   final request = http.MultipartRequest('PUT', Uri.parse(url));
+  //   request.files.add(http.MultipartFile(
+  //       'file', imageFile!.readAsBytes().asStream(), imageFile!.lengthSync(),
+  //       filename: imageFile!.path.split('/').last));
 
-    final response = await request.send();
+  //   final response = await request.send();
 
-    if (response.statusCode == 200) {
-      print(await response.stream.bytesToString());
-    } else {
-      print(response.reasonPhrase);
-    }
+  //   if (response.statusCode == 200) {
+  //     print(await response.stream.bytesToString());
+  //   } else {
+  //     print(response.reasonPhrase);
+  //   }
 
-    // setState(() {
+  //   // setState(() {
 
-    // });
-  }
+  //   // });
+  // }
 
   void getIdUser() async {
     var id = await SecureStorages().readStorage('id_user');
@@ -181,10 +177,11 @@ class _UploadPohoState extends State<UploadPoho> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            Navigator.pushReplacement(context,
-                                MaterialPageRoute(builder: (context) {
-                              return UbahProfilPage(users);
-                            }));
+                            context.read<AuthCubit>().getProfil();
+                            Navigator.pushNamedAndRemoveUntil(
+                                context, '/main', (route) => false);
+                            // Navigator.pushNamedAndRemoveUntil(
+                            //     context, '/main', (route) => false);
                           },
                           child: Icon(
                             CupertinoIcons.arrow_left,

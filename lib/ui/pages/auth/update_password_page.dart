@@ -48,7 +48,7 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
     var id = await SecureStorages().readStorage('id_user');
     setState(() {
       idUser = id;
-      print('id user == $idUser');
+      // print('id user == $idUser');
     });
   }
 

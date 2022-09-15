@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ft_uim_naive_bayes/cubit/auth/auth_cubit.dart';
 import 'package:ft_uim_naive_bayes/cubit/page_cubit.dart';
 import 'package:ft_uim_naive_bayes/models/user_model.dart';
+import 'package:ft_uim_naive_bayes/storage/storage.dart';
 import 'package:ft_uim_naive_bayes/ui/pages/auth/up_photo_profil_page.dart';
 import 'package:ft_uim_naive_bayes/ui/widgets/custom_button.dart';
 import 'package:ft_uim_naive_bayes/ui/widgets/custom_field_edit_profil.dart';
@@ -18,106 +20,69 @@ class UbahProfilPage extends StatefulWidget {
 }
 
 class _UbahProfilPageState extends State<UbahProfilPage> {
-  late bool readOnly, stambukReadOnly, prodiRO;
+  late bool readOnly, stambukReadOnly, prodiRO, genderRO, emailRO;
   late FocusNode myFocusNode;
   late FocusNode stambukFocusNode;
-  late FocusNode prodiFocus;
+  late FocusNode prodiFocus, genderFocus, emailFocus;
   late TextEditingController namaController = TextEditingController();
   late TextEditingController stambukController = TextEditingController();
   late TextEditingController prodiController = TextEditingController();
+  late TextEditingController genderController = TextEditingController();
+  late TextEditingController emailController = TextEditingController();
+  String? idUser;
 
   @override
   void initState() {
     super.initState();
-
+    getIdUser();
     readOnly = true;
     stambukReadOnly = true;
     prodiRO = true;
+    emailRO = true;
+    genderRO = true;
     myFocusNode = FocusNode();
     prodiFocus = FocusNode();
+    genderFocus = FocusNode();
+    emailFocus = FocusNode();
     stambukFocusNode = FocusNode();
     namaController.text = '${widget.users.nama}';
     stambukController.text = '${widget.users.stambuk}';
     prodiController.text = '${widget.users.prodi}';
+    genderController.text = '${widget.users.gender}';
+    emailController.text = '${widget.users.email}';
   }
 
   @override
   void dispose() {
     super.dispose();
     myFocusNode.dispose();
+    stambukFocusNode.dispose();
+    prodiFocus.dispose();
+    genderFocus.dispose();
+    emailFocus.dispose();
     namaController.dispose();
     stambukController.dispose();
-    stambukFocusNode.dispose();
     prodiController.dispose();
-    prodiFocus.dispose();
+    genderController.dispose();
+    emailController.dispose();
+  }
+
+  void getIdUser() async {
+    var id = await SecureStorages().readStorage('id_user');
+    print('id user = $id');
+    setState(() {
+      idUser = id;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kBackgroundColor,
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Container(
-                margin: const EdgeInsets.only(top: 260),
-                padding: EdgeInsets.symmetric(horizontal: defaultPadding),
-                child: Column(
-                  children: <Widget>[
-                    CustomFieldProfil(
-                      controller: namaController,
-                      label: 'Nama Lengkap',
-                      readOnly: readOnly,
-                      focusNode: myFocusNode,
-                      onPressed: () {
-                        setState(() {
-                          myFocusNode.requestFocus();
-                          readOnly = false;
-                          stambukReadOnly = true;
-                          prodiRO = true;
-                        });
-                      },
-                    ),
-                    CustomFieldProfil(
-                      controller: stambukController,
-                      label: 'Stambuk',
-                      readOnly: stambukReadOnly,
-                      focusNode: stambukFocusNode,
-                      onPressed: () {
-                        setState(() {
-                          stambukFocusNode.requestFocus();
-                          stambukReadOnly = false;
-                          prodiRO = true;
-                          readOnly = true;
-                        });
-                      },
-                    ),
-                    CustomFieldProfil(
-                      controller: prodiController,
-                      label: 'Prodi',
-                      readOnly: prodiRO,
-                      focusNode: prodiFocus,
-                      onPressed: () {
-                        setState(() {
-                          prodiFocus.requestFocus();
-                          prodiRO = false;
-                          readOnly = true;
-                          stambukReadOnly = true;
-                        });
-                      },
-                    ),
-                    CustomButton(
-                        margin: const EdgeInsets.only(top: 30),
-                        hintText: 'Simpan',
-                        onPressed: () {
-                          print('nama = ${namaController.text}');
-                        })
-                  ],
-                )),
-          ),
+      body: ListView(
+        shrinkWrap: true,
+        children: <Widget>[
           Container(
-            height: 235,
             width: double.infinity,
             padding: EdgeInsets.symmetric(horizontal: defaultPadding),
             decoration: BoxDecoration(
@@ -198,6 +163,125 @@ class _UbahProfilPageState extends State<UbahProfilPage> {
               ),
             ),
           ),
+          Container(
+              margin: const EdgeInsets.only(top: 20),
+              padding: EdgeInsets.symmetric(horizontal: defaultPadding),
+              child: Column(
+                children: <Widget>[
+                  CustomFieldProfil(
+                    controller: namaController,
+                    label: 'Nama Lengkap',
+                    readOnly: readOnly,
+                    focusNode: myFocusNode,
+                    onPressed: () {
+                      setState(() {
+                        myFocusNode.requestFocus();
+                        readOnly = false;
+                        stambukReadOnly = true;
+                        prodiRO = true;
+                        genderRO = true;
+                        emailRO = true;
+                      });
+                    },
+                  ),
+                  CustomFieldProfil(
+                    controller: stambukController,
+                    label: 'Stambuk',
+                    readOnly: stambukReadOnly,
+                    focusNode: stambukFocusNode,
+                    onPressed: () {
+                      setState(() {
+                        stambukFocusNode.requestFocus();
+                        stambukReadOnly = false;
+                        prodiRO = true;
+                        readOnly = true;
+                        genderRO = true;
+                        emailRO = true;
+                      });
+                    },
+                  ),
+                  CustomFieldProfil(
+                    controller: prodiController,
+                    label: 'Prodi',
+                    readOnly: prodiRO,
+                    focusNode: prodiFocus,
+                    onPressed: () {
+                      setState(() {
+                        prodiFocus.requestFocus();
+                        prodiRO = false;
+                        readOnly = true;
+                        stambukReadOnly = true;
+                        genderRO = true;
+                        emailRO = true;
+                      });
+                    },
+                  ),
+                  CustomFieldProfil(
+                    controller: genderController,
+                    label: 'Jenis Kelamin',
+                    readOnly: genderRO,
+                    focusNode: genderFocus,
+                    onPressed: () {
+                      setState(() {
+                        genderFocus.requestFocus();
+                        genderRO = false;
+                        readOnly = true;
+                        stambukReadOnly = true;
+                        prodiRO = true;
+                        emailRO = true;
+                      });
+                    },
+                  ),
+                  CustomFieldProfil(
+                    controller: emailController,
+                    label: 'E-Mail',
+                    readOnly: emailRO,
+                    focusNode: emailFocus,
+                    onPressed: () {
+                      setState(() {
+                        emailFocus.requestFocus();
+                        readOnly = true;
+                        stambukReadOnly = true;
+                        prodiRO = true;
+                        genderRO = true;
+                        emailRO = false;
+                      });
+                    },
+                  ),
+                  BlocConsumer<AuthCubit, AuthState>(
+                    listener: (context, state) {
+                      if (state is AuthSuccess) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          backgroundColor: kBlueColor,
+                          content: Text(
+                            'Data telah di perbaharui.',
+                            style: whiteTextStyle.copyWith(),
+                          ),
+                        ));
+                      }
+                    },
+                    builder: (context, state) {
+                      return Container(
+                        padding: EdgeInsets.symmetric(horizontal: 40),
+                        child: CustomButton(
+                            margin: const EdgeInsets.only(top: 20),
+                            height: 45,
+                            hintText: 'Simpan',
+                            onPressed: () {
+                              context.read<AuthCubit>().editUser(
+                                    idUser: idUser!,
+                                    nama: namaController.text,
+                                    stambuk: stambukController.text,
+                                    prodi: prodiController.text,
+                                    gender: genderController.text.toLowerCase(),
+                                    email: emailController.text,
+                                  );
+                            }),
+                      );
+                    },
+                  )
+                ],
+              )),
         ],
       ),
     );

@@ -228,4 +228,37 @@ class AuthService {
           'Gagal update password $url, status ${response.statusCode}');
     }
   }
+
+  Future<UserModel> editUser({
+    String? idUser,
+    nama,
+    stambuk,
+    prodi,
+    gender,
+    email,
+  }) async {
+    var url = baseUrl + '/auth/edit-user?id=$idUser';
+    var headers = {'Content-Type': 'application/json'};
+    var body = jsonEncode({
+      'nama': nama,
+      'stambuk': stambuk,
+      'prodi': prodi,
+      'gender': gender,
+      'email': email,
+    });
+    var response = await http.put(
+      Uri.parse(url),
+      headers: headers,
+      body: body,
+    );
+
+    if (response.statusCode == 201) {
+      var jsonResp = jsonDecode(response.body);
+      UserModel users = UserModel.fromJson(jsonResp);
+      return users;
+    } else {
+      throw Exception(
+          'Gagal Memuat Data $url, status code : ${response.statusCode}');
+    }
+  }
 }
