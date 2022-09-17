@@ -16,7 +16,7 @@ class CustomMenuUtama extends StatelessWidget {
       elevation: 7,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
       child: Container(
-        width: 85,
+        width: MediaQuery.of(context).size.width / 4,
         height: 90,
         padding: EdgeInsets.symmetric(horizontal: 2),
         // margin: EdgeInsets.only(right: 12, left: 12),

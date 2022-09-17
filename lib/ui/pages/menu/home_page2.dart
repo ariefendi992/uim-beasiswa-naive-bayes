@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,6 +24,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     setState(() {});
+    context.read<AuthCubit>().getProfil();
   }
 
   @override
@@ -92,118 +92,112 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Container(
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height,
-              margin: EdgeInsets.only(top: 245),
-              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 24),
-              decoration: BoxDecoration(
-                color: kBackgroundColor,
-                borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(20),
-                ),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 230),
+              margin: EdgeInsets.only(top: 250),
               padding: EdgeInsets.symmetric(horizontal: 12),
+              decoration: BoxDecoration(
+                  color: kBackgroundColor,
+                  borderRadius: BorderRadius.circular(18)),
               child: Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Route route = MaterialPageRoute(
-                                builder: (context) => PenerimaPage());
-                            Navigator.pushAndRemoveUntil(
-                                context, route, (route) => false);
-                          },
-                          child: CustomMenuUtama(
-                            title: 'Data Training',
-                            icons: CupertinoIcons.square_list,
+                child: Padding(
+                  padding: const EdgeInsets.all(18.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Route route = MaterialPageRoute(
+                                  builder: (context) => PenerimaPage());
+                              Navigator.pushAndRemoveUntil(
+                                  context, route, (route) => false);
+                            },
+                            child: CustomMenuUtama(
+                              title: 'Data Training',
+                              icons: CupertinoIcons.square_list,
+                            ),
                           ),
-                        ),
-                        SizedBox(width: 18),
-                        GestureDetector(
-                          onTap: () {
-                            Route route = MaterialPageRoute(
-                                builder: (context) => UjiPage());
-                            Navigator.pushAndRemoveUntil(
-                                context, route, (route) => false);
-                          },
-                          child: CustomMenuUtama(
-                            title: 'Form Registrasi',
-                            icons: CupertinoIcons.question_square,
+                          SizedBox(width: 18),
+                          GestureDetector(
+                            onTap: () {
+                              Route route = MaterialPageRoute(
+                                  builder: (context) => UjiPage());
+                              Navigator.pushAndRemoveUntil(
+                                  context, route, (route) => false);
+                            },
+                            child: CustomMenuUtama(
+                              title: 'Form Registrasi',
+                              icons: CupertinoIcons.question_square,
+                            ),
                           ),
-                        ),
-                        SizedBox(width: 18),
-                        GestureDetector(
-                          onTap: () {
-                            context.read<PageCubit>().setPage(2);
-                            Navigator.pushNamed(context, '/main');
-                          },
-                          child: CustomMenuUtama(
-                            title: 'Hasil Keputusan',
-                            icons: Icons.checklist_rounded,
+                          SizedBox(width: 18),
+                          GestureDetector(
+                            onTap: () {
+                              context.read<PageCubit>().setPage(2);
+                              Navigator.pushNamed(context, '/main');
+                            },
+                            child: CustomMenuUtama(
+                              title: 'Hasil Keputusan',
+                              icons: Icons.checklist_rounded,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 12),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pushAndRemoveUntil(
+                        ],
+                      ),
+                      SizedBox(height: 12),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => UploadPoho(),
+                                  ),
+                                  (route) => false);
+                            },
+                            child: CustomMenuUtama(
+                              title: 'Ubah Photo Profil',
+                              icons: CupertinoIcons.profile_circled,
+                            ),
+                          ),
+                          SizedBox(width: 18),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => UploadPoho(),
+                                  builder: (context) => SyaratPage(),
                                 ),
-                                (route) => false);
-                          },
-                          child: CustomMenuUtama(
-                            title: 'Ubah Photo Profil',
-                            icons: CupertinoIcons.profile_circled,
+                              );
+                            },
+                            child: CustomMenuUtama(
+                              title: 'Syarat & Ketentuan',
+                              icons: Icons.not_listed_location_rounded,
+                            ),
                           ),
-                        ),
-                        SizedBox(width: 18),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => SyaratPage(),
-                              ),
-                            );
-                          },
-                          child: CustomMenuUtama(
-                            title: 'Syarat & Ketentuan',
-                            icons: Icons.not_listed_location_rounded,
+                          SizedBox(width: 18),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => CheckPasswordPage(),
+                                  ),
+                                  (route) => false);
+                            },
+                            child: CustomMenuUtama(
+                              title: 'Ubah Password',
+                              icons: CupertinoIcons.lock_rotation,
+                            ),
                           ),
-                        ),
-                        SizedBox(width: 18),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => CheckPasswordPage(),
-                                ),
-                                (route) => false);
-                          },
-                          child: CustomMenuUtama(
-                            title: 'Ubah Password',
-                            icons: CupertinoIcons.lock_rotation,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             )

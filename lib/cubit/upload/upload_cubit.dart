@@ -1,9 +1,7 @@
 import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:ft_uim_naive_bayes/models/upload_model.dart';
-import 'package:ft_uim_naive_bayes/models/user_model.dart';
 import 'package:ft_uim_naive_bayes/services/upload_service.dart';
 
 part 'upload_state.dart';

@@ -145,6 +145,8 @@ class AuthService {
 
     if (response.statusCode == 200) {
       UserModel user = UserModel.fromJson(jsonDecode(response.body));
+      await SecureStorages().setStorage('status_berkas', user.statusBerkas);
+      await SecureStorages().setStorage('berkas', user.berkas);
       return user;
     } else if (response.statusCode == 401) {
       await SecureStorages().deleteKey('token');

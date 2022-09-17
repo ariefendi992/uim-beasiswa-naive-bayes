@@ -495,7 +495,7 @@ class _UjiPageState extends State<UjiPage> {
         builder: (context, state) {
           if (state is TanggunganSucces) {
             return Container(
-              margin: const EdgeInsets.only(top: 10, bottom: 30),
+              margin: const EdgeInsets.only(top: 10, bottom: 20),
               // padding: const EdgeInsets.symmetric(
               //   vertical: 10,
               //   horizontal: 18,
@@ -560,27 +560,45 @@ class _UjiPageState extends State<UjiPage> {
               child: CircularProgressIndicator(),
             );
           }
-          return CustomButton(
-            color: statusBerkas != '0' ? kBlueColor : kGreyColor,
-            margin: const EdgeInsets.only(bottom: 10),
-            hintText: 'UJI DATA',
-            onPressed: () {
-              if (berkas == null) return;
-              if (berkas != null && statusBerkas == '0') return;
-              if (berkas != null && statusBerkas == '1') {
-                context.read<UktCubit>().ujiUkt(
-                      idUser: idUser!,
-                      idProdi: selectProdi!.id!,
-                      idSemester: selectSemester!.id,
-                      // statusMhs: selectStatusMhs!,
-                      kip: selectKip!,
-                      idPenghasilan: selectPenghasilan!.id,
-                      idTanggungan: selectTanggungan!.id,
-                      pkh: selectPkh!,
-                    );
-                setAtribut();
-              }
-            },
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CustomButton(
+                color: statusBerkas != '0' ? kBlueColor : Colors.grey,
+                margin: const EdgeInsets.only(bottom: 10),
+                hintText: 'UJI DATA',
+                onPressed: () {
+                  if (berkas == null) return;
+                  if (berkas != null && statusBerkas == '0') return;
+                  if (berkas != null && statusBerkas == '1') {
+                    context.read<UktCubit>().ujiUkt(
+                          idUser: idUser!,
+                          idProdi: selectProdi!.id!,
+                          idSemester: selectSemester!.id,
+                          // statusMhs: selectStatusMhs!,
+                          kip: selectKip!,
+                          idPenghasilan: selectPenghasilan!.id,
+                          idTanggungan: selectTanggungan!.id,
+                          pkh: selectPkh!,
+                        );
+                    setAtribut();
+                  }
+                },
+              ),
+              berkas == null
+                  ? AnimatedContainer(
+                      duration: Duration(milliseconds: 500),
+                      child: Text('*Silahkan upload berkas anda.',
+                          style: redTextStyle.copyWith()),
+                    )
+                  : SizedBox(),
+              const SizedBox(height: 6),
+              statusBerkas == '0'
+                  ? Text('*Menunggu Persetujuan Berkas',
+                      style: redTextStyle.copyWith())
+                  : SizedBox(),
+              SizedBox(height: 30),
+            ],
           );
         },
       );
@@ -599,6 +617,7 @@ class _UjiPageState extends State<UjiPage> {
           ),
           Container(
             margin: EdgeInsets.only(top: 80),
+            height: MediaQuery.of(context).size.height,
             // padding: EdgeInsets.symmetric(horizontal: defaultPadding),
             decoration: BoxDecoration(color: kBackgroundColor),
             child: SingleChildScrollView(
@@ -646,16 +665,6 @@ class _UjiPageState extends State<UjiPage> {
                         // title(),
                         formInput(),
                         submitButton(),
-                        // const SizedBox(height: 8),
-                        berkas == null
-                            ? Text('*Silahkan upload berkas anda.',
-                                style: redTextStyle.copyWith())
-                            : SizedBox(),
-                        statusBerkas == '0'
-                            ? Text('*Menunggu Persetujuan Berkas',
-                                style: redTextStyle.copyWith())
-                            : SizedBox(),
-                        SizedBox(height: 30),
                       ],
                     );
                   },

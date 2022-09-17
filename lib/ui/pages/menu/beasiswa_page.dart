@@ -1,12 +1,13 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:ft_uim_naive_bayes/cubit/auth/auth_cubit.dart';
 import 'package:ft_uim_naive_bayes/ui/pages/beasiswa/penerima_page.dart';
 import 'package:ft_uim_naive_bayes/ui/pages/beasiswa/uji_page.dart';
 import 'package:ft_uim_naive_bayes/ui/widgets/cuttom_background_menu_akun.dart';
 import 'package:ft_uim_naive_bayes/ui/widgets/cuttom_button_akun.dart';
 import 'package:ft_uim_naive_bayes/utils/theme.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BeasiswaPage extends StatefulWidget {
   const BeasiswaPage({Key? key}) : super(key: key);
@@ -23,6 +24,7 @@ class _BeasiswaPageState extends State<BeasiswaPage> {
   @override
   void initState() {
     super.initState();
+    context.read<AuthCubit>().getProfil();
   }
 
   @override

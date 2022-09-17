@@ -20,6 +20,7 @@ class _HasilPageState extends State<HasilPage> {
   void initState() {
     super.initState();
     getIdUser();
+
     // this.id = id;
     // context.read<HasilUktCubit>().fetchOneUkt(idUser: '$id');
   }
