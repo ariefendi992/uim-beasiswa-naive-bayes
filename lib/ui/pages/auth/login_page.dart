@@ -118,10 +118,8 @@ class _LoginPageState extends State<LoginPage> {
                 BlocConsumer<AuthCubit, AuthState>(
                   listener: (context, state) {
                     if (state is AuthSuccess) {
-                      context.read<AuthCubit>().getProfil();
                       Navigator.pushNamedAndRemoveUntil(
                           context, '/main', (route) => false);
-                      print('state = ${state.props}');
                     } else if (state is AuthFailed) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
@@ -139,9 +137,11 @@ class _LoginPageState extends State<LoginPage> {
                       color: kBlueColor,
                       hintText: 'Masuk',
                       onPressed: () {
-                        context.read<AuthCubit>().signIn(
-                            stambuk: stambukController.text,
-                            password: passwordController.text);
+                        setState(() {
+                          context.read<AuthCubit>().signIn(
+                              stambuk: stambukController.text,
+                              password: passwordController.text);
+                        });
                       },
                     );
                   },

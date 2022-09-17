@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ft_uim_naive_bayes/cubit/auth/auth_cubit.dart';
@@ -14,6 +16,7 @@ import 'package:ft_uim_naive_bayes/storage/storage.dart';
 import 'package:ft_uim_naive_bayes/ui/widgets/custom_app_bar.dart';
 import 'package:ft_uim_naive_bayes/ui/widgets/custom_button.dart';
 import 'package:ft_uim_naive_bayes/ui/widgets/custom_dropdown_form_field.dart';
+import 'package:ft_uim_naive_bayes/ui/widgets/loading_widget.dart';
 import 'package:ft_uim_naive_bayes/utils/theme.dart';
 import 'package:ft_uim_naive_bayes/utils/extensions.dart';
 
@@ -37,6 +40,7 @@ class _UjiPageState extends State<UjiPage> {
   TextEditingController namaUserController = TextEditingController();
   String? berkas;
   String? statusBerkas;
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -48,6 +52,12 @@ class _UjiPageState extends State<UjiPage> {
     context.read<TanggunganCubit>().fetchTanggungan();
     getBerkas();
     getStatusBerkas();
+
+    Timer((Duration(seconds: 5)), () {
+      setState(() {
+        isLoading = false;
+      });
+    });
   }
 
   void getUserId() async {
@@ -628,14 +638,18 @@ class _UjiPageState extends State<UjiPage> {
                   builder: (context, state) {
                     if (state is HasilUktSuccess) {
                       if (state.hasilUkt.length == 0) {
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // title(),
-                            formInput(),
-                            submitButton(),
-                          ],
-                        );
+                        return isLoading
+                            ? Container(
+                                height: MediaQuery.of(context).size.height,
+                                child: LoadingWidget())
+                            : Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  // title(),
+                                  formInput(),
+                                  submitButton(),
+                                ],
+                              );
                       } else {
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.center,

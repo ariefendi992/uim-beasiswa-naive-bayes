@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ft_uim_naive_bayes/cubit/page_cubit.dart';
 import 'package:ft_uim_naive_bayes/cubit/ukt/training_ukt_cubit.dart';
 import 'package:ft_uim_naive_bayes/models/training_ukt.dart';
 import 'package:ft_uim_naive_bayes/ui/widgets/custom_app_bar.dart';
+import 'package:ft_uim_naive_bayes/ui/widgets/loading_widget.dart';
 import 'package:ft_uim_naive_bayes/ui/widgets/srollable_widget.dart';
 import 'package:ft_uim_naive_bayes/utils/theme.dart';
 import 'package:ft_uim_naive_bayes/utils/extensions.dart';
@@ -19,11 +22,17 @@ class _PenerimaPageState extends State<PenerimaPage> {
   late List<TrainingUktModel> trainingUkt;
   int? sortColumnIndex;
   bool isAscending = false;
+  bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
     context.read<TrainingUktCubit>().fetchUkt();
+    Timer(Duration(seconds: 4), () {
+      setState(() {
+        isLoading = false;
+      });
+    });
   }
 
   @override
@@ -122,9 +131,7 @@ class _PenerimaPageState extends State<PenerimaPage> {
               ],
             );
           }
-          return Center(
-            child: CircularProgressIndicator(),
-          );
+          return LoadingWidget();
         },
       ),
     );

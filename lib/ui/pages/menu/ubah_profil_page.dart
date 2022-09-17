@@ -16,7 +16,7 @@ class UbahProfilPage extends StatefulWidget {
   const UbahProfilPage(this.users, {Key? key}) : super(key: key);
 
   @override
-  _UbahProfilPageState createState() => _UbahProfilPageState();
+  _UbahProfilPageState createState() => _UbahProfilPageState(this.users);
 }
 
 class _UbahProfilPageState extends State<UbahProfilPage> {
@@ -30,11 +30,14 @@ class _UbahProfilPageState extends State<UbahProfilPage> {
   late TextEditingController genderController = TextEditingController();
   late TextEditingController emailController = TextEditingController();
   String? idUser;
+  UserModel users;
+  _UbahProfilPageState(this.users);
 
   @override
   void initState() {
     super.initState();
     getIdUser();
+
     readOnly = true;
     stambukReadOnly = true;
     prodiRO = true;
@@ -45,11 +48,12 @@ class _UbahProfilPageState extends State<UbahProfilPage> {
     genderFocus = FocusNode();
     emailFocus = FocusNode();
     stambukFocusNode = FocusNode();
-    namaController.text = '${widget.users.nama}';
-    stambukController.text = '${widget.users.stambuk}';
-    prodiController.text = '${widget.users.prodi}';
-    genderController.text = '${widget.users.gender}';
-    emailController.text = '${widget.users.email}';
+    namaController.text = '${users.nama}';
+    stambukController.text = '${users.stambuk}';
+    prodiController.text = '${users.prodi}';
+    genderController.text = '${users.gender}';
+    emailController.text = '${users.email}';
+    context.read<AuthCubit>().getProfil();
   }
 
   @override
@@ -124,8 +128,8 @@ class _UbahProfilPageState extends State<UbahProfilPage> {
                           child: widget.users.picture != null
                               ? CircleAvatar(
                                   radius: 50,
-                                  backgroundImage: NetworkImage(
-                                      '$baseUrl ${widget.users.picture}'),
+                                  backgroundImage: NetworkImage('$imageUrl'
+                                      '${users.picture!}'),
                                 )
                               : CircleAvatar(
                                   radius: 50,
@@ -264,7 +268,7 @@ class _UbahProfilPageState extends State<UbahProfilPage> {
                       return Container(
                         padding: EdgeInsets.symmetric(horizontal: 40),
                         child: CustomButton(
-                          color: kBlueColor,
+                            color: kBlueColor,
                             margin: const EdgeInsets.only(top: 20),
                             height: 45,
                             hintText: 'Simpan',

@@ -7,6 +7,7 @@ import 'package:ft_uim_naive_bayes/cubit/auth/auth_cubit.dart';
 import 'package:ft_uim_naive_bayes/cubit/upload/upload_cubit.dart';
 import 'package:ft_uim_naive_bayes/storage/storage.dart';
 import 'package:ft_uim_naive_bayes/ui/widgets/custom_button.dart';
+import 'package:ft_uim_naive_bayes/ui/widgets/loading_widget.dart';
 import 'package:ft_uim_naive_bayes/utils/theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:open_file/open_file.dart';
@@ -23,6 +24,7 @@ class _UploadBerkasPageState extends State<UploadBerkasPage> {
   FilePickerResult? result;
   File? files;
   PlatformFile? file;
+  bool isLoading = false;
 
   void getIdUser() async {
     var id = await SecureStorages().readStorage('id_user');
@@ -79,27 +81,35 @@ class _UploadBerkasPageState extends State<UploadBerkasPage> {
                     ],
                   ),
                 ),
-                Container(
-                  margin: EdgeInsets.only(top: 10),
-                  width: double.infinity,
-                  height: MediaQuery.of(context).size.height,
-                  padding: EdgeInsets.symmetric(
-                      horizontal: defaultPadding, vertical: 18),
-                  decoration: BoxDecoration(color: kBackgroundColor),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Silahkan unggah berkas anda...',
-                        style: blackTextStyle.copyWith(fontSize: 16),
-                      ),
-                      // selectFile(),
-                      // onOpenedFile(file!)
+                isLoading
+                    ? Container(
+                        margin: EdgeInsets.only(top: 10),
+                        height: MediaQuery.of(context).size.height,
+                        decoration: BoxDecoration(color: kBackgroundColor),
+                        alignment: Alignment.center,
+                        child: LoadingWidget(),
+                      )
+                    : Container(
+                        margin: EdgeInsets.only(top: 10),
+                        width: double.infinity,
+                        height: MediaQuery.of(context).size.height,
+                        padding: EdgeInsets.symmetric(
+                            horizontal: defaultPadding, vertical: 18),
+                        decoration: BoxDecoration(color: kBackgroundColor),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Silahkan unggah berkas anda...',
+                              style: blackTextStyle.copyWith(fontSize: 16),
+                            ),
+                            // selectFile(),
+                            // onOpenedFile(file!)
 
-                      file != null ? onOpenedFile(file!) : selectFile(),
-                    ],
-                  ),
-                )
+                            file != null ? onOpenedFile(file!) : selectFile(),
+                          ],
+                        ),
+                      )
               ],
             ),
           ),
@@ -198,12 +208,17 @@ class _UploadBerkasPageState extends State<UploadBerkasPage> {
                     color: kBlueColor,
                     height: 40,
                     hintText: 'Unggah',
-                    onPressed: () {
-                      setState(() {
-                        context.read<UploadCubit>().uploadPdf(
-                            idUser: idUser,
-                            fieldName: 'berkas',
-                            pdfFile: files!);
+                    onPressed: () async {
+                      setState(() => isLoading = true);
+                      await Future.delayed(Duration(seconds: 5), () {
+                        setState(() {
+                          isLoading = false;
+                          context.read<UploadCubit>().uploadPdf(
+                                idUser: idUser,
+                                fieldName: 'berkas',
+                                pdfFile: files!,
+                              );
+                        });
                       });
                     },
                   ),

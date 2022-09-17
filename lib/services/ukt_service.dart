@@ -144,12 +144,12 @@ class UktService {
       final request = await http.get(Uri.parse(url));
       if (request.statusCode == 200) {
         var response = jsonDecode(request.body);
-        print('response hasil ukt $response');
+        // print('response hasil ukt $response');
         List<HasilUktModel> ukt =
             List<HasilUktModel>.from(response['data'].map((e) {
           return HasilUktModel.fromJson(e);
         })).toList();
-        print('ukte lenght == ${ukt.length}');
+        // print('ukte lenght == ${ukt.length}');
         return ukt;
       } else {
         throw Exception(

@@ -25,6 +25,7 @@ class _ProfilPageState extends State<ProfilPage> {
   @override
   void initState() {
     super.initState();
+    context.read<AuthCubit>().getProfil();
   }
 
   // Future navigateEditUserForm(BuildContext context, UserModel users) async {
@@ -181,8 +182,6 @@ class _ProfilPageState extends State<ProfilPage> {
                         );
                       } else if (state is AuthInitial) {
                         context.read<PageCubit>().setPage(0);
-                        Navigator.pushNamedAndRemoveUntil(
-                            context, '/login', (route) => false);
                       }
                     },
                     builder: (context, state) {
@@ -198,8 +197,10 @@ class _ProfilPageState extends State<ProfilPage> {
                               color: kBlueColor,
                               width: double.infinity,
                               hintText: 'Keluar',
-                              onPressed: () async {
+                              onPressed: () {
                                 context.read<AuthCubit>().signOut();
+                                Navigator.pushNamedAndRemoveUntil(
+                                    context, '/login', (route) => false);
                                 // await SecureStorages().deleteKey('timeExpire');
                               }),
                         ),

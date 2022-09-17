@@ -141,18 +141,18 @@ class AuthService {
       headers: headers,
     );
 
-    print('Data = ${response.body}');
+    // print('Data = ${response.body}');
 
     if (response.statusCode == 200) {
       UserModel user = UserModel.fromJson(jsonDecode(response.body));
       await SecureStorages().setStorage('status_berkas', user.statusBerkas);
       await SecureStorages().setStorage('berkas', user.berkas);
       return user;
-    } else if (response.statusCode == 401) {
-      await SecureStorages().deleteKey('token');
-      print('expire bos ${response.statusCode}');
-      await SecureStorages().setStorage('msg', 'expire');
-      await refreshToken();
+      // } else if (response.statusCode == 401) {
+      //   await SecureStorages().deleteKey('token');
+      //   print('expire bos ${response.statusCode}');
+      //   await SecureStorages().setStorage('msg', 'expire');
+      //   await refreshToken();
     } else {
       throw Exception('gagal muat data $url, status : ${response.body}');
     }
@@ -173,12 +173,12 @@ class AuthService {
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body)['token'];
       await SecureStorages().setStorage('newToken', data);
-      print('New Token = $data');
+      // print('New Token = $data');
 
       return data;
     } else {
       // await SecureStorages().deleteKey('token');
-      print('expire 2');
+      // print('expire 2');
       throw Exception('error boss');
     }
   }

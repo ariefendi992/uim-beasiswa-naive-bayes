@@ -12,38 +12,33 @@ class CustomMenuUtama extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 7,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
-      child: Container(
-        width: MediaQuery.of(context).size.width / 4,
-        height: 90,
-        padding: EdgeInsets.symmetric(horizontal: 2),
-        // margin: EdgeInsets.only(right: 12, left: 12),
-        decoration: BoxDecoration(
-          color: kWhiteColor,
-          borderRadius: BorderRadius.circular(18),
-        ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Icon(
-                icons,
-                size: 48,
-                color: kBlueColor,
-              ),
-              SizedBox(height: 6),
-              Text(
-                title.toUpperCase(),
-                style:
-                    greyTextStyle.copyWith(fontWeight: semiBold, fontSize: 10),
-                textAlign: TextAlign.center,
-              )
-            ],
+    return Container(
+      width: MediaQuery.of(context).size.width / 4,
+      height: MediaQuery.of(context).size.height / 10.3,
+      // padding: EdgeInsets.only(bottom: 6),
+      // margin: EdgeInsets.only(bottom: 6),
+      decoration: BoxDecoration(
+        // color:,
+        borderRadius: BorderRadius.circular(18),
+      ),
+      child: Column(
+        children: [
+          Center(
+            child: Icon(
+              icons,
+              size: 32,
+              color: kBlueColor,
+            ),
           ),
-        ),
+          const SizedBox(height: 2),
+          Text(
+            title,
+            style: blackTextStyle.copyWith(fontSize: 12, fontWeight: medium),
+            textAlign: TextAlign.center,
+            maxLines: 2,
+            // overflow: TextOverflow.,
+          )
+        ],
       ),
     );
   }

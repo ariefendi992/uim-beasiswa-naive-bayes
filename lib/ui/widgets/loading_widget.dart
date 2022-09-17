@@ -13,7 +13,7 @@ class LoadingWidget extends StatelessWidget {
           'Loading...',
           textAlign: TextAlign.center,
           style: blackTextStyle.copyWith(
-            fontSize: 40,
+            fontSize: 24,
             fontWeight: bold,
           ),
         ),

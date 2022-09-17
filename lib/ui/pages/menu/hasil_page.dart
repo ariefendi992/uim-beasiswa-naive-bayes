@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ft_uim_naive_bayes/cubit/ukt/hasil_ukt_cubit.dart';
 import 'package:ft_uim_naive_bayes/storage/storage.dart';
+import 'package:ft_uim_naive_bayes/ui/widgets/loading_widget.dart';
 import 'package:ft_uim_naive_bayes/utils/theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ft_uim_naive_bayes/utils/extensions.dart';
@@ -15,12 +18,18 @@ class HasilPage extends StatefulWidget {
 
 class _HasilPageState extends State<HasilPage> {
   String? idUser;
+  bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
     getIdUser();
 
+    Timer((Duration(seconds: 5)), () {
+      setState(() {
+        isLoading = false;
+      });
+    });
     // this.id = id;
     // context.read<HasilUktCubit>().fetchOneUkt(idUser: '$id');
   }
@@ -75,9 +84,7 @@ class _HasilPageState extends State<HasilPage> {
                       color: kBackgroundColor,
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
+                    child: LoadingWidget(),
                   );
                 } else if (state is HasilUktSuccess) {
                   if (state.hasilUkt.length == 0) {

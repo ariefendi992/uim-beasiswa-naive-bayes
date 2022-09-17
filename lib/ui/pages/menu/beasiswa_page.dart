@@ -17,6 +17,7 @@ class BeasiswaPage extends StatefulWidget {
 }
 
 class _BeasiswaPageState extends State<BeasiswaPage> {
+  bool isLoading = false;
   FutureOr onGoBack(dynamic value) {
     setState(() {});
   }

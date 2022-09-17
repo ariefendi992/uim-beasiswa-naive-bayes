@@ -57,7 +57,9 @@ class AuthCubit extends Cubit<AuthState> {
       emit(AuthLoading());
       await AuthService().signOut();
       emit(AuthInitial());
-    } catch (e) {}
+    } catch (e) {
+      emit(AuthFailed(e.toString()));
+    }
   }
 
   void getProfil() async {
