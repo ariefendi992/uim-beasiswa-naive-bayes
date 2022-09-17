@@ -210,6 +210,7 @@ class _CheckPasswordPageState extends State<CheckPasswordPage> {
                     },
                     builder: (context, state) {
                       return CustomButton(
+                        color: kBlueColor,
                         hintText: 'Lanjutkan',
                         onPressed: () {
                           context.read<AuthCubit>().checkPassword(

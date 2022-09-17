@@ -222,6 +222,7 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
             }
 
             return CustomButton(
+              color: kBlueColor,
               margin: EdgeInsets.only(top: 10),
               hintText: 'Sign Up',
               onPressed: () {

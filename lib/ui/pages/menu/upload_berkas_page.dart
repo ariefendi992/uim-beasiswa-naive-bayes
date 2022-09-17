@@ -127,6 +127,7 @@ class _UploadBerkasPageState extends State<UploadBerkasPage> {
         padding: const EdgeInsets.symmetric(horizontal: 48),
         width: double.infinity,
         child: CustomButton(
+          color: kBlueColor,
           height: 40,
           hintText: 'Select File',
           onPressed: () {
@@ -194,6 +195,7 @@ class _UploadBerkasPageState extends State<UploadBerkasPage> {
                   ),
                   SizedBox(height: 12),
                   CustomButton(
+                    color: kBlueColor,
                     height: 40,
                     hintText: 'Unggah',
                     onPressed: () {

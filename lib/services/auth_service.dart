@@ -76,6 +76,8 @@ class AuthService {
       await SecureStorages().setStorage('token', data['token']);
       await SecureStorages().setStorage('id_user', data['id'].toString());
       await SecureStorages().setStorage('timeSecond', data['expire']);
+      await SecureStorages().setStorage('status_berkas', data['status_berkas']);
+      await SecureStorages().setStorage('berkas', data['berkas']);
 
       DateTime setTimeString =
           DateTime.now().add(Duration(seconds: int.parse(data['expire'])));

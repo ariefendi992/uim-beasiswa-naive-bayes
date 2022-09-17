@@ -195,6 +195,7 @@ class _ProfilPageState extends State<ProfilPage> {
                         margin: const EdgeInsets.symmetric(horizontal: 12),
                         child: Center(
                           child: CustomButton(
+                              color: kBlueColor,
                               width: double.infinity,
                               hintText: 'Keluar',
                               onPressed: () async {

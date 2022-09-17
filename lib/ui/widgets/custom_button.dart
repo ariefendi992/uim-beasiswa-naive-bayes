@@ -7,15 +7,17 @@ class CustomButton extends StatelessWidget {
   final Function() onPressed;
   final EdgeInsets margin;
   final double height;
+  final Color color;
 
-  const CustomButton(
-      {Key? key,
-      required this.hintText,
-      required this.onPressed,
-      this.width = double.infinity,
-      this.margin = EdgeInsets.zero,
-      this.height = 55})
-      : super(key: key);
+  CustomButton({
+    Key? key,
+    required this.hintText,
+    required this.onPressed,
+    this.width = double.infinity,
+    this.margin = EdgeInsets.zero,
+    this.height = 55,
+    required this.color,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,7 @@ class CustomButton extends StatelessWidget {
           style: whiteTextStyle.copyWith(fontSize: 18, fontWeight: medium),
         ),
         style: TextButton.styleFrom(
-          backgroundColor: kBlueColor,
+          backgroundColor: color,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(defaultRadius),
           ),

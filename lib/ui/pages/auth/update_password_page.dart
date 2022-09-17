@@ -192,6 +192,7 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
                       },
                       builder: (context, state) {
                         return CustomButton(
+                            color: kBlueColor,
                             width: double.infinity,
                             hintText: 'Update Password',
                             onPressed: () {

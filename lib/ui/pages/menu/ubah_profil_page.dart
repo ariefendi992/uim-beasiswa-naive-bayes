@@ -264,6 +264,7 @@ class _UbahProfilPageState extends State<UbahProfilPage> {
                       return Container(
                         padding: EdgeInsets.symmetric(horizontal: 40),
                         child: CustomButton(
+                          color: kBlueColor,
                             margin: const EdgeInsets.only(top: 20),
                             height: 45,
                             hintText: 'Simpan',

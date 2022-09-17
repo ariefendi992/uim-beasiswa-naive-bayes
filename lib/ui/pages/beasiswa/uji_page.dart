@@ -35,6 +35,8 @@ class _UjiPageState extends State<UjiPage> {
   String? selectKip, selectPkh;
   int? idUser;
   TextEditingController namaUserController = TextEditingController();
+  String? berkas;
+  String? statusBerkas;
 
   @override
   void initState() {
@@ -44,12 +46,28 @@ class _UjiPageState extends State<UjiPage> {
     penghasilan = KategoriService().fetchPenghasilanOrtu();
     getUserId();
     context.read<TanggunganCubit>().fetchTanggungan();
+    getBerkas();
+    getStatusBerkas();
   }
 
   void getUserId() async {
     var id = await SecureStorages().readStorage('id_user');
     setState(() {
       idUser = int.parse(id!);
+    });
+  }
+
+  void getBerkas() async {
+    var berkas = await SecureStorages().readStorage('berkas');
+    setState(() {
+      this.berkas = berkas;
+    });
+  }
+
+  void getStatusBerkas() async {
+    var statusBerkas = await SecureStorages().readStorage('status_berkas');
+    setState(() {
+      this.statusBerkas = statusBerkas;
     });
   }
 
@@ -543,20 +561,25 @@ class _UjiPageState extends State<UjiPage> {
             );
           }
           return CustomButton(
-            margin: const EdgeInsets.only(bottom: 40),
+            color: statusBerkas != '0' ? kBlueColor : kGreyColor,
+            margin: const EdgeInsets.only(bottom: 10),
             hintText: 'UJI DATA',
             onPressed: () {
-              context.read<UktCubit>().ujiUkt(
-                    idUser: idUser!,
-                    idProdi: selectProdi!.id!,
-                    idSemester: selectSemester!.id,
-                    // statusMhs: selectStatusMhs!,
-                    kip: selectKip!,
-                    idPenghasilan: selectPenghasilan!.id,
-                    idTanggungan: selectTanggungan!.id,
-                    pkh: selectPkh!,
-                  );
-              setAtribut();
+              if (berkas == null) return;
+              if (berkas != null && statusBerkas == '0') return;
+              if (berkas != null && statusBerkas == '1') {
+                context.read<UktCubit>().ujiUkt(
+                      idUser: idUser!,
+                      idProdi: selectProdi!.id!,
+                      idSemester: selectSemester!.id,
+                      // statusMhs: selectStatusMhs!,
+                      kip: selectKip!,
+                      idPenghasilan: selectPenghasilan!.id,
+                      idTanggungan: selectTanggungan!.id,
+                      pkh: selectPkh!,
+                    );
+                setAtribut();
+              }
             },
           );
         },
@@ -623,6 +646,16 @@ class _UjiPageState extends State<UjiPage> {
                         // title(),
                         formInput(),
                         submitButton(),
+                        // const SizedBox(height: 8),
+                        berkas == null
+                            ? Text('*Silahkan upload berkas anda.',
+                                style: redTextStyle.copyWith())
+                            : SizedBox(),
+                        statusBerkas == '0'
+                            ? Text('*Menunggu Persetujuan Berkas',
+                                style: redTextStyle.copyWith())
+                            : SizedBox(),
+                        SizedBox(height: 30),
                       ],
                     );
                   },
