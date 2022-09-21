@@ -120,16 +120,6 @@ class _LoginPageState extends State<LoginPage> {
                     if (state is AuthSuccess) {
                       Navigator.pushNamedAndRemoveUntil(
                           context, '/main', (route) => false);
-                    } else if (state is AuthFailed) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          backgroundColor: kRedColor,
-                          content: Text(
-                            state.error,
-                            style: whiteTextStyle,
-                          ),
-                        ),
-                      );
                     }
                   },
                   builder: (context, state) {

@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:ft_uim_naive_bayes/cubit/auth/auth_cubit.dart';
 import 'package:ft_uim_naive_bayes/ui/pages/beasiswa/penerima_page.dart';
 import 'package:ft_uim_naive_bayes/ui/pages/beasiswa/uji_page.dart';
+import 'package:ft_uim_naive_bayes/ui/pages/beasiswa/upload_berkas_page.dart';
 import 'package:ft_uim_naive_bayes/ui/widgets/cuttom_background_menu_akun.dart';
 import 'package:ft_uim_naive_bayes/ui/widgets/cuttom_button_akun.dart';
 import 'package:ft_uim_naive_bayes/utils/theme.dart';
@@ -109,6 +110,17 @@ class _BeasiswaPageState extends State<BeasiswaPage> {
                           //     builder: (context) => UploadPoho(),
                           //   ),
                           // );
+                        },
+                      ),
+                      CustomButtonAkun(
+                        text: 'Upload Berkas',
+                        onPressed: () {
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => UploadBerkasPage(),
+                              ),
+                              (route) => false);
                         },
                       ),
                     ],

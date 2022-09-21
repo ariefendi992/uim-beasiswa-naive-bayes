@@ -23,8 +23,9 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    setState(() {});
-    context.read<AuthCubit>().getProfil();
+    // setState(() {
+    //   context.read<AuthCubit>().getProfil();
+    // });
   }
 
   @override

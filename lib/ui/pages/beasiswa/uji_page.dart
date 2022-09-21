@@ -574,7 +574,9 @@ class _UjiPageState extends State<UjiPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomButton(
-                color: statusBerkas != '0' ? kBlueColor : Colors.grey,
+                color: statusBerkas != '0' && statusBerkas != null
+                    ? kBlueColor
+                    : Colors.grey,
                 margin: const EdgeInsets.only(bottom: 10),
                 hintText: 'UJI DATA',
                 onPressed: () {

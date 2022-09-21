@@ -7,7 +7,6 @@ import 'package:ft_uim_naive_bayes/models/user_model.dart';
 import 'package:ft_uim_naive_bayes/ui/pages/auth/check_password_page.dart';
 import 'package:ft_uim_naive_bayes/ui/pages/beasiswa/syarat_ketentuan_page.dart';
 import 'package:ft_uim_naive_bayes/ui/pages/menu/ubah_profil_page.dart';
-import 'package:ft_uim_naive_bayes/ui/pages/menu/upload_berkas_page.dart';
 import 'package:ft_uim_naive_bayes/ui/widgets/custom_button.dart';
 import 'package:ft_uim_naive_bayes/ui/widgets/cuttom_background_menu_akun.dart';
 import 'package:ft_uim_naive_bayes/ui/widgets/cuttom_button_akun.dart';
@@ -110,9 +109,6 @@ class _ProfilPageState extends State<ProfilPage> {
                             return CustomButtonAkun(
                               text: 'Ubah Profil',
                               onPressed: () {
-                                setState(() {
-                                  print('${state.user}');
-                                });
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -128,17 +124,6 @@ class _ProfilPageState extends State<ProfilPage> {
                           }
                           return CustomButtonAkun(
                               text: 'Ubah Profil', onPressed: () {});
-                        },
-                      ),
-                      CustomButtonAkun(
-                        text: 'Upload Berkas',
-                        onPressed: () {
-                          Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => UploadBerkasPage(),
-                              ),
-                              (route) => false);
                         },
                       ),
                     ],
@@ -182,6 +167,8 @@ class _ProfilPageState extends State<ProfilPage> {
                         );
                       } else if (state is AuthInitial) {
                         context.read<PageCubit>().setPage(0);
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, '/login', (route) => false);
                       }
                     },
                     builder: (context, state) {
@@ -199,8 +186,7 @@ class _ProfilPageState extends State<ProfilPage> {
                               hintText: 'Keluar',
                               onPressed: () {
                                 context.read<AuthCubit>().signOut();
-                                Navigator.pushNamedAndRemoveUntil(
-                                    context, '/login', (route) => false);
+
                                 // await SecureStorages().deleteKey('timeExpire');
                               }),
                         ),
