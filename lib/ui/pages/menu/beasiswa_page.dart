@@ -112,17 +112,6 @@ class _BeasiswaPageState extends State<BeasiswaPage> {
                           // );
                         },
                       ),
-                      CustomButtonAkun(
-                        text: 'Upload Berkas',
-                        onPressed: () {
-                          Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => UploadBerkasPage(),
-                              ),
-                              (route) => false);
-                        },
-                      ),
                     ],
                   ),
                   SizedBox(height: 20),

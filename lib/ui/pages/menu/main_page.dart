@@ -75,7 +75,7 @@ class _MainPageState extends State<MainPage> {
               CustomBottomNavigation(
                 icons: Icons.manage_accounts,
                 index: 3,
-                titleMenu: 'Akun',
+                titleMenu: 'Profil',
               )
             ],
           ),

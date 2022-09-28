@@ -6,6 +6,7 @@ import 'package:ft_uim_naive_bayes/cubit/page_cubit.dart';
 import 'package:ft_uim_naive_bayes/models/user_model.dart';
 import 'package:ft_uim_naive_bayes/ui/pages/auth/check_password_page.dart';
 import 'package:ft_uim_naive_bayes/ui/pages/beasiswa/syarat_ketentuan_page.dart';
+import 'package:ft_uim_naive_bayes/ui/pages/beasiswa/upload_berkas_page.dart';
 import 'package:ft_uim_naive_bayes/ui/pages/menu/ubah_profil_page.dart';
 import 'package:ft_uim_naive_bayes/ui/widgets/custom_button.dart';
 import 'package:ft_uim_naive_bayes/ui/widgets/cuttom_background_menu_akun.dart';
@@ -52,7 +53,7 @@ class _ProfilPageState extends State<ProfilPage> {
                       children: [
                         SizedBox(),
                         Text(
-                          'AKUN',
+                          'PROFIL',
                           style: whiteTextStyle.copyWith(
                             fontSize: 18,
                             fontWeight: medium,
@@ -89,17 +90,6 @@ class _ProfilPageState extends State<ProfilPage> {
                   ),
                   CustomBackgroundMenuAkun(
                     children: [
-                      CustomButtonAkun(
-                        text: 'Ubah Password',
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => CheckPasswordPage(),
-                            ),
-                          );
-                        },
-                      ),
                       BlocConsumer<AuthCubit, AuthState>(
                         listener: (context, state) {
                           if (state is AuthInitial) {}
@@ -107,7 +97,7 @@ class _ProfilPageState extends State<ProfilPage> {
                         builder: (context, state) {
                           if (state is AuthSuccess) {
                             return CustomButtonAkun(
-                              text: 'Ubah Profil',
+                              text: 'Ubah Profil Pengguna',
                               onPressed: () {
                                 Navigator.push(
                                     context,
@@ -123,7 +113,29 @@ class _ProfilPageState extends State<ProfilPage> {
                             );
                           }
                           return CustomButtonAkun(
-                              text: 'Ubah Profil', onPressed: () {});
+                              text: 'Update Profil', onPressed: () {});
+                        },
+                      ),
+                      CustomButtonAkun(
+                        text: 'Ubah Kata Sandi',
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CheckPasswordPage(),
+                            ),
+                          );
+                        },
+                      ),
+                      CustomButtonAkun(
+                        text: 'Upload Berkas',
+                        onPressed: () {
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => UploadBerkasPage(),
+                              ),
+                              (route) => false);
                         },
                       ),
                     ],

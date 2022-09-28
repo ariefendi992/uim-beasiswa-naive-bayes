@@ -76,7 +76,7 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
                   ),
                 ),
                 Text(
-                  'Ubah Password',
+                  'Ubah Kata Sandi',
                   style: whiteTextStyle.copyWith(
                     fontSize: 16,
                     fontWeight: medium,
